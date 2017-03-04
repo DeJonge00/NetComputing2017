@@ -1,18 +1,15 @@
 package message_inbox;
 import java.io.Serializable;
 
-public class Message implements Serializable {
-	private String message_body;
+public class Message<T> implements Serializable {
+	private T t;
 	
-	public Message() {
-		this.message_body = "";
+	public Message(T t) {
+		this.t = t;
 	}
 	
-	public Message(String message_body) {
-		this.message_body = message_body;
-	}
 	
-	public String get_message_body() {
-		return this.message_body;
+	public T getMessageContent() {
+		return this.t;
 	}
 }

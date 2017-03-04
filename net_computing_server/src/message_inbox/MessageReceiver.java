@@ -24,8 +24,8 @@ public class MessageReceiver implements Runnable {
 			}
 	}
 	
-	public Message read_message() {
-		Message msg;
+	public Message<Measurement> read_message() {
+		Message<Measurement> msg;
 		Object o = null;
 		
 		try {
@@ -34,10 +34,10 @@ public class MessageReceiver implements Runnable {
 			e.printStackTrace();
 		}
 		
-		if(o != null && o instanceof Message) {
-			msg = (Message)o;
+		if(o != null && o instanceof Message<?>) {
+			msg = (Message<Measurement>)o;
 		} else {
-			msg = new Message("error");
+			msg = new Message<Measurement>(new Measurement("error"));
 		}
 		
 		
@@ -45,7 +45,7 @@ public class MessageReceiver implements Runnable {
 	}
 	
 	public void run() {
-		Message msg;
+		Message<Measurement> msg;
 		while (true) {
 			msg = read_message();
 			this.messages.enqueue(msg);

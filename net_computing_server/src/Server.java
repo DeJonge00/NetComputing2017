@@ -1,12 +1,14 @@
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import org.hyperic.sigar.Mem;
-import org.hyperic.sigar.Sigar;
-import org.hyperic.sigar.SigarException;
 import message_inbox.ConnectionList;
 import message_inbox.Message;
 import message_inbox.MessageInbox;
+
+import org.hyperic.sigar.CpuPerc;
+import org.hyperic.sigar.Mem;
+import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarException;
 
 public class Server {
 	private ConnectionList workers;
@@ -25,12 +27,18 @@ public class Server {
 	
 	public void takeMeasurement() {
 		Mem mem = null;
+		CpuPerc[] cpu = null;
         try {
             mem = sigar.getMem();
+            cpu = sigar.getCpuPercList();
         } catch (SigarException se) {
             se.printStackTrace();
         }
-
+        
+        for(int i = 0; i<cpu.length; i++) {
+        	System.out.println("CPU core " + i + ":" + cpu[i].getCombined()*100 + "%");
+        }
+        
         System.out.println("Actual total free system memory: "
                 + mem.getActualFree() / 1024 / 1024+ " MB");
         System.out.println("Actual total used system memory: "
@@ -59,7 +67,7 @@ public class Server {
 				Message msg = new Message(String.format("test%d",i));
 				oos.writeObject(msg);
 				System.out.println("Sent message to inbox");
-				//Thread.sleep(100);
+				this.takeMeasurement();
 			}
 			
 		} catch (Exception e) {
