@@ -1,57 +1,87 @@
 package resource_monitor;
 
-import java.io.File;
-import java.util.Properties;
-import java.util.Set;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
+import org.hyperic.sigar.CpuPerc;
+import org.hyperic.sigar.Mem;
+import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarException;
 
 public class ResourceMonitor extends Thread {
 	
-	public ResourceMonitor() {
-		int i = 0;
-		boolean running = true;
+	private boolean running;
+	private int serverPort;
+	private static Sigar sigar;
+	
+	public ResourceMonitor(int serverPort) {
+		running = false;
+		this.serverPort = serverPort;
+		sigar = new Sigar();
+	}
+	
+	public void run() {
+		running = true;
 		while(running) {
-			this.getInfo();
-			i++;
-			if(i>10) running = false;
+			if(!sendData(serverPort, takeMeasurement())) {
+				// Sending message failed
+				running = false;
+			}
+			
+			// End of cycle
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
-	public void getInfo() {
-		/* Total number of processors or cores available to the JVM */
-	    System.out.println("Available processors (cores): " + 
-	        Runtime.getRuntime().availableProcessors());
+	public Measurement takeMeasurement() {
+		Mem mem = null;
+		CpuPerc[] cpu = null;
+		
+		try {
+            mem = sigar.getMem();
+            cpu = sigar.getCpuPercList();
+        } catch (SigarException se) {
+            se.printStackTrace();
+        }
+	    /*// Print the measurement
+        for(int i = 0; i<cpu.length; i++) {
+        	System.out.println("CPU core " + i + ":" + cpu[i].getCombined()*100 + "%");
+        }
+        
+        System.out.println("Actual total free system memory: "
+                + mem.getActualFree() / 1024 / 1024+ " MB");
+        System.out.println("Actual total used system memory: "
+                + mem.getActualUsed() / 1024 / 1024 + " MB");
+        System.out.println("Total free system memory ......: " + mem.getFree()
+                / 1024 / 1024+ " MB");
+        System.out.println("System Random Access Memory....: " + mem.getRam()
+                + " MB");
+        System.out.println("Total system memory............: " + mem.getTotal()
+                / 1024 / 1024+ " MB");
+        System.out.println("Total used system memory.......: " + mem.getUsed()
+                / 1024 / 1024+ " MB");
 
-	    /* Total amount of free memory available to the JVM */
-	    System.out.println("Free memory (bytes): " + 
-	        Runtime.getRuntime().freeMemory());
-
-	    /* This will return Long.MAX_VALUE if there is no preset limit */
-	    long maxMemory = Runtime.getRuntime().maxMemory();
-	    /* Maximum amount of memory the JVM will attempt to use */
-	    System.out.println("Maximum memory (bytes): " + 
-	        (maxMemory == Long.MAX_VALUE ? "no limit" : maxMemory));
-
-	    /* Total memory currently available to the JVM */
-	    System.out.println("Total memory available to JVM (bytes): " + 
-	        Runtime.getRuntime().totalMemory());
-
-	    /* Get a list of all filesystem roots on this system */
-	    File[] roots = File.listRoots();
-
-	    /* For each filesystem root, print some info */
-	    for (File root : roots) {
-	      System.out.println("File system root: " + root.getAbsolutePath());
-	      System.out.println("Total space (bytes): " + root.getTotalSpace());
-	      System.out.println("Free space (bytes): " + root.getFreeSpace());
-	      System.out.println("Usable space (bytes): " + root.getUsableSpace());
-	    }
+        System.out.println("\n**************************************\n");
+        */
+		return new Measurement(mem.getRam(), mem.getTotal(), mem.getTotal() - mem.getUsed());
 	}
 	
-	public void getMoreInfo() {
-		Properties properties = System.getProperties();
-        Set<Object> keys = properties.keySet();
-        for(Object key : keys){
-            System.out.println(key + ": " + properties.get(key));
-        }
+	public boolean sendData(int port, Measurement m) {
+		try {
+			Socket s = new Socket("localhost", port);
+			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+			
+			oos.writeObject(m);
+			System.out.println("Sent message to inbox");
+			return true;
+			
+		} catch (Exception e) {
+			System.out.println("Is there a server running on that port?");
+			return false;
+		}
 	}
 }
