@@ -1,6 +1,8 @@
 package message_inbox;
 
-public class Measurement {
+import java.io.Serializable;
+
+public class Measurement implements Serializable{
 	String content;
 	public Measurement(String s) {
 		this.content = s;

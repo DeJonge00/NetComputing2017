@@ -2,13 +2,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import message_inbox.ConnectionList;
+import message_inbox.Measurement;
 import message_inbox.Message;
 import message_inbox.MessageInbox;
 
-import org.hyperic.sigar.CpuPerc;
-import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.Sigar;
-import org.hyperic.sigar.SigarException;
 
 public class Server {
 	private ConnectionList workers;
@@ -66,7 +64,7 @@ public class Server {
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 			
 			for(int i=0; i<1000; i++) {
-				Message msg = new Message(String.format("test%d",i));
+				Measurement msg = new Measurement(String.format("test%d",i));
 				oos.writeObject(msg);
 				System.out.println("Sent message to inbox");
 				this.takeMeasurement();

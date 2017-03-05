@@ -34,8 +34,8 @@ public class MessageReceiver implements Runnable {
 			e.printStackTrace();
 		}
 		
-		if(o != null && o instanceof Message<?>) {
-			msg = (Message<Measurement>)o;
+		if(o != null && o instanceof Measurement) {
+			msg = new Message<Measurement>((Measurement)o);
 		} else {
 			msg = new Message<Measurement>(new Measurement("error"));
 		}
