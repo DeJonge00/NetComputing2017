@@ -1,13 +1,10 @@
 package message_inbox;
-import java.net.ServerSocket;
-import java.io.ObjectInputStream;
+
 import java.io.IOException;
-import java.net.UnknownHostException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.lang.StringBuilder;
-import java.lang.Runnable;
-import java.net.Socket;
+import java.io.ObjectInputStream;
+
+import resource_monitor.Measurement;
+
 
 public class MessageReceiver implements Runnable {
 	private Connection connection;
@@ -37,7 +34,7 @@ public class MessageReceiver implements Runnable {
 		if(o != null && o instanceof Measurement) {
 			msg = new Message<Measurement>((Measurement)o);
 		} else {
-			msg = new Message<Measurement>(new Measurement("error"));
+			msg = new Message<Measurement>(new Measurement(0, 0, 0));
 		}
 		
 		

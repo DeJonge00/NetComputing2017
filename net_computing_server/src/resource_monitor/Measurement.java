@@ -1,4 +1,5 @@
 package resource_monitor;
+
 import java.io.Serializable;
 
 public class Measurement implements Serializable {

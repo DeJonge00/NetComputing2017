@@ -2,11 +2,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import message_inbox.ConnectionList;
-import message_inbox.Measurement;
-import message_inbox.Message;
 import message_inbox.MessageInbox;
 
 import org.hyperic.sigar.Sigar;
+
+import resource_monitor.Measurement;
 
 public class Server {
 	private ConnectionList workers;
@@ -64,7 +64,7 @@ public class Server {
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 			
 			for(int i=0; i<1000; i++) {
-				Measurement msg = new Measurement(String.format("test%d",i));
+				Measurement msg = new Measurement(-1, -1, -1);
 				oos.writeObject(msg);
 				System.out.println("Sent message to inbox");
 				this.takeMeasurement();
@@ -83,6 +83,6 @@ public class Server {
 		Server s = new Server(port);
 		s.start();
 		
-		s.test();
+		//s.test();
 	}
 }
