@@ -14,10 +14,12 @@ public class Server {
 	private ConnectionList workers;
 	private MessageInbox message_inbox;
 	private static Sigar sigar = new Sigar();
+	private int port;
 	
-	public Server() {
+	public Server(int port) {
 		this.workers = new ConnectionList();
-		this.message_inbox = new MessageInbox(this.workers);
+		this.message_inbox = new MessageInbox(this.workers, port);
+		this.port = port;
 	}
 	
 	public void start() {
@@ -26,7 +28,7 @@ public class Server {
 	}
 	
 	public void takeMeasurement() {
-		Mem mem = null;
+		/*Mem mem = null;
 		CpuPerc[] cpu = null;
         try {
             mem = sigar.getMem();
@@ -52,7 +54,7 @@ public class Server {
         System.out.println("Total used system memory.......: " + mem.getUsed()
                 / 1024 / 1024+ " MB");
 
-        System.out.println("\n**************************************\n");
+        System.out.println("\n**************************************\n");*/
 	}
 	
 	public void test() {
@@ -79,7 +81,8 @@ public class Server {
 	}
 	
 	public static void main(String [] args) {
-		Server s = new Server();
+		int port = Integer.parseInt(args[0]);
+		Server s = new Server(port);
 		s.start();
 		
 		s.test();
