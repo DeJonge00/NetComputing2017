@@ -1,6 +1,7 @@
 package resource_monitor;
 
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 
 import org.hyperic.sigar.CpuPerc;
@@ -14,7 +15,7 @@ public class ResourceMonitor extends Thread {
 	private int serverPort;
 	private static Sigar sigar;
 	
-	public ResourceMonitor(int serverPort) {
+	public ResourceMonitor(InetAddress address, int serverPort) {
 		running = false;
 		this.serverPort = serverPort;
 		sigar = new Sigar();
