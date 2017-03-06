@@ -2,6 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="F:/school/year3/New folder/hyperic-sigar-1.6.4/sigar-bin/lib/sigar.jar"/>
+=======
+	<classpathentry kind="lib" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_worker/lib/sigar.jar"/>
+>>>>>>> 951661fbe74fca32e250a31b18df5c0bcbd515d7
 	<classpathentry kind="output" path="bin"/>
 </classpath>
