@@ -1,0 +1,9 @@
+package message_inbox;
+
+public class Message extends QueueItem {
+	private String message_body;
+	
+	public Message() {
+		message_body = "";
+	}
+}

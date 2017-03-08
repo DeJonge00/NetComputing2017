@@ -1,0 +1,11 @@
+package message_inbox;
+
+import java.net.Socket;
+
+
+public class Connection {
+	private Socket socke;
+	public Connection(Socket s) {
+		this.s = s;
+	}
+}
