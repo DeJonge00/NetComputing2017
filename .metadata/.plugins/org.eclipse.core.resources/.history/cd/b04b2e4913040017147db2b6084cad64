@@ -1,0 +1,7 @@
+package task_manager;
+
+import java.rmi.Remote;
+
+public interface RMI extends Remote {
+
+}

@@ -1,7 +1,12 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 import resource_monitor.ResourceMonitor;
+import task_manager.TaskManager;
 
 
 
@@ -31,5 +36,21 @@ public class Worker {
 		
 		monitor = new ResourceMonitor(serverAddress, serverPort);
 		monitor.start();
+		
+		
+		// initialize taskManager
+		TaskManager tm = new TaskManager();
+		tm.initSecurityManager();
+		
+		try {
+			TaskManager stub = (TaskManager) UnicastRemoteObject.exportObject(tm, 0);
+			Registry registry = LocateRegistry.getRegistry();
+            registry.rebind("taskManager", stub);
+            System.out.println("TaskManager bound");
+		} catch (RemoteException e) {
+
+			System.out.println("remote exception in taskManager");
+			e.printStackTrace();
+		}
 	}
 }
