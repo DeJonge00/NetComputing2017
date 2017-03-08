@@ -20,18 +20,20 @@ public class ResourceMonitor extends Thread {
 
 	private boolean running;
 	private int serverPort;
+	private InetAddress serverAddress;
 	private static Sigar sigar;
 	
-	public ResourceMonitor(InetAddress address, int serverPort) {
+	public ResourceMonitor(InetAddress a, int p) {
 		running = false;
-		this.serverPort = serverPort;
+		this.serverAddress = a;
+		this.serverPort = p;
 		sigar = new Sigar();
 	}
 
 	public void run() {
 		running = true;
 		while (running) {
-			if (!sendData(serverPort, takeMeasurement())) {
+			if (!sendData(serverAddress, serverPort, takeMeasurement())) {
 				// Sending message failed
 				running = false;
 			}
@@ -80,7 +82,6 @@ public class ResourceMonitor extends Thread {
 			CpuInfo[] cpus = sigar.getCpuInfoList();
 			Cpu[] CpuInfo = sigar.getCpuList();
 			File[] roots = File.listRoots();
-			double[] loadAvg = sigar.getLoadAverage();
 
 			for (File root : roots) {
 				System.out.println(root.getAbsolutePath());
@@ -93,18 +94,16 @@ public class ResourceMonitor extends Thread {
 			String loadAverage;
 
 			try {
+				double[] loadAvg = sigar.getLoadAverage();
 				double[] avg = sigar.getLoadAverage();
 				loadAvg[0] = new Double(avg[0]);
 				loadAvg[1] = new Double(avg[1]);
 				loadAvg[2] = new Double(avg[2]);
 				loadAverage = String.format("load average(1 min): %f\nload average(5 min): %f\nload average:(15 min): %f", loadAvg[0], loadAvg[1], loadAvg[2]);
-
+				System.out.println(loadAverage);
 			} catch (SigarNotImplementedException e) {
 				loadAverage = "(load average unknown)";
 			}
-
-			System.out.println(loadAverage);
-			
 			System.out.println(sigar.getNetStat().toString());
 
 			DiskUsage disk = sigar.getDiskUsage("/");
@@ -123,9 +122,9 @@ public class ResourceMonitor extends Thread {
 				- mem.getUsed());
 	}
 
-	public boolean sendData(int port, Measurement m) {
+	public boolean sendData(InetAddress a, int p, Measurement m) {
 		try {
-			Socket s = new Socket("localhost", port);
+			Socket s = new Socket(a.getHostAddress(), p);
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 
 			oos.writeObject(m);
@@ -133,6 +132,7 @@ public class ResourceMonitor extends Thread {
 			return true;
 
 		} catch (Exception e) {
+			System.out.println(a.getHostAddress() + " -- " + p);
 			System.out.println("Is there a server running on that port?");
 			return false;
 		}
