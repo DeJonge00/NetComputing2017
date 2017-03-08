@@ -1,0 +1,5 @@
+package message_inbox;
+
+public class Message extends QueueItem {
+	private string message_body;
+}

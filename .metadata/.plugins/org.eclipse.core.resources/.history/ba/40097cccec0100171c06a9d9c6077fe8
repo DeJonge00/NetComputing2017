@@ -1,0 +1,19 @@
+package resource_monitor;
+import java.io.Serializable;
+
+public class Measurement implements Serializable {
+	long ram;
+	long memory;
+	long freememory;
+	
+	public Measurement(long l, long m, long n) {
+		this.ram = l;
+		this.memory = m;
+		this.freememory = n;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Ram: %ld, memory: %ld, free memory: %d", this.ram, this.memory, this.freememory);
+	}
+}

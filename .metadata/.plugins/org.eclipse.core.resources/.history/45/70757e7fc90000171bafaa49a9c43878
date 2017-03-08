@@ -1,0 +1,8 @@
+import message_inbox.MessageReceiver;
+
+
+public class Connection {
+	public Connection(MessageReceiver mr, String s) {
+		
+	}
+}

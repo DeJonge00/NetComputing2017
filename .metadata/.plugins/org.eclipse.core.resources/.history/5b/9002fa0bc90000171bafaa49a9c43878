@@ -1,0 +1,6 @@
+
+public class Connection {
+	public Connection(MessageReceiver mr, String s) {
+		
+	}
+}

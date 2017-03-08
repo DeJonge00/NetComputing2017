@@ -1,0 +1,20 @@
+package message_inbox;
+
+import java.net.Socket;
+
+
+public class Connection {
+	private Socket socket;
+	
+	public Connection(Socket s) {
+		this.socket = s;
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		Connection c;
+		if(o instanceof Connection) {
+			
+		}
+	}
+}

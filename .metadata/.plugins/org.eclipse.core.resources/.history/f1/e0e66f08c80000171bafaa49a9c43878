@@ -1,0 +1,36 @@
+package message_inbox;
+import java.util.LinkedList;
+import java.io.IOException;
+import java.lang.Runnable;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class MessageInbox implements Runnable {
+	private ServerSocket s;
+	private MessageQueue messages;
+	private ArrayList<Socket> workers;
+	
+	public MessageInbox() {
+		try {
+			this.s = new ServerSocket(5000);
+			this.messages = new MessageQueue();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("error creating socket");
+		}
+	}
+	
+	public void run() {
+		while (true) {
+			try {
+				Socket worker = s.accept();
+				MessageReceiver mr = new MessageReceiver(worker, this.messages);
+				Thread t = new Thread(mr);
+				t.start();
+			} catch (IOException e) {
+				e.printStackTrace();
+				return;
+			}
+		}
+	}
+}

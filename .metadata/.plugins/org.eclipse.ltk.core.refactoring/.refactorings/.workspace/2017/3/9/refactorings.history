@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;net_computing&apos; to &apos;net_computing_server&apos;&#x0A;- Original element: &apos;net_computing&apos;&#x0A;- Renamed element: &apos;net_computing&apos;&#x0A;- Update references to refactored element" description="Rename Java project &apos;net_computing&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=net_computing" name="net_computing_server" references="true" stamp="1488465164893" version="1.0"/>
+</session>

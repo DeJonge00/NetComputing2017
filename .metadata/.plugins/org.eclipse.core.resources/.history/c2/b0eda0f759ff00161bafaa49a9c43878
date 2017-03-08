@@ -1,0 +1,11 @@
+package message_inbox;
+
+public interface Queue {
+	public void enqueue() {
+		
+	}
+	
+	public void dequeue() {
+		
+	}
+}
