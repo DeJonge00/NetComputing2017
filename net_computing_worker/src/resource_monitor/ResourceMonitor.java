@@ -32,10 +32,12 @@ public class ResourceMonitor extends Thread {
 
 	public void run() {
 		running = true;
+		sendInitData(serverAddress, serverPort);
 		while (running) {
-			if (!sendData(serverAddress, serverPort, takeMeasurement())) {
+			if (!sendMeasurement(serverAddress, serverPort, takeMeasurement())) {
 				// Sending message failed
 				running = false;
+				System.out.println("Server address: " + serverAddress.getHostAddress() + ", server port: " + serverPort);
 			}
 
 			// End of cycle
@@ -45,95 +47,111 @@ public class ResourceMonitor extends Thread {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("Connections closed, stopping worker");
 	}
 
 	public Measurement takeMeasurement() {
-		Mem mem = null;
-		CpuPerc[] cpu = null;
-
+		Mem mem;
+		CpuPerc[] cpu;
+		Measurement measurement = new Measurement();
 		try {
 			mem = sigar.getMem();
-			cpu = sigar.getCpuPercList();
+			measurement.setMemoryInfo(mem.getRam(), mem.getTotal(), mem.getTotal() - mem.getUsed());
 		} catch (SigarException se) {
-			se.printStackTrace();
+			System.out.println("Aquiring of memory info failed");
 		}
-		/*
-		 * // Print the measurement for(int i = 0; i<cpu.length; i++) {
-		 * System.out.println("CPU core " + i + ":" + cpu[i].getCombined()*100 +
-		 * "%"); }
-		 * 
-		 * System.out.println("Actual total free system memory: " +
-		 * mem.getActualFree() / 1024 / 1024+ " MB");
-		 * System.out.println("Actual total used system memory: " +
-		 * mem.getActualUsed() / 1024 / 1024 + " MB");
-		 * System.out.println("Total free system memory ......: " +
-		 * mem.getFree() / 1024 / 1024+ " MB");
-		 * System.out.println("System Random Access Memory....: " + mem.getRam()
-		 * + " MB"); System.out.println("Total system memory............: " +
-		 * mem.getTotal() / 1024 / 1024+ " MB");
-		 * System.out.println("Total used system memory.......: " +
-		 * mem.getUsed() / 1024 / 1024+ " MB");
-		 * 
-		 * System.out.println("\n**************************************\n");
-		 */
+		
 		try {
-			// CpuInfoList contains information about the clock speed, cache
-			// size, model, number of cores of the CPU
-			CpuInfo[] cpus = sigar.getCpuInfoList();
-			Cpu[] CpuInfo = sigar.getCpuList();
-			File[] roots = File.listRoots();
-
-			for (File root : roots) {
-				System.out.println(root.getAbsolutePath());
-				System.out.println(root.getTotalSpace());
-
+			cpu = sigar.getCpuPercList();
+			for(int j = 0; j<cpu.length; j++) {
+				System.out.println(j + " user: " + cpu[j].getUser());
+				System.out.println(j + " All: " + cpu[j].getCombined() + "\n");
 			}
-
-			double uptime = sigar.getUptime().getUptime();
-
-			String loadAverage;
-
-			try {
-				double[] loadAvg = sigar.getLoadAverage();
-				double[] avg = sigar.getLoadAverage();
-				loadAvg[0] = new Double(avg[0]);
-				loadAvg[1] = new Double(avg[1]);
-				loadAvg[2] = new Double(avg[2]);
-				loadAverage = String.format("load average(1 min): %f\nload average(5 min): %f\nload average:(15 min): %f", loadAvg[0], loadAvg[1], loadAvg[2]);
-				System.out.println(loadAverage);
-			} catch (SigarNotImplementedException e) {
-				loadAverage = "(load average unknown)";
-			}
-			System.out.println(sigar.getNetStat().toString());
-
-			DiskUsage disk = sigar.getDiskUsage("/");
-			System.out.println(disk);
-			for (int i = 0; i < cpus.length; i++) {
-				System.out.println(cpus[i].toString());
-
-				System.out.println("\n" + CpuInfo[i].toString());
-			}
-		} catch (SigarException e) {
-			System.out.println("sigar exception");
-			e.printStackTrace();
+		} catch (SigarException e3) {
+			System.out.println("Aquiring cpu info failed");
 		}
 
-		return new Measurement(mem.getRam(), mem.getTotal(), mem.getTotal()
-				- mem.getUsed());
+		double uptime;
+		try {
+			uptime = sigar.getUptime().getUptime();
+			System.out.println("Uptime: " + uptime);
+		} catch (SigarException e2) {
+			System.out.println("Sigar.getUptime() failed");
+		}
+		
+		try {
+			double[] loadAvg = sigar.getLoadAverage();
+			double[] avg = sigar.getLoadAverage();
+			loadAvg[0] = new Double(avg[0]);
+			loadAvg[1] = new Double(avg[1]);
+			loadAvg[2] = new Double(avg[2]);
+			System.out.println("load average(1 min):" + loadAvg[0]);
+			System.out.println("load average(5 min): " + loadAvg[1]);
+			System.out.println("load average:(15 min): " + loadAvg[2]);
+			measurement.setLoadAvg(loadAvg[1]);
+		} catch (SigarNotImplementedException e) {
+			System.out.println("Load avg unimplemented");
+		} catch (SigarException e) {
+			System.out.println("load average sigar exception");
+		}
+		
+		try {
+			System.out.println(sigar.getNetStat().getAllOutboundTotal());
+		} catch (SigarException e1) {
+			System.out.println("Sigar.getNetStat() failed");
+		}
+
+		return measurement;
 	}
 
-	public boolean sendData(InetAddress a, int p, Measurement m) {
+	public boolean sendMeasurement(InetAddress a, int p, Measurement m) {
 		try {
 			Socket s = new Socket(a.getHostAddress(), p);
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 
 			oos.writeObject(m);
-			System.out.println("Sent message to inbox");
+			System.out.println("Sent message to server inbox");
 			return true;
-
 		} catch (Exception e) {
-			System.out.println(a.getHostAddress() + " -- " + p);
-			System.out.println("Is there a server running on that port?");
+			System.out.println("Unable to make a socket connection");
+			return false;
+		}
+	}
+	
+	public boolean sendInitData(InetAddress a, int p) {
+		// CpuInfoList contains information about the clock speed, cache
+		// size, model, number of cores of the CPU
+		int cpuamount = 0;
+		try {
+			CpuInfo[] cpus;
+			Cpu[] CpuInfo = sigar.getCpuList();
+			File[] roots = File.listRoots();
+			cpus = sigar.getCpuInfoList();
+			for (File root : roots) {
+				System.out.println(root.getAbsolutePath());
+				System.out.println(root.getTotalSpace());
+			}
+			cpuamount = roots.length;
+			DiskUsage disk = sigar.getDiskUsage(roots[0].getAbsolutePath());
+			System.out.println(disk + "\n");
+			for (int i = 0; i < cpus.length; i++) {
+				System.out.println(cpus[i].toString());
+				System.out.println(CpuInfo[i].toString()+ "\n");
+			}
+		} catch (SigarException e2) {
+			System.out.println("Aquiring cpu info failed");
+			return false;
+		}
+		
+		try {
+			Socket s = new Socket(a.getHostAddress(), p);
+			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+
+			oos.writeObject(cpuamount);
+			System.out.println("Sent message to server inbox");
+			return true;
+		} catch (Exception e) {
+			System.out.println("Unable to make a socket connection");
 			return false;
 		}
 	}
