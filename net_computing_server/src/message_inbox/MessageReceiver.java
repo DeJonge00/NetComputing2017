@@ -43,9 +43,9 @@ public class MessageReceiver implements Runnable {
 	
 	public void run() {
 		Message<Measurement> msg;
-		while (true) {
+		//while (true) {
 			msg = read_message();
 			this.messages.enqueue(msg);
-		}
+		//}
 	}
 }

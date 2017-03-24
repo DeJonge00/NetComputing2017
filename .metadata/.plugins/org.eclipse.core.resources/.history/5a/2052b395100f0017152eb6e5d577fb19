@@ -1,0 +1,15 @@
+package task_manager;
+
+import java.rmi.*;
+
+public class TaskManager implements RMI {
+	public TaskManager() {
+		
+	}
+	
+	public void initSecurityManager() {
+		if (System.getSecurityManager() == null) {
+		    System.setSecurityManager(new SecurityManager());
+		}
+	}
+}

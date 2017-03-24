@@ -1,0 +1,8 @@
+package task_manager;
+
+public class TaskOutput {
+	private String output;
+	public TaskOutput() {
+		this.output = "not_finished";
+	}
+}

@@ -1,0 +1,18 @@
+package task_manager;
+
+public class Task extends Thread {
+	private Process process;
+	
+	public Task(Process p) {
+		this.process = p;
+	}
+	
+	public void run() {
+		try {
+			process.waitFor();
+		} catch (InterruptedException e) {
+			System.out.println("Process was interrupted: " + process.toString());
+		}
+		System.out.println("Process finished executing: " + process.toString());
+	}
+}

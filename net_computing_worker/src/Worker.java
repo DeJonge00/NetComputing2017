@@ -1,9 +1,8 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.rmi.RemoteException;
+import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 
 import resource_monitor.ResourceMonitor;
 import task_manager.TaskManager;
@@ -17,9 +16,13 @@ public class Worker {
 			return;
 		}
 		
+		
 		int serverPort;
 		InetAddress serverAddress;
 		ResourceMonitor monitor;
+		
+
+		//System.setProperty("java.security.policy","../lib/security.policy‌​");
 		
 		try {
 			if(args.length==2) {
@@ -39,17 +42,24 @@ public class Worker {
 		
 		
 		// initialize taskManager
-		TaskManager tm = new TaskManager();
-		tm.initSecurityManager();
+		
 		
 		try {
-			TaskManager stub = (TaskManager) UnicastRemoteObject.exportObject(tm, 0);
-			Registry registry = LocateRegistry.getRegistry();
-            registry.rebind("taskManager", stub);
-            System.out.println("TaskManager bound");
-		} catch (RemoteException e) {
+			TaskManager tm = new TaskManager();
+			tm.initSecurityManager();
+			System.out.println("\n\nStarting registry");
+			//TaskManager stub = (TaskManager) UnicastRemoteObject.exportObject(tm, 0);
+			Registry registry = LocateRegistry.createRegistry(1099);
+			//System.out.println(registry);
+			Naming.rebind("rmi://192.168.178.30:1099/taskManager", tm);
+			//System.out.println(registry);
+			//System.out.println("\n\n" + registry.lookup("taskManager"));
+			System.out.println("\n\n" + Naming.lookup("rmi://192.168.178.30:1099/taskManager"));
+			
+            System.out.println("TaskManager bound\n\n");
+		} catch (Exception e) {
 
-			System.out.println("remote exception in taskManager");
+			System.out.println("remote exception in taskManager\n\n");
 			e.printStackTrace();
 		}
 	}

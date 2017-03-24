@@ -1,0 +1,15 @@
+package task_manager;
+
+public class ProcessTask implements Task<>{
+	public ProcessTask() {
+		
+	}
+	
+	public void createProcess() {
+		
+	}
+	
+	public void interruptProcess() {
+		
+	}
+}

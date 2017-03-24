@@ -1,0 +1,35 @@
+package task_manager;
+
+public class ProcessTask implements Task<Process>{
+	public ProcessTask() {
+		
+	}
+	
+	/*
+	 * creates a new process
+	 */
+	public Process createProcess() {
+		return new Process();
+	}
+	
+	/* 
+	 * deletes the given process
+	 */
+	public Process deleteProcess() {
+		return new Process();
+	}
+	
+	/*
+	 * updates the given process
+	 */
+	public Process updateProcess() {
+		return new Process();
+	}
+	
+	/*
+	 * returns the process state
+	 */
+	public Process getProcess() {
+		return new Process();
+	}
+}

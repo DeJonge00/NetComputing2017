@@ -1,0 +1,13 @@
+package task_distributor;
+
+import java.rmi.*;
+
+public class TaskDistributor {
+	  
+	public TaskDistributor() {
+		try {
+			TaskManager stub=(TaskManager)Naming.lookup("rmi://localhost:5000/taskManager");  
+			System.out.println(stub.add(34,4));  
+		}catch(Exception e){}   
+	}  
+}

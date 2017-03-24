@@ -1,0 +1,13 @@
+package task_manager;
+
+public class Task extends Thread {
+	private Process process;
+	
+	public Task(Process p) {
+		this.process = p;
+	}
+	
+	public void run() {
+		p.waitFor();
+	}
+}

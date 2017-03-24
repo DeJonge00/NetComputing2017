@@ -1,0 +1,26 @@
+package task_distributor;
+
+import java.rmi.Naming;
+import java.rmi.RMISecurityManager;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
+import rmi.TaskManager;
+
+public class TaskDistributor {
+	  
+	public TaskDistributor() {
+		try {
+			System.out.println("Starting task distributor");
+			System.setSecurityManager(new RMISecurityManager());
+			Registry registry = LocateRegistry.getRegistry("192.168.178.12", 4000);
+			System.out.println(registry.toString());
+			TaskManager stub=(TaskManager)registry.lookup("rmi://192.168.178.12:4000/TaskManager");  
+			System.out.println("asdfasdf");
+			System.out.println("stub: " + stub.toString());
+			System.out.println(stub.execute("test"));  
+		}catch(Exception e){
+			e.printStackTrace();
+		}   
+	}  
+}

@@ -1,0 +1,3 @@
+grant codeBase "TaskManager" {
+    permission java.security.AllPermission;
+};

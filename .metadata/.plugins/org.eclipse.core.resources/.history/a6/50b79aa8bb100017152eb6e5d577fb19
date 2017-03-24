@@ -1,0 +1,52 @@
+package task_manager;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Observable;
+
+public class Task extends Observable implements Runnable {
+	private Process process;
+	
+	public Task(Process p) {
+		this.process = p;
+	}
+	
+	public void run() {
+		try {
+			process.waitFor();
+		} catch (InterruptedException e) {
+			System.out.println("Process was interrupted: " + process.toString());
+			return;
+		}
+		System.out.println("Process finished executing: " + process.toString());
+		
+		BufferedReader in = getInputStream();
+		String output = readTaskOutput(in);
+		notifyObservers(output);
+	}
+	
+	public synchronized String getOutput() {
+		return this.output;
+	}
+	
+	private BufferedReader getInputStream() {
+		return new BufferedReader(new InputStreamReader(process.getInputStream()));
+	}
+	
+	private String readTaskOutput(BufferedReader in) {
+		StringBuffer sb = new StringBuffer();
+		
+		String line;
+		try {
+			while((line = in.readLine()) != null) {
+				sb.append(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return sb.toString();
+			
+	}
+}

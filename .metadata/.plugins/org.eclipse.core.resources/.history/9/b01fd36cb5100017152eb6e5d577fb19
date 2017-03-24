@@ -1,0 +1,7 @@
+package task_manager;
+
+public class Task {
+	public Task(Process p) {
+		
+	}
+}

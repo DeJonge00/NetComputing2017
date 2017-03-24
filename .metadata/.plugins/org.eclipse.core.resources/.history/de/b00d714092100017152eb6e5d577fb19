@@ -1,0 +1,25 @@
+package rmi;
+
+import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+
+public class TaskManager extends UnicastRemoteObject implements TaskServer, Serializable {
+	static final long serialVersionUID = 1234;
+	
+	public TaskManager() throws RemoteException {
+		super(4000);
+	}
+	
+	public String execute(String t) {
+		System.out.println("hello");
+		return "executing";
+	}
+	
+	public void initSecurityManager() {
+		if (System.getSecurityManager() == null) {
+		    System.setSecurityManager(new SecurityManager());
+		}
+	}
+}

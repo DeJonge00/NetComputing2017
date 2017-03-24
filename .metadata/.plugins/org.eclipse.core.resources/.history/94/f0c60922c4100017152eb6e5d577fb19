@@ -1,0 +1,66 @@
+package task_manager;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
+import rmi.TaskResult;
+import rmi.TaskServer;
+
+
+public class TaskManager extends UnicastRemoteObject implements TaskServer, Serializable {
+	static final long serialVersionUID = 1234;
+	
+	private ArrayList<TaskThread> tasks;
+	private ArrayList<TaskResult> taskResults;
+	private int pid;
+	
+	public TaskManager() throws RemoteException {
+		super(4000);
+		this.tasks = new ArrayList<TaskThread>();
+		this.taskResults = new ArrayList<TaskResult>();
+		this.pid = 0;
+	}
+	
+	public synchronized int execute(String process) {
+		TaskThread tt = null;
+		try {
+			Process p = Runtime.getRuntime().exec(process);
+			TaskThread tt = new TaskThread(p);
+			Thread thread = new Thread(tt);
+			Task t = new Task(thread, this.pid);
+			this.tasks.add(t);
+			this.pid++;
+			thread.start();
+		} catch (IOException e) {
+			System.out.println("IO exception when starting executable in Taskmanager");
+			e.printStackTrace();
+		}
+		if(t != null) {
+			return t.getPid();
+		} else {
+			return -1;
+		}
+	}
+	
+	public void interrupt(int pid) {
+		TaskThread t;
+		if((t = getTask()) != null) {
+			t.interrupt();
+		}
+	}
+	
+	public void getResult(int pid) {
+		
+	}
+	
+	public void initSecurityManager() {
+		if (System.getSecurityManager() == null) {
+		    System.setSecurityManager(new SecurityManager());
+		}
+	}
+}

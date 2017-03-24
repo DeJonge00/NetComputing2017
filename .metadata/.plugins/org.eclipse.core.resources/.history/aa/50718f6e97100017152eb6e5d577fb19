@@ -1,0 +1,11 @@
+package rmi;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface TaskServer extends Remote {
+	public ProcessTask execute(String t) throws RemoteException;
+
+	public void interrupt(int pid);
+	}
+}

@@ -1,0 +1,24 @@
+package task_distributor;
+
+import java.rmi.Naming;
+import java.rmi.RMISecurityManager;
+
+import rmi.TaskManager;
+
+public class TaskDistributor {
+	  
+	public TaskDistributor() {
+		try {
+			System.out.println("Starting task distributor");
+			System.setSecurityManager(new RMISecurityManager());
+			//Registry registry = LocateRegistry.locateRegistry(1099);
+			//System.out.println(registry.toString());
+			TaskManager stub=(TaskManager)Naming.lookup("taskManager");  
+			System.out.println("asdfasdf");
+			System.out.println("stub: " + stub.toString());
+			System.out.println(stub.execute("test"));  
+		}catch(Exception e){
+			e.printStackTrace();
+		}   
+	}  
+}

@@ -1,0 +1,3 @@
+grant codeBase "/home/jeroen/remco/net_computing/NetComputing2017/net_computing_worker/src/rmi/TaskManager" {
+    permission java.security.AllPermission;
+};

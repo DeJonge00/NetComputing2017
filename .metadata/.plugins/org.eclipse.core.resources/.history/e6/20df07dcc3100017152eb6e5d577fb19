@@ -1,0 +1,12 @@
+package task_manager;
+
+public class Task {
+	private Thread taskThread;
+	public Task(Thread t, int pid) {
+		this.taskThread = t;
+	}
+	
+	public void interrupt() {
+		this.taskThread.interrupt();
+	}
+}
