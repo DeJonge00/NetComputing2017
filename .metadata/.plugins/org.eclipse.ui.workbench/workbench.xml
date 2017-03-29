@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="22" version="2.0">
+<workbench progressCount="17" version="2.0">
 <workbenchAdvisor/>
 <window height="743" maximized="true" width="684" x="683" y="0">
 <fastViewData fastViewLocation="1024"/>
@@ -42,13 +42,15 @@
 <part id="9"/>
 <part id="10"/>
 <part id="11"/>
+<part id="12"/>
+<part id="13"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Server.java" partName="Server.java" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_server/src/Server.java" title="Server.java" tooltip="net_computing_server/src/Server.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/net_computing_server/src/Server.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2269" selectionTopPixel="873"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="918" selectionTopPixel="442"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DataAnalyzer.java" partName="DataAnalyzer.java" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_server/src/data_analyzer/DataAnalyzer.java" title="DataAnalyzer.java" tooltip="net_computing_server/src/data_analyzer/DataAnalyzer.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/net_computing_server/src/data_analyzer/DataAnalyzer.java"/>
@@ -60,23 +62,19 @@
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MessageInbox.java" partName="MessageInbox.java" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_server/src/message_inbox/MessageInbox.java" title="MessageInbox.java" tooltip="net_computing_server/src/message_inbox/MessageInbox.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/net_computing_server/src/message_inbox/MessageInbox.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="904" selectionTopPixel="85"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Worker.java" partName="Worker.java" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_worker/src/Worker.java" title="Worker.java" tooltip="net_computing_worker/src/Worker.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/net_computing_worker/src/Worker.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="42" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ResourceMonitor.java" partName="ResourceMonitor.java" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_worker/src/resource_monitor/ResourceMonitor.java" title="ResourceMonitor.java" tooltip="net_computing_worker/src/resource_monitor/ResourceMonitor.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/net_computing_worker/src/resource_monitor/ResourceMonitor.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="643" selectionTopPixel="85"/>
+<editorState selectionHorizontalPixel="13" selectionLength="0" selectionOffset="1077" selectionTopPixel="561"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Connection.java" partName="Connection.java" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_server/src/message_inbox/Connection.java" title="Connection.java" tooltip="net_computing_server/src/message_inbox/Connection.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/net_computing_server/src/message_inbox/Connection.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="482" selectionTopPixel="136"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="481" selectionTopPixel="136"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MessageReceiver.java" partName="MessageReceiver.java" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_server/src/message_inbox/MessageReceiver.java" title="MessageReceiver.java" tooltip="net_computing_server/src/message_inbox/MessageReceiver.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MessageReceiver.java" partName="MessageReceiver.java" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_server/src/message_inbox/MessageReceiver.java" title="MessageReceiver.java" tooltip="net_computing_server/src/message_inbox/MessageReceiver.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/net_computing_server/src/message_inbox/MessageReceiver.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="86" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="881" selectionTopPixel="323"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MessageQueue.java" partName="MessageQueue.java" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_server/src/message_inbox/MessageQueue.java" title="MessageQueue.java" tooltip="net_computing_server/src/message_inbox/MessageQueue.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/net_computing_server/src/message_inbox/MessageQueue.java"/>
@@ -94,20 +92,31 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/net_computing_worker/src/resource_monitor/Measurement.java"/>
 <editorState selectionHorizontalPixel="0" selectionLength="452" selectionOffset="0" selectionTopPixel="0"/>
 </editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RMI.java" partName="RMI.java" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_worker/src/task_manager/RMI.java" title="RMI.java" tooltip="net_computing_worker/src/task_manager/RMI.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/net_computing_worker/src/task_manager/RMI.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="172" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Task.java" partName="Task.java" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_worker/src/task_manager/Task.java" title="Task.java" tooltip="net_computing_worker/src/task_manager/Task.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/net_computing_worker/src/task_manager/Task.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="63" selectionTopPixel="0"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Worker.java" partName="Worker.java" path="/home/jeroen/remco/net_computing/NetComputing2017/net_computing_worker/src/Worker.java" title="Worker.java" tooltip="net_computing_worker/src/Worker.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/net_computing_worker/src/Worker.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="4" selectionOffset="155" selectionTopPixel="51"/>
+</editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
 <viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
 </view>
 <view id="org.eclipse.jdt.ui.TypeHierarchy" partName="Type Hierarchy">
-<viewState hidefields="false" hidelocaltypes="false" hidenonpublic="false" hidestatic="false" input="=net_computing_server/src&lt;" input1="=net_computing_server/\/usr\/lib\/jvm\/java-7-openjdk-amd64\/jre\/lib\/rt.jar&lt;" link_editors="0" mv_vertical_scroll="0" orientation="3" qualified_names="0" ratio="350" selection="=net_computing_server/\/usr\/lib\/jvm\/java-7-openjdk-amd64\/jre\/lib\/rt.jar&lt;java.lang(Object.class[Object" showinherited="false" sortbydefiningtype="false" vertical_scroll="0" view="2" workingSetName=""/>
+<viewState hidefields="false" hidelocaltypes="false" hidenonpublic="false" hidestatic="false" input="=net_computing_server" link_editors="0" mv_vertical_scroll="0" orientation="3" qualified_names="0" ratio="350" selection="=net_computing_server/lib\/sigar.jar&lt;org.hyperic.jni(CopyDependsTask.class[CopyDependsTask" showinherited="false" sortbydefiningtype="false" vertical_scroll="0" view="2" workingSetName=""/>
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Warnings"/>
 <category IMemento.internal.id="Errors"/>
-<category IMemento.internal.id="Warnings (9 items)"/>
+<category IMemento.internal.id="Warnings (21 items)"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -116,9 +125,6 @@
 <visible IMemento.internal.id="org.eclipse.ui.ide.locationField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
 </viewState>
-</view>
-<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
-<viewState/>
 </view>
 <view id="org.eclipse.jdt.ui.PackageExplorer" partName="Package Explorer">
 <viewState group_libraries="1" layout="2" linkWithEditor="0" rootMode="1" workingSetName="">
@@ -149,6 +155,9 @@
 </customFilters>
 </viewState>
 </view>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
+</view>
 <view id="org.eclipse.ui.internal.introview" partName="Welcome">
 <viewState>
 <presentation currentPage="root" restore="true"/>
@@ -173,7 +182,7 @@
 </view>
 <view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
 </views>
-<perspectives activePart="org.eclipse.jdt.ui.PackageExplorer" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.ui.internal.ide.application.ResourcePerspective" id="org.eclipse.ui.resourcePerspective" label="Resource"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -290,18 +299,14 @@
 <hide_toolbar_item_id id="org.eclipse.debug.ui.commands.RunToLine"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
-<view id="org.eclipse.jdt.ui.PackageExplorer"/>
-<view id="org.eclipse.jdt.ui.TypeHierarchy"/>
+<view id="org.eclipse.ui.internal.introview"/>
 <view id="org.eclipse.ui.views.ProblemView"/>
 <view id="org.eclipse.jdt.ui.JavadocView"/>
 <view id="org.eclipse.jdt.ui.SourceView"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="org.eclipse.jdt.ui.TypeHierarchy"/>
+<view id="org.eclipse.jdt.ui.PackageExplorer"/>
 <fastViewBars>
-<fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@48fe4ecd" orientation="512" selectedTabId="org.eclipse.ui.internal.introview" style="0">
-<fastViews>
-<view id="org.eclipse.ui.internal.introview" ratio="0.3"/>
-</fastViews>
-</fastViewBar>
 <fastViewBar fastViewLocation="131072" id="right" orientation="512" selectedTabId="org.eclipse.ui.views.ContentOutline" style="0">
 <fastViews>
 <view id="org.eclipse.ui.views.ContentOutline" ratio="0.3"/>
@@ -310,42 +315,44 @@
 </fastViewBars>
 <layout>
 <mainWindow>
-<info folder="true" part="left">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@479cd4c2">
 <folder activePageID="org.eclipse.jdt.ui.PackageExplorer" appearance="2" expanded="2">
 <page content="org.eclipse.jdt.ui.PackageExplorer" label="Package Explorer"/>
-<page content="org.eclipse.jdt.ui.TypeHierarchy" label="Type Hierarchy"/>
-<page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
-<page content="org.eclipse.ui.navigator.ProjectExplorer" label="LabelNotFound"/>
-<page content="org.eclipse.jdt.junit.ResultView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
-<part id="1"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@48fe4ecd" ratio="0.7495049" ratioLeft="757" ratioRight="253" relationship="2" relative="left">
-<folder appearance="2" expanded="0">
-<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
-<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
-<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+<info folder="true" part="left" ratio="0.24962293" ratioLeft="331" ratioRight="995" relationship="2" relative="org.eclipse.ui.internal.ViewStack@479cd4c2">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
+<page content="org.eclipse.ui.navigator.ProjectExplorer" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.junit.ResultView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@3535ac91" ratio="0.24950495" ratioLeft="252" ratioRight="758" relationship="2" relative="left">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@48fe4ecd" ratio="0.5975733" ratioLeft="591" ratioRight="398" relationship="2" relative="left">
 <folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
 <page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="org.eclipse.jdt.ui.TypeHierarchy" label="Type Hierarchy"/>
+<page content="org.eclipse.ui.internal.introview" label="Welcome"/>
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
+<part id="4"/>
+<part id="5"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="bottom" ratio="0.7496136" ratioLeft="485" ratioRight="162" relationship="4" relative="org.eclipse.ui.internal.ViewStack@3535ac91">
+<info part="org.eclipse.ui.editorss" ratio="0.24950495" ratioLeft="252" ratioRight="758" relationship="2" relative="left"/>
+<info folder="true" part="bottom" ratio="0.7496136" ratioLeft="485" ratioRight="162" relationship="4" relative="org.eclipse.ui.editorss">
 <folder appearance="2" expanded="2">
 <page content="org.eclipse.search.ui.views.SearchView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
@@ -353,7 +360,7 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info folder="true" part="right" ratio="0.74934036" ratioLeft="568" ratioRight="190" relationship="2" relative="org.eclipse.ui.internal.ViewStack@3535ac91">
+<info folder="true" part="right" ratio="0.74934036" ratioLeft="568" ratioRight="190" relationship="2" relative="org.eclipse.ui.editorss">
 <folder appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.ui.texteditor.TemplatesView" label="LabelNotFound"/>
@@ -361,7 +368,6 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.3445693" ratioLeft="368" ratioRight="700" relationship="2" relative="org.eclipse.ui.internal.ViewStack@3535ac91"/>
 </mainWindow>
 </layout>
 </perspective>
@@ -369,169 +375,168 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/message_inbox/Connection.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/message_inbox/MessageReceiver.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/message_inbox/MessageInbox.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/Server.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/message_inbox/MessageQueue.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/message_inbox/Message.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/message_inbox/Measurement.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/message_inbox/ConnectionList.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/database/MeasurementDatabase.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_worker/src/Worker.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/task_distributor/TaskDistributor.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/Server.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/task_distributor/Task.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/task_distributor/TaskQueue.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/message_inbox/ConnectionList.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/message_inbox/Connection.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_worker/src/task_manager/TaskThread.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_worker/src/task_manager/TaskManager.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_shared/src/rmi/Measurement.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_worker/src/resource_monitor/ResourceMonitor.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_worker/src/resource_monitor/Measurement.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/message_inbox/Measurement.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/net_computing_server/src/message_inbox/MessageReceiver.java"/>
 </editors>
-<item historyLabel="Measurement.java" index="6">
-<position info="not_deleted" x="188" y="0"/>
-</item>
-<item historyLabel="Connection.java" index="0">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="MeasurementDatabase.java" index="8">
-<position info="not_deleted" x="54" y="0"/>
-</item>
-<item historyLabel="Message.java" index="5">
-<position info="not_deleted" x="134" y="0"/>
-</item>
-<item historyLabel="Measurement.java" index="6">
-<position info="not_deleted" x="188" y="0"/>
-</item>
-<item historyLabel="Message.java" index="5">
-<position info="not_deleted" x="134" y="0"/>
-</item>
-<item historyLabel="Server.java" index="3">
+<item historyLabel="TaskQueue.java" index="4">
 <position/>
 </item>
-<item historyLabel="Server.java" index="3">
-<position/>
+<item historyLabel="Task.java" index="3">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="MessageInbox.java" index="2">
-<position info="not_deleted" x="904" y="0"/>
+<item historyLabel="TaskQueue.java" index="4">
+<position info="not_deleted" x="139" y="0"/>
 </item>
-<item historyLabel="Server.java" index="3">
-<position/>
+<item historyLabel="TaskDistributor.java" index="1">
+<position info="not_deleted" x="642" y="0"/>
 </item>
-<item historyLabel="Message.java" index="5">
-<position info="not_deleted" x="134" y="0"/>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="1257" y="0"/>
 </item>
-<item historyLabel="MessageInbox.java" index="2">
-<position info="not_deleted" x="904" y="0"/>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="947" y="0"/>
 </item>
-<item historyLabel="MessageReceiver.java" index="1">
-<position/>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="875" y="0"/>
 </item>
-<item historyLabel="Server.java" index="3">
-<position/>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="876" y="0"/>
 </item>
-<item historyLabel="Message.java" index="5">
-<position info="not_deleted" x="134" y="0"/>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="875" y="0"/>
 </item>
-<item historyLabel="Measurement.java" index="6">
-<position info="not_deleted" x="188" y="0"/>
+<item historyLabel="ConnectionList.java" index="5">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="MessageQueue.java" index="4">
-<position info="not_deleted" x="361" y="0"/>
+<item historyLabel="ConnectionList.java" index="5">
+<position info="not_deleted" x="413" y="0"/>
 </item>
-<item historyLabel="Server.java" index="3">
-<position/>
+<item historyLabel="TaskDistributor.java" index="1">
+<position info="not_deleted" x="1155" y="0"/>
 </item>
-<item historyLabel="Measurement.java" index="6">
-<position info="not_deleted" x="188" y="0"/>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="876" y="0"/>
 </item>
-<item historyLabel="Server.java" index="3">
-<position/>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="947" y="0"/>
 </item>
-<item historyLabel="Measurement.java" index="6">
-<position info="not_deleted" x="188" y="0"/>
+<item historyLabel="TaskDistributor.java" index="1">
+<position info="not_deleted" x="1155" y="0"/>
 </item>
-<item historyLabel="Connection.java" index="0">
+<item historyLabel="TaskDistributor.java" index="1">
+<position info="not_deleted" x="1533" y="0"/>
+</item>
+<item historyLabel="TaskDistributor.java" index="1">
+<position info="not_deleted" x="1535" y="0"/>
+</item>
+<item historyLabel="Task.java" index="3">
+<position info="not_deleted" x="334" y="0"/>
+</item>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="947" y="0"/>
+</item>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="1025" y="0"/>
+</item>
+<item historyLabel="TaskQueue.java" index="4">
+<position info="not_deleted" x="139" y="0"/>
+</item>
+<item historyLabel="TaskQueue.java" index="4">
+<position info="not_deleted" x="234" y="0"/>
+</item>
+<item historyLabel="TaskDistributor.java" index="1">
+<position info="not_deleted" x="1535" y="0"/>
+</item>
+<item historyLabel="TaskDistributor.java" index="1">
+<position info="not_deleted" x="1290" y="0"/>
+</item>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="1025" y="0"/>
+</item>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="1025" y="0"/>
+</item>
+<item historyLabel="TaskDistributor.java" index="1">
+<position info="not_deleted" x="1839" y="0"/>
+</item>
+<item historyLabel="TaskQueue.java" index="4">
+<position info="not_deleted" x="234" y="0"/>
+</item>
+<item historyLabel="TaskQueue.java" index="4">
+<position info="not_deleted" x="291" y="0"/>
+</item>
+<item historyLabel="TaskDistributor.java" index="1">
+<position info="not_deleted" x="1839" y="0"/>
+</item>
+<item historyLabel="Connection.java" index="6">
 <position info="not_deleted" x="482" y="0"/>
 </item>
-<item historyLabel="MessageReceiver.java" index="1">
-<position info="not_deleted" x="856" y="0"/>
-</item>
-<item historyLabel="MessageInbox.java" index="2">
-<position info="not_deleted" x="904" y="0"/>
-</item>
-<item historyLabel="Server.java" index="3">
-<position info="not_deleted" x="2069" y="0"/>
-</item>
-<item historyLabel="MessageQueue.java" index="4">
-<position info="not_deleted" x="361" y="0"/>
-</item>
-<item historyLabel="Message.java" index="5">
-<position info="not_deleted" x="134" y="0"/>
-</item>
-<item historyLabel="Measurement.java" index="6">
-<position info="not_deleted" x="102" y="0"/>
-</item>
-<item historyLabel="ConnectionList.java" index="7">
+<item historyLabel="TaskThread.java" index="7">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="Worker.java" index="9">
-<position info="not_deleted" x="57" y="0"/>
+<item historyLabel="TaskManager.java" index="8">
+<position info="not_deleted" x="1122" y="0"/>
 </item>
-<item historyLabel="ResourceMonitor.java" index="10">
-<position info="not_deleted" x="271" y="0"/>
+<item historyLabel="Worker.java" index="0">
+<position info="not_deleted" x="1571" y="0"/>
 </item>
-<item historyLabel="Worker.java" index="9">
-<position info="not_deleted" x="110" y="0"/>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="2011" y="0"/>
 </item>
-<item historyLabel="ResourceMonitor.java" index="10">
-<position info="not_deleted" x="643" y="0"/>
+<item historyLabel="TaskDistributor.java" index="1">
+<position info="not_deleted" x="1365" y="0"/>
 </item>
-<item historyLabel="Server.java" index="3">
-<position info="not_deleted" x="2442" y="0"/>
-</item>
-<item historyLabel="Measurement.java" index="11">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Measurement.java" index="11">
-<position info="not_deleted" x="445" y="0"/>
-</item>
-<item historyLabel="Measurement.java" index="11">
-<position info="not_deleted" x="404" y="0"/>
-</item>
-<item historyLabel="Worker.java" index="9">
-<position info="not_deleted" x="42" y="0"/>
-</item>
-<item historyLabel="Measurement.java" index="11">
-<position info="not_deleted" x="404" y="0"/>
-</item>
-<item historyLabel="MessageReceiver.java" index="1">
-<position info="not_deleted" x="776" y="0"/>
-</item>
-<item historyLabel="Measurement.java" index="12">
-<position info="not_deleted" x="449" y="0"/>
-</item>
-<item historyLabel="MessageReceiver.java" index="1">
-<position info="not_deleted" x="839" y="0"/>
-</item>
-<item historyLabel="Server.java" index="3">
-<position info="not_deleted" x="2102" y="0"/>
-</item>
-<item historyLabel="Measurement.java" index="12">
-<position/>
-</item>
-<item historyLabel="Measurement.java" index="11">
-<position info="not_deleted" x="0" y="452"/>
-</item>
-<item historyLabel="Measurement.java" index="12">
+<item historyLabel="TaskManager.java" index="8">
 <position info="not_deleted" x="21" y="0"/>
 </item>
-<item historyLabel="Measurement.java" index="11">
-<position info="not_deleted" x="0" y="452"/>
+<item historyLabel="TaskThread.java" index="7">
+<position info="not_deleted" x="21" y="0"/>
 </item>
-<item historyLabel="MessageReceiver.java" index="1">
-<position info="not_deleted" x="23" y="0"/>
+<item historyLabel="Worker.java" index="0">
+<position info="not_deleted" x="1596" y="0"/>
 </item>
-<item historyLabel="Server.java" index="3">
-<position info="not_deleted" x="2269" y="0"/>
+<item historyLabel="Measurement.java" index="9">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item active="true" historyLabel="MessageReceiver.java" index="1">
-<position info="not_deleted" x="23" y="0"/>
+<item historyLabel="Worker.java" index="0">
+<position info="not_deleted" x="1596" y="0"/>
+</item>
+<item historyLabel="ResourceMonitor.java" index="10">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="ResourceMonitor.java" index="10">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="MessageReceiver.java" index="11">
+<position info="not_deleted" x="881" y="0"/>
+</item>
+<item historyLabel="Server.java" index="2">
+<position info="not_deleted" x="918" y="0"/>
+</item>
+<item historyLabel="Connection.java" index="6">
+<position info="not_deleted" x="481" y="0"/>
+</item>
+<item historyLabel="Worker.java" index="0">
+<position info="not_deleted" x="1596" y="0"/>
+</item>
+<item historyLabel="ResourceMonitor.java" index="10">
+<position info="not_deleted" x="1077" y="0"/>
+</item>
+<item historyLabel="Worker.java" index="0">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item active="true" historyLabel="Worker.java" index="0">
+<position info="not_deleted" x="155" y="4"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -539,10 +544,6 @@
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
-<trimArea IMemento.internal.id="16384">
-<trimItem IMemento.internal.id="left"/>
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@3535ac91"/>
-</trimArea>
 <trimArea IMemento.internal.id="131072">
 <trimItem IMemento.internal.id="right"/>
 </trimArea>
@@ -553,11 +554,40 @@
 <trimItem IMemento.internal.id="org.eclise.ui.internal.FastViewBar"/>
 <trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@48fe4ecd"/>
 </trimArea>
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Worker.java" tooltip="net_computing_worker/src/Worker.java">
+<persistable path="/net_computing_worker/src/Worker.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Measurement.java" tooltip="net_computing_shared/src/rmi/Measurement.java">
+<persistable path="/net_computing_shared/src/rmi/Measurement.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TaskThread.java" tooltip="net_computing_worker/src/task_manager/TaskThread.java">
+<persistable path="/net_computing_worker/src/task_manager/TaskThread.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TaskQueue.java" tooltip="net_computing_server/src/task_distributor/TaskQueue.java">
+<persistable path="/net_computing_server/src/task_distributor/TaskQueue.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Task.java" tooltip="net_computing_server/src/task_distributor/Task.java">
+<persistable path="/net_computing_server/src/task_distributor/Task.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TaskInfo.java" tooltip="net_computing_shared/src/rmi/TaskInfo.java">
+<persistable path="/net_computing_shared/src/rmi/TaskInfo.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TaskDistributor.java" tooltip="net_computing_server/src/task_distributor/TaskDistributor.java">
+<persistable path="/net_computing_server/src/task_distributor/TaskDistributor.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Task.java" tooltip="net_computing_worker/src/task_manager/Task.java">
+<persistable path="/net_computing_worker/src/task_manager/Task.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RMI.java" tooltip="net_computing_worker/src/task_manager/RMI.java">
+<persistable path="/net_computing_worker/src/task_manager/RMI.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="taskManager.java" tooltip="net_computing_worker/src/task_manager/taskManager.java">
+<persistable path="/net_computing_worker/src/task_manager/taskManager.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Measurement.java" tooltip="net_computing_server/src/message_inbox/Measurement.java">
 <persistable path="/net_computing_server/src/message_inbox/Measurement.java"/>
 </file>
@@ -572,21 +602,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MessageQueue.java" tooltip="net_computing_server/src/message_inbox/MessageQueue.java">
 <persistable path="/net_computing_server/src/message_inbox/MessageQueue.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="sigar.jar" tooltip="net_computing_server/lib/sigar.jar">
-<persistable path="/net_computing_server/lib/sigar.jar"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MessageReceiver.java" tooltip="net_computing_server/src/message_inbox/MessageReceiver.java">
-<persistable path="/net_computing_server/src/message_inbox/MessageReceiver.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Connection.java" tooltip="net_computing_server/src/message_inbox/Connection.java">
-<persistable path="/net_computing_server/src/message_inbox/Connection.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ResourceMonitor.java" tooltip="net_computing_worker/src/resource_monitor/ResourceMonitor.java">
-<persistable path="/net_computing_worker/src/resource_monitor/ResourceMonitor.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Worker.java" tooltip="net_computing_worker/src/Worker.java">
-<persistable path="/net_computing_worker/src/Worker.java"/>
 </file>
 </mruList>
 </workbench>
