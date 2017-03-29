@@ -1,8 +1,0 @@
-package message_inbox;
-
-
-public class Connection {
-	public Connection(Socket s) {
-		
-	}
-}

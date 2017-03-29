@@ -1,0 +1,10 @@
+
+public class TaskInfo {
+	private int pid;
+	private String status;
+	
+	public TaskInfo(int pid, String s) {
+		this.pid = pidl
+		this.status = status;
+	}
+}

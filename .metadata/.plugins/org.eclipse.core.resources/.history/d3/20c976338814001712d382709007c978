@@ -1,0 +1,95 @@
+package resource_monitor;
+
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
+
+import org.hyperic.sigar.CpuPerc;
+import org.hyperic.sigar.Mem;
+import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarException;
+import org.hyperic.sigar.SigarNotImplementedException;
+
+public class ResourceMonitor extends Thread {
+
+	private boolean running;
+	private int serverPort;
+	private InetAddress serverAddress;
+	private static Sigar sigar;
+	
+	public ResourceMonitor(InetAddress a, int p) {
+		running = false;
+		this.serverAddress = a;
+		this.serverPort = p;
+		sigar = new Sigar();
+	}
+
+	public void run() {
+		running = true;
+		while (running) {
+			if (!sendMeasurement(serverAddress, serverPort, takeMeasurement())) {
+				// Sending message failed
+				running = false;
+				System.out.println("Server address: " + serverAddress.getHostAddress() + ", server port: " + serverPort);
+			}
+
+			// End of cycle
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("Connections closed, stopping worker");
+	}
+
+	public Measurement takeMeasurement() {
+		Mem mem;
+		CpuPerc[] cpu;
+		Measurement measurement = new Measurement();
+		try {
+			mem = sigar.getMem();
+			measurement.setMemoryInfo(mem.getRam(), mem.getTotal(), mem.getTotal() - mem.getUsed());
+		} catch (SigarException se) {
+			System.out.println("Aquiring of memory info failed");
+		}
+		
+		try {
+			cpu = sigar.getCpuPercList();
+			int total = 0;
+			for(int j = 0; j<cpu.length; j++) {
+				total += cpu[j].getCombined();
+			}
+			measurement.setCpuUsage(total);
+		} catch (SigarException e3) {
+			System.out.println("Aquiring cpu info failed");
+		}
+		
+		try {
+			double[] loadAvg = sigar.getLoadAverage();
+			double[] avg = sigar.getLoadAverage();
+			loadAvg[0] = new Double(avg[0]);
+			loadAvg[1] = new Double(avg[1]);
+			loadAvg[2] = new Double(avg[2]);
+			measurement.setLoadAvg(loadAvg[1]);
+		} catch (SigarNotImplementedException e) {
+			System.out.println("Load avg unimplemented");
+		} catch (SigarException e) {
+			System.out.println("load average sigar exception");
+		}
+		return measurement;
+	}
+
+	public boolean sendMeasurement(InetAddress a, int p, Measurement m) {
+		try {
+			Socket s = new Socket(a.getHostAddress(), p);
+			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+
+			oos.writeObject(m);
+		return true;
+		} catch (Exception e) {
+			System.out.println("Unable to make a socket connection");
+			return false;
+		}
+	}
+}

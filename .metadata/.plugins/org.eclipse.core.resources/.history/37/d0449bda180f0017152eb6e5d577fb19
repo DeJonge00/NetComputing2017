@@ -1,0 +1,9 @@
+package shared;
+
+import java.rmi.RemoteException;
+
+import task_manager.Task;
+
+public interface TaskServer extends remote{
+	<T> T executeTask(Task<T> t) throws RemoteException;
+}

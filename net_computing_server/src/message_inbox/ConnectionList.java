@@ -1,5 +1,7 @@
 package message_inbox;
 
+
+
 import java.util.ArrayList;
 
 public class ConnectionList {
@@ -15,5 +17,9 @@ public class ConnectionList {
 		} else {
 			this.connections.add(c);
 		}
+	}
+	
+	synchronized public Connection getFirst() {
+		return this.connections.get(0);
 	}
 }

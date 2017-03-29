@@ -1,0 +1,18 @@
+package task_manager;
+
+public class Task implements Observer{
+	private Thread taskThread;
+	private int pid;
+
+	public Task(Thread t, int pid) {
+		this.taskThread = t;
+	}
+	
+	public int getPid() {
+		return this.pid;
+	}
+	
+	public void interrupt() {
+		this.taskThread.interrupt();
+	}
+}

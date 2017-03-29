@@ -1,9 +1,0 @@
-package message_inbox;
-
-import java.util.LinkedList;
-
-public class MessageQueue extends LinkedList<Message>{
-	public MessageQueue() {
-		
-	}
-}

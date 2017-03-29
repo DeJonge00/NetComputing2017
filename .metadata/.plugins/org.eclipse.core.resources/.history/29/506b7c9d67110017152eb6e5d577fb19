@@ -1,0 +1,16 @@
+package task_distributor;
+
+import message_inbox.Connection;
+
+public class Task { 
+	private Connection conn;
+	private String command;
+	
+	public Task() {
+		
+	}
+	
+	public String getAddress() {
+		return conn.getInetAddress().toString();
+	}
+}

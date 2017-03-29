@@ -1,0 +1,8 @@
+package rmi;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface TaskServer extends Remote implements Serializable {
+	public String execute(String t) throws RemoteException;
+}
