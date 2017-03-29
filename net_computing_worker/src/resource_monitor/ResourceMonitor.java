@@ -1,14 +1,10 @@
 package resource_monitor;
 
-import java.io.File;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import org.hyperic.sigar.Cpu;
-import org.hyperic.sigar.CpuInfo;
 import org.hyperic.sigar.CpuPerc;
-import org.hyperic.sigar.DiskUsage;
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
@@ -32,7 +28,6 @@ public class ResourceMonitor extends Thread {
 
 	public void run() {
 		running = true;
-		sendInitData(serverAddress, serverPort);
 		while (running) {
 			if (!sendMeasurement(serverAddress, serverPort, takeMeasurement())) {
 				// Sending message failed
@@ -63,20 +58,13 @@ public class ResourceMonitor extends Thread {
 		
 		try {
 			cpu = sigar.getCpuPercList();
+			int total = 0;
 			for(int j = 0; j<cpu.length; j++) {
-				System.out.println(j + " user: " + cpu[j].getUser());
-				System.out.println(j + " All: " + cpu[j].getCombined() + "\n");
+				total += cpu[j].getCombined();
 			}
+			measurement.setCpuUsage(total);
 		} catch (SigarException e3) {
 			System.out.println("Aquiring cpu info failed");
-		}
-
-		double uptime;
-		try {
-			uptime = sigar.getUptime().getUptime();
-			System.out.println("Uptime: " + uptime);
-		} catch (SigarException e2) {
-			System.out.println("Sigar.getUptime() failed");
 		}
 		
 		try {
@@ -94,13 +82,6 @@ public class ResourceMonitor extends Thread {
 		} catch (SigarException e) {
 			System.out.println("load average sigar exception");
 		}
-		
-		try {
-			System.out.println(sigar.getNetStat().getAllOutboundTotal());
-		} catch (SigarException e1) {
-			System.out.println("Sigar.getNetStat() failed");
-		}
-
 		return measurement;
 	}
 
@@ -110,44 +91,6 @@ public class ResourceMonitor extends Thread {
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 
 			oos.writeObject(m);
-			System.out.println("Sent message to server inbox");
-			return true;
-		} catch (Exception e) {
-			System.out.println("Unable to make a socket connection");
-			return false;
-		}
-	}
-	
-	public boolean sendInitData(InetAddress a, int p) {
-		// CpuInfoList contains information about the clock speed, cache
-		// size, model, number of cores of the CPU
-		int cpuamount = 0;
-		try {
-			CpuInfo[] cpus;
-			Cpu[] CpuInfo = sigar.getCpuList();
-			File[] roots = File.listRoots();
-			cpus = sigar.getCpuInfoList();
-			for (File root : roots) {
-				System.out.println(root.getAbsolutePath());
-				System.out.println(root.getTotalSpace());
-			}
-			cpuamount = roots.length;
-			DiskUsage disk = sigar.getDiskUsage(roots[0].getAbsolutePath());
-			System.out.println(disk + "\n");
-			for (int i = 0; i < cpus.length; i++) {
-				System.out.println(cpus[i].toString());
-				System.out.println(CpuInfo[i].toString()+ "\n");
-			}
-		} catch (SigarException e2) {
-			System.out.println("Aquiring cpu info failed");
-			return false;
-		}
-		
-		try {
-			Socket s = new Socket(a.getHostAddress(), p);
-			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-
-			oos.writeObject(cpuamount);
 			System.out.println("Sent message to server inbox");
 			return true;
 		} catch (Exception e) {
