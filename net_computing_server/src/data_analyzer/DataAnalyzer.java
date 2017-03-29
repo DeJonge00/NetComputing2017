@@ -19,7 +19,8 @@ public class DataAnalyzer implements Runnable {
 		while (true) {
 			Message<?> m = messages.peek();
 			if (m.getMessageContent() instanceof Measurement) {
-				
+				m = messages.dequeue();
+				System.out.println(m.getMessageContent().toString());
 			}
 		}
 	}
