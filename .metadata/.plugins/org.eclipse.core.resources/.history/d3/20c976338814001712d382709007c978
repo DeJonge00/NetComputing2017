@@ -10,8 +10,6 @@ import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.SigarNotImplementedException;
 
-import rmi.Measurement;
-
 public class ResourceMonitor extends Thread {
 
 	private boolean running;

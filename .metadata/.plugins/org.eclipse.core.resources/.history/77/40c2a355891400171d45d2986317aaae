@@ -29,7 +29,7 @@ public class Server {
 		Thread t = new Thread(this.message_inbox);
 		t.start();
 		
-		/*try {
+		try {
 			Thread.sleep(5000);
 			TaskQueue tq = new TaskQueue();
 			Task task = new Task("ls");
@@ -54,7 +54,7 @@ public class Server {
 		}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
 	
 	public void takeMeasurement() {

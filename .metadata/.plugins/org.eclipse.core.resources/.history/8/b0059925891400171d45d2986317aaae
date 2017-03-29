@@ -43,7 +43,7 @@ public class Worker {
 		
 		// initialize taskManager
 		
-		/*
+		
 		try {
 			TaskManager tm = new TaskManager();
 			tm.initSecurityManager();
@@ -61,6 +61,6 @@ public class Worker {
 
 			System.out.println("remote exception in taskManager\n\n");
 			e.printStackTrace();
-		}*/
+		}
 	}
 }

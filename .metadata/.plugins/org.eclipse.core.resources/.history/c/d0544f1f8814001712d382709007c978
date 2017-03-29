@@ -57,6 +57,7 @@ public class ResourceMonitor extends Thread {
 		}
 		
 		try {
+<<<<<<< HEAD
 			cpu = sigar.getCpuPercList();
 			int total = 0;
 			for(int j = 0; j<cpu.length; j++) {

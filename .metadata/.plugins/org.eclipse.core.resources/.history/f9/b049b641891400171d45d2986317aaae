@@ -38,7 +38,7 @@ public class MessageReceiver implements Runnable {
 		} else if(o instanceof TaskInfo){
 			msg = new Message<TaskInfo>((TaskInfo)o, this.connection);
 		} else {
-			msg = new Message<Measurement>(new Measurement(), this.connection);
+			msg = new Message<Measurement>(new Measurement(0, 0, 0), this.connection);
 		}
 		
 		
