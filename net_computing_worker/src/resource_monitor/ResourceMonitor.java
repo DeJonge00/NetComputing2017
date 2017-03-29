@@ -14,7 +14,7 @@ import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.SigarNotImplementedException;
 
-import resource_monitor.Measurement;
+import rmi.Measurement;
 
 public class ResourceMonitor extends Thread {
 
@@ -84,8 +84,8 @@ public class ResourceMonitor extends Thread {
 			File[] roots = File.listRoots();
 
 			for (File root : roots) {
-				System.out.println(root.getAbsolutePath());
-				System.out.println(root.getTotalSpace());
+				//System.out.println(root.getAbsolutePath());
+				//System.out.println(root.getTotalSpace());
 
 			}
 
@@ -100,18 +100,18 @@ public class ResourceMonitor extends Thread {
 				loadAvg[1] = new Double(avg[1]);
 				loadAvg[2] = new Double(avg[2]);
 				loadAverage = String.format("load average(1 min): %f\nload average(5 min): %f\nload average:(15 min): %f", loadAvg[0], loadAvg[1], loadAvg[2]);
-				System.out.println(loadAverage);
+				//System.out.println(loadAverage);
 			} catch (SigarNotImplementedException e) {
 				loadAverage = "(load average unknown)";
 			}
-			System.out.println(sigar.getNetStat().toString());
+			//System.out.println(sigar.getNetStat().toString());
 
 			DiskUsage disk = sigar.getDiskUsage("/");
-			System.out.println(disk);
+			//System.out.println(disk);
 			for (int i = 0; i < cpus.length; i++) {
-				System.out.println(cpus[i].toString());
+				//System.out.println(cpus[i].toString());
 
-				System.out.println("\n" + CpuInfo[i].toString());
+				//System.out.println("\n" + CpuInfo[i].toString());
 			}
 		} catch (SigarException e) {
 			System.out.println("sigar exception");
@@ -128,7 +128,7 @@ public class ResourceMonitor extends Thread {
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 
 			oos.writeObject(m);
-			System.out.println("Sent message to inbox");
+			//System.out.println("Sent message to inbox");
 			return true;
 
 		} catch (Exception e) {

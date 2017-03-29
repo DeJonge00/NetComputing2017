@@ -3,8 +3,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import task_distributor.TaskDistributor;
-
 public class MessageInbox implements Runnable {
 	private ServerSocket server_socket;
 	private MessageQueue messages;
@@ -21,6 +19,13 @@ public class MessageInbox implements Runnable {
 		}
 	}
 	
+	public Message<?> getNextMessage() {
+		if(this.messages.isEmpty()) {
+			return null;
+		}
+		return this.messages.dequeue();
+	}
+	
 	public void run() {
 		while (true) {
 			try {
@@ -30,7 +35,6 @@ public class MessageInbox implements Runnable {
 				this.workers.addConnection(conn);
 				Thread t = new Thread(mr);
 				t.start();
-				TaskDistributor td = new TaskDistributor();
 			} catch (IOException e) {
 				e.printStackTrace();
 				return;

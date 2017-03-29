@@ -51,10 +51,10 @@ public class Worker {
 			//TaskManager stub = (TaskManager) UnicastRemoteObject.exportObject(tm, 0);
 			Registry registry = LocateRegistry.createRegistry(1099);
 			//System.out.println(registry);
-			Naming.rebind("rmi://192.168.178.30:1099/taskManager", tm);
+			Naming.rebind("rmi://localhost:1099/taskManager", tm);
 			//System.out.println(registry);
 			//System.out.println("\n\n" + registry.lookup("taskManager"));
-			System.out.println("\n\n" + Naming.lookup("rmi://192.168.178.30:1099/taskManager"));
+			System.out.println("\n\n" + Naming.lookup("rmi://localhost:1099/taskManager"));
 			
             System.out.println("TaskManager bound\n\n");
 		} catch (Exception e) {

@@ -8,7 +8,6 @@ public class MessageQueue extends LinkedList<Message<?>>{
 	}
 	
 	synchronized public void enqueue(Message<?> m) {
-		System.out.println("enqueued message: " + m.getMessageContent());
 		this.add(m);
 	}
 	

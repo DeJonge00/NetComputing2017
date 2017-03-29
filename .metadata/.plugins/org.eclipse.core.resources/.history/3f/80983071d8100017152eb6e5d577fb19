@@ -1,0 +1,4 @@
+
+public class TaskInfo {
+	private int pid;
+}
