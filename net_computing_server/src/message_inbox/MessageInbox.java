@@ -19,6 +19,10 @@ public class MessageInbox implements Runnable {
 		}
 	}
 	
+	public MessageQueue getMessageQueue() {
+		return messages;
+	}
+	
 	public void run() {
 		while (true) {
 			try {

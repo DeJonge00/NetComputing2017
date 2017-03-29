@@ -3,6 +3,7 @@ import java.net.Socket;
 
 import message_inbox.ConnectionList;
 import message_inbox.MessageInbox;
+import data_analyzer.DataAnalyzer;
 
 import org.hyperic.sigar.Sigar;
 
@@ -11,17 +12,21 @@ import resource_monitor.Measurement;
 public class Server {
 	private ConnectionList workers;
 	private MessageInbox message_inbox;
+	private DataAnalyzer analyzer;
 	private static Sigar sigar = new Sigar();
 	private int port;
 	
 	public Server(int port) {
 		this.workers = new ConnectionList();
 		this.message_inbox = new MessageInbox(this.workers, port);
+		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue());
 		this.port = port;
 	}
 	
 	public void start() {
 		Thread t = new Thread(this.message_inbox);
+		t.start();
+		t = new Thread(this.analyzer);
 		t.start();
 	}
 	
