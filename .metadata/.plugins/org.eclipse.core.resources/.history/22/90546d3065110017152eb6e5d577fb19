@@ -1,0 +1,7 @@
+package task_distributor;
+
+public class TaskQueue extends LinedList<?> {
+	public TaskQueue() {
+		
+	}
+}

@@ -1,0 +1,6 @@
+import java.rmi.RemoteException;
+
+
+public interface TaskServer {
+	public String doCommunicate(String name) throws RemoteException;
+}

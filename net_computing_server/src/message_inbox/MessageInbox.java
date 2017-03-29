@@ -19,6 +19,13 @@ public class MessageInbox implements Runnable {
 		}
 	}
 	
+	public Message<?> getNextMessage() {
+		if(this.messages.isEmpty()) {
+			return null;
+		}
+		return this.messages.dequeue();
+	}
+	
 	public void run() {
 		while (true) {
 			try {

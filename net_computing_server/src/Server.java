@@ -2,11 +2,16 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import message_inbox.ConnectionList;
+import message_inbox.Message;
 import message_inbox.MessageInbox;
 
 import org.hyperic.sigar.Sigar;
 
-import resource_monitor.Measurement;
+import rmi.Measurement;
+import rmi.TaskInfo;
+import task_distributor.Task;
+import task_distributor.TaskDistributor;
+import task_distributor.TaskQueue;
 
 public class Server {
 	private ConnectionList workers;
@@ -23,6 +28,33 @@ public class Server {
 	public void start() {
 		Thread t = new Thread(this.message_inbox);
 		t.start();
+		
+		/*try {
+			Thread.sleep(5000);
+			TaskQueue tq = new TaskQueue();
+			Task task = new Task("ls");
+			task.setConn(this.workers.getFirst());
+			tq.enqueue(task);
+			System.out.println("tq size: " + tq.size());
+			TaskDistributor td = new TaskDistributor(tq, this.workers);
+			td.start();
+			//System.out.println("Started ./infinte as process #" + pid);
+			//System.out.println("going to sleep for 10 seconds");
+			//Thread.sleep(10000);
+			//td.interrupt(pid);
+			//System.out.println("interrupted process #" + pid);
+		while(true) {
+			Message<?> msg = this.message_inbox.getNextMessage();
+			if(msg != null && msg.getMessageContent() instanceof TaskInfo) {
+				TaskInfo tf = (TaskInfo)msg.getMessageContent();
+				System.out.println("Process exit status: " + td.getTaskData(tf.getPid()));
+				System.out.println("Process output: " + td.getTaskData(tf.getPid()));
+			}
+			Thread.sleep(50);
+		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
 	}
 	
 	public void takeMeasurement() {
@@ -64,7 +96,7 @@ public class Server {
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 			
 			for(int i=0; i<1000; i++) {
-				Measurement msg = new Measurement(-1, -1, -1);
+				Measurement msg = new Measurement();
 				oos.writeObject(msg);
 				System.out.println("Sent message to inbox");
 				this.takeMeasurement();

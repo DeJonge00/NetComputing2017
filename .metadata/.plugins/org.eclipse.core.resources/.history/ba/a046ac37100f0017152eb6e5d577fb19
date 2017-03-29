@@ -1,0 +1,11 @@
+package task_manager;
+
+public class Process {
+	private int pid;
+	
+	public Process() {
+		int pid = 0;
+	}
+	
+	
+}

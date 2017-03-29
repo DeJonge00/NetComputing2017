@@ -1,0 +1,11 @@
+package task_manager;
+
+import java.rmi.*;
+
+public class TaskManager implements RMI {
+	public TaskManager() {
+		
+	}
+	
+	
+}

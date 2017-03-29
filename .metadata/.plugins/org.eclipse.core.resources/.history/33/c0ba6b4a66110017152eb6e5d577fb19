@@ -1,0 +1,5 @@
+package task_distributor;
+
+public class Task {
+
+}

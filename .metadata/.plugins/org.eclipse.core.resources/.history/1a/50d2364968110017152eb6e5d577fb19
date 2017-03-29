@@ -1,0 +1,79 @@
+package task_distributor;
+
+import java.rmi.Naming;
+import java.rmi.RMISecurityManager;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
+import rmi.TaskServer;
+
+public class TaskDistributor extends Thread{
+	private TaskServer stub; 
+	private TaskQueue tq;
+	public TaskDistributor(TaskQueue tq) {
+		try {
+			System.out.println("Starting task distributor");
+			System.setSecurityManager(new RMISecurityManager());
+		//	stub=(TaskServer)Naming.lookup("rmi://192.168.178.30:1099/taskManager");  
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}   
+	} 
+	
+	public int execute(String command) {
+		int pid = -2;
+		try {
+			pid = stub.execute(command);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return pid;
+	}
+	
+	public void interrupt(int pid) {
+		try {
+			stub.interrupt(pid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String getTaskData(int pid) {
+		String s = "";
+		try {
+			s = stub.getOutput(pid);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return s;
+	}
+	
+	@Override
+	public void run() {
+		Task t;
+		while(true) {
+			//dequeue task
+			t = tq.dequeue();
+			
+			if(t != null) {
+				// there is a task to distribute
+				try {
+					stub=(TaskServer)Naming.lookup("rmi://" + t.getAddress() + ":1099/taskManager");  
+					stub.execute(t.getCommand());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					
+				} catch (InterruptedException e) {
+					return;
+				}
+			}
+			//execute task on client
+			//insert task info in ResultList
+		}
+	}
+}

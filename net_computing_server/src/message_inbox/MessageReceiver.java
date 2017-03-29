@@ -1,9 +1,11 @@
 package message_inbox;
 
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import resource_monitor.Measurement;
+import rmi.Measurement;
+import rmi.TaskInfo;
 
 
 public class MessageReceiver implements Runnable {
@@ -21,8 +23,8 @@ public class MessageReceiver implements Runnable {
 			}
 	}
 	
-	public Message<Measurement> read_message() {
-		Message<Measurement> msg;
+	public Message<?> read_message() {
+		Message<?> msg;
 		Object o = null;
 		
 		try {
@@ -32,9 +34,11 @@ public class MessageReceiver implements Runnable {
 		}
 		
 		if(o != null && o instanceof Measurement) {
-			msg = new Message<Measurement>((Measurement)o);
+			msg = new Message<Measurement>((Measurement)o, this.connection);
+		} else if(o instanceof TaskInfo){
+			msg = new Message<TaskInfo>((TaskInfo)o, this.connection);
 		} else {
-			msg = new Message<Measurement>(new Measurement(0, 0, 0));
+			msg = new Message<Measurement>(new Measurement(), this.connection);
 		}
 		
 		
@@ -42,10 +46,10 @@ public class MessageReceiver implements Runnable {
 	}
 	
 	public void run() {
-		Message<Measurement> msg;
-		while (true) {
+		Message<?> msg;
+		//while (true) {
 			msg = read_message();
 			this.messages.enqueue(msg);
-		}
+		//}
 	}
 }

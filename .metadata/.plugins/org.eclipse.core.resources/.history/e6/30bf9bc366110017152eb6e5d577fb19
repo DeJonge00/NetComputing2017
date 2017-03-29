@@ -1,0 +1,13 @@
+package task_distributor;
+
+import java.util.LinkedList;
+
+public class TaskQueue extends LinkedList<Task> {
+	public TaskQueue() {
+		
+	}
+	
+	public Task dequeue() {
+		return this.removeFirst();
+	}
+}

@@ -2,13 +2,16 @@ package message_inbox;
 
 import java.util.LinkedList;
 
+import rmi.Measurement;
+
 public class MessageQueue extends LinkedList<Message<?>>{
 	public MessageQueue() {
 		
 	}
 	
 	synchronized public void enqueue(Message<?> m) {
-		System.out.println("enqueued message: " + m.getMessageContent());
+		Measurement me = ((Message<Measurement>)m).getMessageContent();
+		System.out.println(me.toString());
 		this.add(m);
 	}
 	

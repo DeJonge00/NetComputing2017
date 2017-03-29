@@ -1,0 +1,9 @@
+package rmi;
+
+public class TaskResult {
+	public String output;
+	
+	public TaskResult(String s) {
+		this.output = s;
+	}
+}

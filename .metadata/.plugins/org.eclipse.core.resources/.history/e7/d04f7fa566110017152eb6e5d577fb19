@@ -1,0 +1,10 @@
+package task_distributor;
+
+public class Task { 
+	private Connection conn;
+	public Task() {
+		
+	}
+	
+	
+}

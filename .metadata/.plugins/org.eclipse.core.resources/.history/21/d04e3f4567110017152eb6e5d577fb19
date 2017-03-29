@@ -1,0 +1,12 @@
+package task_distributor;
+
+import message_inbox.Connection;
+
+public class Task { 
+	private Connection conn;
+	public Task() {
+		
+	}
+	
+	
+}

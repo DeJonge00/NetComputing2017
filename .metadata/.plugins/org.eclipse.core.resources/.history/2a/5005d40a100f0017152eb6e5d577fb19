@@ -1,0 +1,23 @@
+package task_manager;
+
+public class ProcessTask implements Task<>{
+	public ProcessTask() {
+		
+	}
+	
+	public Process createProcess() {
+		
+	}
+	
+	public Process deleteProcess() {
+		
+	}
+	
+	public Process updateProcess() {
+		
+	}
+	
+	public Process getProcess() {
+		
+	}
+}
