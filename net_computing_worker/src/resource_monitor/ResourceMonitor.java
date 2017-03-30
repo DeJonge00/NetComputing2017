@@ -1,8 +1,10 @@
 package resource_monitor;
 
+import java.io.File;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Mem;
@@ -10,6 +12,7 @@ import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.SigarNotImplementedException;
 
+import rmi.InitData;
 import rmi.Measurement;
 
 public class ResourceMonitor extends Thread {
@@ -27,6 +30,7 @@ public class ResourceMonitor extends Thread {
 	}
 
 	public void run() {
+		while(!sendInitData(serverAddress, serverPort));
 		running = true;
 		while (running) {
 			if (!sendMeasurement(serverAddress, serverPort, takeMeasurement())) {
@@ -43,6 +47,28 @@ public class ResourceMonitor extends Thread {
 			}
 		}
 		System.out.println("Connections closed, stopping worker");
+	}
+
+	private boolean sendInitData(InetAddress a, int p) {
+		InitData data;
+		// Create init data
+		try {
+			data = new InitData(File.listRoots().length, InetAddress.getLocalHost(), System.getProperty("os.name"));
+		} catch (UnknownHostException e1) {
+			System.out.println("UnknownHostException in initdata");
+			return false;
+		}
+		// Send data to server
+		try {
+			Socket s = new Socket(a.getHostAddress(), p);
+			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+
+			oos.writeObject(data);
+		} catch (Exception e) {
+			System.out.println("Unable to make a socket connection");
+			return false;
+		}
+		return true;
 	}
 
 	public Measurement takeMeasurement() {
