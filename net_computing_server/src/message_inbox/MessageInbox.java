@@ -19,16 +19,15 @@ public class MessageInbox implements Runnable {
 		}
 	}
 	
-<<<<<<< HEAD
 	public MessageQueue getMessageQueue() {
 		return messages;
-=======
+	}
+
 	public Message<?> getNextMessage() {
 		if(this.messages.isEmpty()) {
 			return null;
 		}
 		return this.messages.dequeue();
->>>>>>> refs/remotes/origin/master
 	}
 	
 	public void run() {

@@ -19,7 +19,8 @@ public class Measurement implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Cpu amount: " + cpuamount + ", ram: " + this.ram + ", memory: " + this.memory + ", free memory: " + this.freememory;
+		return "Cpu amount: " + cpuamount + ", ram: " + this.ram + ", memory: " + this.memory + ", free memory: " 
+	           + this.freememory + ", load avg: " + loadAvg + ", cpu usage: " + cpuUsage;
 	}
 
 	public void setMemoryInfo(long r, long t, long f) {

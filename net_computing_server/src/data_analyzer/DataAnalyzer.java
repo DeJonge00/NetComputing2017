@@ -1,11 +1,8 @@
 package data_analyzer;
 
-import java.io.IOException;
-import java.net.Socket;
-
 import message_inbox.Message;
 import message_inbox.MessageQueue;
-import resource_monitor.Measurement;
+import rmi.Measurement;
 
 public class DataAnalyzer implements Runnable {
 	
@@ -15,12 +12,16 @@ public class DataAnalyzer implements Runnable {
 		this.messages = messages;
 	}
 	
+	@SuppressWarnings("unused")
 	public void run() {
 		while (true) {
-			Message<?> m = messages.peek();
-			if (m.getMessageContent() instanceof Measurement) {
-				m = messages.dequeue();
-				System.out.println(m.getMessageContent().toString());
+			Message<?> message = messages.peek();
+			if (message != null && message.getMessageContent() instanceof Measurement) {
+				Measurement measure = (Measurement) messages.dequeue().getMessageContent();
+				System.out.println("-" + measure.toString());
+				if (false) {
+					//
+				}
 			}
 		}
 	}
