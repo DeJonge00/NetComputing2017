@@ -17,7 +17,7 @@ public class TaskDistributor extends Thread{
 		try {
 			System.out.println("Starting task distributor");
 			System.setSecurityManager(new RMISecurityManager());
-		//	stub=(TaskServer)Naming.lookup("rmi://192.168.178.30:1099/taskManager");  
+			//stub=(TaskServer)Naming.lookup("rmi://192.168.178.30:1099/taskManager");  
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -57,11 +57,11 @@ public class TaskDistributor extends Thread{
 		while(true) {
 			//dequeue task
 			Task t = tasks.dequeue();
-			System.out.println("in taskdistributor loop");
+			//System.out.println("in taskdistributor loop");
 			if(t != null) {
 				// there is a task to distribute
 				try {
-					stub=(TaskServer)Naming.lookup("rmi://" + t.getAddress() + ":1099/taskManager");  
+					stub=(TaskServer)Naming.lookup("rmi://145.97.164.22:1099/taskManager");  
 					stub.execute(t.getCommand());
 					System.out.println("executing " + t.getCommand());
 				} catch (Exception e) {
