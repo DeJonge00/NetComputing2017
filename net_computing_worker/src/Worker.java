@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.Naming;
@@ -6,8 +7,6 @@ import java.rmi.registry.Registry;
 
 import resource_monitor.ResourceMonitor;
 import task_manager.TaskManager;
-
-
 
 public class Worker {	
 	public static void main(String [] args) {
@@ -34,8 +33,13 @@ public class Worker {
 			return;
 		}
 		
-		monitor = new ResourceMonitor(serverAddress, serverPort);
-		monitor.start();
+		try {
+			monitor = new ResourceMonitor(serverAddress, serverPort);
+			monitor.start();
+		} catch (IOException e1) {
+			System.out.println("Starting resourcemonitor failed");
+			return;
+		}
 		
 		// initialize taskManager
 		try {
