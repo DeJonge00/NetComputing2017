@@ -32,7 +32,7 @@ public class Server {
 		try {
 			Thread.sleep(5000);
 			TaskQueue tq = new TaskQueue();
-			Task task = new Task("ls");
+			Task task = new Task("ipconfig");
 			task.setConn(this.workers.getFirst());
 			tq.enqueue(task);
 			System.out.println("tq size: " + tq.size());
@@ -47,7 +47,7 @@ public class Server {
 			Message<?> msg = this.message_inbox.getNextMessage();
 			if(msg != null && msg.getMessageContent() instanceof TaskInfo) {
 				TaskInfo tf = (TaskInfo)msg.getMessageContent();
-				System.out.println("Process exit status: " + td.getTaskData(tf.getPid()));
+				//System.out.println("Process exit status: " + td.getTaskData(tf.getPid()));
 				System.out.println("Process output: " + td.getTaskData(tf.getPid()));
 			}
 			Thread.sleep(50);

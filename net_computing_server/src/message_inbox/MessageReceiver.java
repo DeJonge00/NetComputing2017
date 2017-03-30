@@ -21,8 +21,20 @@ public class MessageReceiver implements Runnable {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+			handleConnect();
 	}
 	
+	public void handleConnect() {
+		try {
+			Object o = this.in.readObject();
+			if(o instanceof InitData) {
+				this.connection.setData((InitData)o);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	public Message<?> read_message() {
 		Message<?> msg;
 		Object o = null;
