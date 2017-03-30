@@ -61,7 +61,7 @@ public class TaskDistributor extends Thread{
 			if(t != null) {
 				// there is a task to distribute
 				try {
-					stub=(TaskServer)Naming.lookup("rmi://145.97.164.22:1099/taskManager");  
+					stub=(TaskServer)Naming.lookup("rmi://145.97.176.108:1099/taskManager");  
 					stub.execute(t.getCommand());
 					System.out.println("executing " + t.getCommand());
 				} catch (Exception e) {

@@ -9,7 +9,17 @@ import java.net.Socket;
 
 public class Connection {
 	private Socket socket;
+	private InitData data;
 	
+	public InitData getData() {
+		return data;
+	}
+
+	public void setData(InitData data) {
+		this.data = data;
+		System.out.println(data.toString());
+	}
+
 	public Connection(Socket s) {
 		this.socket = s;
 	}
