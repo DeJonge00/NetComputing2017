@@ -2,6 +2,7 @@ package task_manager;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -16,11 +17,15 @@ public class TaskManager extends UnicastRemoteObject implements TaskServer, Seri
 	
 	private ArrayList<Task> tasks;
 	private int pid;
+	private InetAddress serveraddress;
+	private int serverport;
 	
-	public TaskManager() throws RemoteException {
+	public TaskManager(InetAddress a, int p) throws RemoteException {
 		super(4000);
 		this.tasks = new ArrayList<Task>();
 		this.pid = 0;
+		this.serveraddress = a;
+		this.serverport = p;
 	}
 	
 	public synchronized int execute(String process) {
@@ -28,7 +33,7 @@ public class TaskManager extends UnicastRemoteObject implements TaskServer, Seri
 		try {
 			Process p = Runtime.getRuntime().exec(process);
 			TaskOutput out = new TaskOutput();
-			TaskThread tt = new TaskThread(p, out, pid);
+			TaskThread tt = new TaskThread(p, out, pid, serveraddress, serverport);
 			Thread thread = new Thread(tt);
 			t = new Task(thread, out, pid);
 			this.tasks.add(t);

@@ -4,6 +4,7 @@ package message_inbox;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import rmi.InitData;
 import rmi.Measurement;
 import rmi.TaskInfo;
 

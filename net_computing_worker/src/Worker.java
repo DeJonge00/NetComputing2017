@@ -16,14 +16,11 @@ public class Worker {
 			return;
 		}
 		
-		
 		int serverPort;
 		InetAddress serverAddress;
 		ResourceMonitor monitor;
-		
 
 		//System.setProperty("java.security.policy","../lib/security.policy‌​");
-		
 		try {
 			if(args.length==2) {
 				serverAddress = InetAddress.getByName(args[0]);
@@ -40,12 +37,9 @@ public class Worker {
 		monitor = new ResourceMonitor(serverAddress, serverPort);
 		monitor.start();
 		
-		
 		// initialize taskManager
-		
-		
 		try {
-			TaskManager tm = new TaskManager();
+			TaskManager tm = new TaskManager(serverAddress, serverPort);
 			tm.initSecurityManager();
 			System.out.println("\n\nStarting registry");
 			//TaskManager stub = (TaskManager) UnicastRemoteObject.exportObject(tm, 0);
