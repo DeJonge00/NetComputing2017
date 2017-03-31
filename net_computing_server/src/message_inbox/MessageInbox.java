@@ -8,15 +8,10 @@ public class MessageInbox implements Runnable {
 	private MessageQueue messages;
 	private ConnectionList workers;
 	
-	public MessageInbox(ConnectionList w, int port) {
+	public MessageInbox(ConnectionList w, int port) throws IOException {
 		this.workers = w;
-		try {
-			this.server_socket = new ServerSocket(port);
-			this.messages = new MessageQueue();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("error creating socket");
-		}
+		this.server_socket = new ServerSocket(port);
+		this.messages = new MessageQueue();
 	}
 	
 	public Message<?> getNextMessage() {

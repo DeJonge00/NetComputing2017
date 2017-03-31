@@ -1,14 +1,11 @@
 package task_manager;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-
 import rmi.TaskServer;
 
 
@@ -17,15 +14,13 @@ public class TaskManager extends UnicastRemoteObject implements TaskServer, Seri
 	
 	private ArrayList<Task> tasks;
 	private int pid;
-	private InetAddress serveraddress;
-	private int serverport;
+	private ObjectOutputStream oos;
 	
-	public TaskManager(InetAddress a, int p) throws RemoteException {
+	public TaskManager(ObjectOutputStream o) throws RemoteException {
 		super(4000);
 		this.tasks = new ArrayList<Task>();
 		this.pid = 0;
-		this.serveraddress = a;
-		this.serverport = p;
+		this.oos = o;
 	}
 	
 	public synchronized int execute(String process) {
@@ -33,7 +28,7 @@ public class TaskManager extends UnicastRemoteObject implements TaskServer, Seri
 		try {
 			Process p = Runtime.getRuntime().exec(process);
 			TaskOutput out = new TaskOutput();
-			TaskThread tt = new TaskThread(p, out, pid, serveraddress, serverport);
+			TaskThread tt = new TaskThread(p, out, pid, oos);
 			Thread thread = new Thread(tt);
 			t = new Task(thread, out, pid);
 			this.tasks.add(t);
@@ -59,9 +54,7 @@ public class TaskManager extends UnicastRemoteObject implements TaskServer, Seri
 	
 	public String getOutput(int pid) {
 		Task t;
-		System.out.println("XD");
 		if((t = getTask(pid)) != null) {
-			System.out.println("XD");
 			return t.getOutput();
 		}
 		return null;

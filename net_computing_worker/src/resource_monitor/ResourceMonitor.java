@@ -19,29 +19,23 @@ import rmi.Measurement;
 public class ResourceMonitor extends Thread {
 
 	private boolean running;
-	private int serverPort;
-	private InetAddress serverAddress;
 	private static Sigar sigar;
-	Socket socket;
 	ObjectOutputStream oos;
 	
-	public ResourceMonitor(InetAddress a, int p) throws UnknownHostException, IOException {
+	public ResourceMonitor(ObjectOutputStream o) {
 		running = false;
-		this.serverAddress = a;
-		this.serverPort = p;
 		sigar = new Sigar();
-		socket = new Socket(a.getHostAddress(), p);
-		oos = new ObjectOutputStream(socket.getOutputStream());
+		oos = o;
 	}
 
 	public void run() {
-		if(sendInitData(serverAddress, serverPort)) {
+		if(sendInitData(oos)) {
 			running = true;
 			while (running) {
-				if (!sendMeasurement(serverAddress, serverPort, takeMeasurement())) {
+				if (!sendMeasurement(oos, takeMeasurement())) {
 					// Sending message failed
 					running = false;
-					System.out.println("Failed sending to server address: " + serverAddress.getHostAddress() + ", server port: " + serverPort);
+					System.out.println("Failed sending measurement");
 				}
 	
 				// End of cycle
@@ -51,13 +45,18 @@ public class ResourceMonitor extends Thread {
 					e.printStackTrace();
 				}
 			}
+			try {
+				oos.close();
+			} catch (IOException e) {
+				System.out.println("Failed to close outputstream or socket");
+			}
 			System.out.println("Connections closed, stopping worker");
 		} else {
 			System.out.println("Server not found, aborting");
 		}
 	}
 
-	private boolean sendInitData(InetAddress a, int p) {
+	private boolean sendInitData(ObjectOutputStream oos) {
 		InitData data;
 		// Create init data
 		try {
@@ -69,6 +68,7 @@ public class ResourceMonitor extends Thread {
 		// Send data to server
 		try {
 			oos.writeObject(data);
+			oos.flush();
 		} catch (Exception e) {
 			System.out.println("Unable to make a socket connection");
 			return false;
@@ -110,16 +110,26 @@ public class ResourceMonitor extends Thread {
 		} catch (SigarException e) {
 			System.out.println("load average sigar exception");
 		}
+		System.out.println(measurement.toString());
 		return measurement;
 	}
 
-	public boolean sendMeasurement(InetAddress a, int p, Measurement m) {
+	public boolean sendMeasurement(ObjectOutputStream oos, Measurement m) {
 		try {
 			oos.writeObject(m);
+			oos.flush();
 		} catch (Exception e) {
 			System.out.println("Unable to make a socket connection");
 			return false;
 		}
 		return true;
+	}
+	
+	public void quit() {
+		this.running = false;
+	}
+	
+	public boolean isRunning() {
+		return running;
 	}
 }
