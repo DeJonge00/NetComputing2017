@@ -57,37 +57,7 @@ public class Server {
 		}
 	}
 	
-	public void takeMeasurement() {
-		/*Mem mem = null;
-		CpuPerc[] cpu = null;
-        try {
-            mem = sigar.getMem();
-            cpu = sigar.getCpuPercList();
-        } catch (SigarException se) {
-            se.printStackTrace();
-        }
-        
-        for(int i = 0; i<cpu.length; i++) {
-        	System.out.println("CPU core " + i + ":" + cpu[i].getCombined()*100 + "%");
-        }
-        
-        System.out.println("Actual total free system memory: "
-                + mem.getActualFree() / 1024 / 1024+ " MB");
-        System.out.println("Actual total used system memory: "
-                + mem.getActualUsed() / 1024 / 1024 + " MB");
-        System.out.println("Total free system memory ......: " + mem.getFree()
-                / 1024 / 1024+ " MB");
-        System.out.println("System Random Access Memory....: " + mem.getRam()
-                + " MB");
-        System.out.println("Total system memory............: " + mem.getTotal()
-                / 1024 / 1024+ " MB");
-        System.out.println("Total used system memory.......: " + mem.getUsed()
-                / 1024 / 1024+ " MB");
-
-        System.out.println("\n**************************************\n");*/
-	}
-	
-	public void test() {
+	/*public void test() {
 		System.out.println("Started messageInbox, sleeping for 500ms");
 		try {
 			Thread.sleep(500);
@@ -108,9 +78,13 @@ public class Server {
 		
 		
 		this.takeMeasurement();
-	}
+	}*/
 	
 	public static void main(String [] args) {
+		if(args.length <= 0) {
+			System.out.println("Give a port as argument 1");
+			return;
+		}
 		int port = Integer.parseInt(args[0]);
 		Server s = new Server(port);
 		s.start();
