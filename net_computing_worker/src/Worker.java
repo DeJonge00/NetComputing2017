@@ -21,7 +21,7 @@ public class Worker {
 
 		//System.setProperty("java.security.policy","../lib/security.policy‌​");
 		try {
-			if(args.length==2) {
+			if(args.length>=2) {
 				serverAddress = InetAddress.getByName(args[0]);
 				serverPort = Integer.parseInt(args[1]);
 			} else {
@@ -31,6 +31,13 @@ public class Worker {
 		} catch (UnknownHostException e) {
 			System.out.println("That is not a valid address");
 			return;
+		}
+		
+		int rmiport;
+		if(args.length>=3) {
+			rmiport = Integer.parseInt(args[1]);
+		} else {
+			rmiport = 1099;
 		}
 		
 		try {
@@ -47,12 +54,12 @@ public class Worker {
 			tm.initSecurityManager();
 			System.out.println("\n\nStarting registry");
 			//TaskManager stub = (TaskManager) UnicastRemoteObject.exportObject(tm, 0);
-			Registry registry = LocateRegistry.createRegistry(1099);
+			Registry registry = LocateRegistry.createRegistry(rmiport);
 			//System.out.println(registry);
-			Naming.rebind("rmi://145.97.176.108:1099/taskManager", tm);
+			Naming.rebind("rmi://localhost:" + rmiport + "/taskManager", tm);
 			//System.out.println(registry);
 			//System.out.println("\n\n" + registry.lookup("taskManager"));
-			System.out.println("\n\n" + Naming.lookup("rmi://localhost:1099/taskManager"));
+			System.out.println("\n\n" + Naming.lookup("rmi://localhost:" + rmiport + "/taskManager"));
 			
             System.out.println("TaskManager bound\n\n");
 		} catch (Exception e) {

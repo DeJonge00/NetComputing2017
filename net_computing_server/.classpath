@@ -3,8 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/net_computing_shared"/>
-	<classpathentry kind="lib" path="/net_computing_shared/lib/libsigar-amd64-linux.so"/>
-	<classpathentry kind="lib" path="/net_computing_shared/lib/sigar-amd64-winnt.dll"/>
 	<classpathentry kind="lib" path="/net_computing_shared/lib/sigar.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

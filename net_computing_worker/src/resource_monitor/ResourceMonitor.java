@@ -39,7 +39,7 @@ public class ResourceMonitor extends Thread {
 				if (!sendMeasurement(serverAddress, serverPort, takeMeasurement())) {
 					// Sending message failed
 					running = false;
-					System.out.println("Server address: " + serverAddress.getHostAddress() + ", server port: " + serverPort);
+					System.out.println("Failed sending to server address: " + serverAddress.getHostAddress() + ", server port: " + serverPort);
 				}
 	
 				// End of cycle
@@ -114,14 +114,12 @@ public class ResourceMonitor extends Thread {
 
 	public boolean sendMeasurement(InetAddress a, int p, Measurement m) {
 		try {
-			Socket s = new Socket(a.getHostAddress(), p);
-			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-
+			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.writeObject(m);
-		return true;
 		} catch (Exception e) {
 			System.out.println("Unable to make a socket connection");
 			return false;
 		}
+		return true;
 	}
 }
