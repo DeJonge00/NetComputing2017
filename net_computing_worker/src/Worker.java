@@ -1,4 +1,4 @@
-
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.Naming;
@@ -8,8 +8,6 @@ import java.rmi.registry.Registry;
 import resource_monitor.ResourceMonitor;import task_manager.TaskManager;
 
 
-
-
 public class Worker {	
 	public static void main(String [] args) {
 		if(args.length<=0) {
@@ -17,14 +15,11 @@ public class Worker {
 			return;
 		}
 		
-		
 		int serverPort;
 		InetAddress serverAddress;
 		ResourceMonitor monitor;
-		
 
 		//System.setProperty("java.security.policy","../lib/security.policy‌​");
-		
 		try {
 			if(args.length==2) {
 				serverAddress = InetAddress.getByName(args[0]);
@@ -38,15 +33,17 @@ public class Worker {
 			return;
 		}
 		
-		monitor = new ResourceMonitor(serverAddress, serverPort);
-		monitor.start();
-		
+		try {
+			monitor = new ResourceMonitor(serverAddress, serverPort);
+			monitor.start();
+		} catch (IOException e1) {
+			System.out.println("Starting resourcemonitor failed");
+			return;
+		}
 		
 		// initialize taskManager
-		
-		
 		try {
-			TaskManager tm = new TaskManager();
+			TaskManager tm = new TaskManager(serverAddress, serverPort);
 			tm.initSecurityManager();
 			System.out.println("\n\nStarting registry");
 			//TaskManager stub = (TaskManager) UnicastRemoteObject.exportObject(tm, 0);

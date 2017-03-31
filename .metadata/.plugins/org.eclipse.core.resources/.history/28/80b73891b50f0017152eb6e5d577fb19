@@ -1,3 +1,0 @@
-grant codeBase "/home/jeroen/remco/net_computing/NetComputing2017/net_computing_worker/bin/rmi/Worker" {
-    permission java.security.AllPermission;
-};

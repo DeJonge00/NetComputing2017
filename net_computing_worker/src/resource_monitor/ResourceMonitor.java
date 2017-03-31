@@ -1,6 +1,7 @@
 package resource_monitor;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -21,32 +22,37 @@ public class ResourceMonitor extends Thread {
 	private int serverPort;
 	private InetAddress serverAddress;
 	private static Sigar sigar;
+	Socket socket;
 	
-	public ResourceMonitor(InetAddress a, int p) {
+	public ResourceMonitor(InetAddress a, int p) throws UnknownHostException, IOException {
 		running = false;
 		this.serverAddress = a;
 		this.serverPort = p;
 		sigar = new Sigar();
+		socket = new Socket(a.getHostAddress(), p);
 	}
 
 	public void run() {
-		while(!sendInitData(serverAddress, serverPort));
-		running = true;
-		while (running) {
-			if (!sendMeasurement(serverAddress, serverPort, takeMeasurement())) {
-				// Sending message failed
-				running = false;
-				System.out.println("Server address: " + serverAddress.getHostAddress() + ", server port: " + serverPort);
+		if(sendInitData(serverAddress, serverPort)) {
+			running = true;
+			while (running) {
+				if (!sendMeasurement(serverAddress, serverPort, takeMeasurement())) {
+					// Sending message failed
+					running = false;
+					System.out.println("Server address: " + serverAddress.getHostAddress() + ", server port: " + serverPort);
+				}
+	
+				// End of cycle
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
-
-			// End of cycle
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			System.out.println("Connections closed, stopping worker");
+		} else {
+			System.out.println("Server not found, aborting");
 		}
-		System.out.println("Connections closed, stopping worker");
 	}
 
 	private boolean sendInitData(InetAddress a, int p) {
@@ -60,9 +66,7 @@ public class ResourceMonitor extends Thread {
 		}
 		// Send data to server
 		try {
-			Socket s = new Socket(a.getHostAddress(), p);
-			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-
+			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.writeObject(data);
 		} catch (Exception e) {
 			System.out.println("Unable to make a socket connection");

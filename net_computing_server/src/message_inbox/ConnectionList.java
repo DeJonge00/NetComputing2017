@@ -1,7 +1,4 @@
 package message_inbox;
-
-
-
 import java.util.ArrayList;
 
 public class ConnectionList {
