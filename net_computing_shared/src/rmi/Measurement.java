@@ -6,9 +6,9 @@ import java.io.Serializable;
 public class Measurement implements Serializable {
 	static final long serialVersionUID = 1234;
 	int cpuamount;
-	private long ram;
-	private long memory;
-	private long freememory;
+	private float ram;
+	private float memory;
+	private float freememory;
 	private double loadAvg;
 	double cpuUsage;
 		
@@ -22,7 +22,7 @@ public class Measurement implements Serializable {
 		return "Cpu amount: " + cpuamount + ", ram: " + this.ram + ", memory: " + this.memory + ", free memory: " + this.freememory;
 	}
 
-	public void setMemoryInfo(long r, long t, long f) {
+	public void setMemoryInfo(float r, float t, float f) {
 		ram = r;
 		memory = t;
 		freememory = f;
@@ -32,7 +32,7 @@ public class Measurement implements Serializable {
 		loadAvg = l;
 	}
 	
-	public void setCpuUsage(double i) {
+	public void setCpuUsage(float i) {
 		cpuUsage = i;
 	}
 }

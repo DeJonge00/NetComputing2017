@@ -23,6 +23,7 @@ public class ResourceMonitor extends Thread {
 	private InetAddress serverAddress;
 	private static Sigar sigar;
 	Socket socket;
+	ObjectOutputStream oos;
 	
 	public ResourceMonitor(InetAddress a, int p) throws UnknownHostException, IOException {
 		running = false;
@@ -30,6 +31,7 @@ public class ResourceMonitor extends Thread {
 		this.serverPort = p;
 		sigar = new Sigar();
 		socket = new Socket(a.getHostAddress(), p);
+		oos = new ObjectOutputStream(socket.getOutputStream());
 	}
 
 	public void run() {
@@ -66,7 +68,6 @@ public class ResourceMonitor extends Thread {
 		}
 		// Send data to server
 		try {
-			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.writeObject(data);
 		} catch (Exception e) {
 			System.out.println("Unable to make a socket connection");
@@ -114,7 +115,6 @@ public class ResourceMonitor extends Thread {
 
 	public boolean sendMeasurement(InetAddress a, int p, Measurement m) {
 		try {
-			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.writeObject(m);
 		} catch (Exception e) {
 			System.out.println("Unable to make a socket connection");

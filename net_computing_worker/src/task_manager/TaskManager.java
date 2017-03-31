@@ -59,10 +59,11 @@ public class TaskManager extends UnicastRemoteObject implements TaskServer, Seri
 	
 	public String getOutput(int pid) {
 		Task t;
+		System.out.println("XD");
 		if((t = getTask(pid)) != null) {
+			System.out.println("XD");
 			return t.getOutput();
 		}
-		
 		return null;
 	}
 	

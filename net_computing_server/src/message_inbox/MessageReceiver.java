@@ -15,15 +15,15 @@ public class MessageReceiver implements Runnable {
 	private MessageQueue messages;
 	
 	public MessageReceiver(Connection c, MessageQueue mq) {
-			this.connection = c;
-			this.messages = mq;
-			try {
-				this.in = new ObjectInputStream(this.connection.getInputStream());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			handleConnect();
+		this.connection = c;
+		this.messages = mq;
+		try {
+			this.in = new ObjectInputStream(this.connection.getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		handleConnect();
 	}
 	
 	public void handleConnect() {
