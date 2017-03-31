@@ -4,6 +4,7 @@ package message_inbox;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import rmi.InitData;
 import rmi.Measurement;
 import rmi.TaskInfo;
 
@@ -21,7 +22,7 @@ public class MessageReceiver implements Runnable {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+			System.out.println("starting message receiver");
 			handleConnect();
 	}
 	
@@ -59,9 +60,9 @@ public class MessageReceiver implements Runnable {
 	
 	public void run() {
 		Message<?> msg;
-		//while (true) {
+		while (true) {
 			msg = read_message();
 			this.messages.enqueue(msg);
-		//}
+		}
 	}
 }

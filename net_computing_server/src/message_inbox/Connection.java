@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import rmi.InitData;
+
 
 public class Connection {
 	private Socket socket;
@@ -17,7 +19,7 @@ public class Connection {
 
 	public void setData(InitData data) {
 		this.data = data;
-		System.out.println(data.toString());
+		System.out.println(data.platform);
 	}
 
 	public Connection(Socket s) {
