@@ -9,7 +9,7 @@ import message_inbox.MessageQueue;
 import rmi.Measurement;
 import rmi.TaskInfo;
 import rmi.TaskServer;
-import task_distributor.ActiveTask;
+import task_distributor.TaskActive;
 import task_distributor.Task;
 
 public class DataAnalyzer implements Runnable {

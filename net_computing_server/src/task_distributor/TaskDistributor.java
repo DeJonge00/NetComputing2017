@@ -40,7 +40,7 @@ public class TaskDistributor extends Thread{
 					stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  
 					stub.execute(t.getCommand());
 					// upgrade the current task to an active task
-					ActiveTask at = new ActiveTask(t);
+					TaskActive at = new TaskActive(t);
 					at.setStartTime(System.currentTimeMillis());
 					// to do: store ActiveTask
 					System.out.println("executing " + t.getCommand());
