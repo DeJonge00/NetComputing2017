@@ -1,27 +1,54 @@
+import java.io.IOException;
+import java.net.Socket;
+
+import message_inbox.Connection;
 import message_inbox.ConnectionList;
 import message_inbox.Message;
 import message_inbox.MessageInbox;
-import data_analyzer.DataAnalyzer;
-
-import java.io.IOException;
 
 import org.hyperic.sigar.Sigar;
 
+import rmi.Measurement;
 import rmi.TaskInfo;
 import task_distributor.Task;
 import task_distributor.TaskDistributor;
 import task_distributor.TaskQueue;
+import data_analyzer.DataAnalyzer;
 
 public class Server {
 	private ConnectionList workers;
 	private MessageInbox message_inbox;
 	private DataAnalyzer analyzer;
 	private static Sigar sigar = new Sigar();
+	private TaskQueue tq;
+	private TaskDistributor td;
 	
 	public Server(int port) throws IOException {
 		this.workers = new ConnectionList();
 		this.message_inbox = new MessageInbox(this.workers, port);
-		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue());
+		this.tq = new TaskQueue();
+		td = new TaskDistributor(tq, this.workers);
+		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue(), this.workers);
+		/* test connection list insertion:
+		Connection c1 = new Connection(new Socket("localhost", 5000));
+		Measurement m1 = new Measurement();
+		m1.setMemoryInfo(2048, 512, 1536);
+		c1.setLastMeasurement(m1);
+		
+		Connection c2 = new Connection(new Socket("localhost", 5000));
+		Measurement m2 = new Measurement();
+		m2.setMemoryInfo(2048, 1024, 1024);
+		c2.setLastMeasurement(m2);
+		
+		Connection c3 = new Connection(new Socket("localhost", 5000));
+		Measurement m3 = new Measurement();
+		m3.setMemoryInfo(2048, 700, 1348);
+		c3.setLastMeasurement(m3);
+
+		workers.addConnection(c1);
+		workers.addConnection(c2);
+		workers.addConnection(c3);
+		*/
 	}
 	
 	public void start() {
@@ -32,19 +59,17 @@ public class Server {
 		
 		try {
 			Thread.sleep(5000);
-			TaskQueue tq = new TaskQueue();
-			Task task = new Task("inf.exe hello");
+			Task task = new Task("./inf hello");
 			task.setConn(this.workers.getFirst());
-			tq.enqueue(task);
+			this.tq.enqueue(task);
 			System.out.println("tq size: " + tq.size());
-			TaskDistributor td = new TaskDistributor(tq, this.workers);
 			td.start();
 			//System.out.println("Started ./infinte as process #" + pid);
 			//System.out.println("going to sleep for 10 seconds");
 			//Thread.sleep(10000);
 			//td.interrupt(pid);
 			//System.out.println("interrupted process #" + pid);
-			while(true) {
+			/*while(true) {
 				Message<?> msg = this.message_inbox.getNextMessage();
 				if(msg != null && msg.getMessageContent() instanceof TaskInfo) {
 					TaskInfo tf = (TaskInfo)msg.getMessageContent();
@@ -52,7 +77,7 @@ public class Server {
 					System.out.println("Process output: " + td.getTaskData(tf.getPid()));
 				}
 				Thread.sleep(50);
-			}
+			}*/
 		} catch (Exception e) {
 			System.out.println("Exception in Server.start");
 			return;

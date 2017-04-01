@@ -9,5 +9,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="Server"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="5000"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="net_computing_server"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djava.security.manager&#10;-Djava.security.policy=/home/jeroen/remco/net_computing/NetComputing2017/net_computing_shared/src/rmi/security.policy&#10;-Djava.rmi.server.hostname=145.97.176.108"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djava.security.manager&#10;-Djava.security.policy=/home/jeroen/remco/net_computing/NetComputing2017/net_computing_shared/src/rmi/security.policy&#10;-Djava.rmi.server.hostname=192.168.178.30"/>
 </launchConfiguration>

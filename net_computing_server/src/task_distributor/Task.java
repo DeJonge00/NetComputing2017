@@ -5,11 +5,26 @@ import message_inbox.Connection;
 public class Task { 
 	private Connection conn;
 	private String command;
+	private int userId;
 	
 	public Task(String c) {
 		this.command = c;
 	}
 	
+	protected Task(Task other) {
+		this.conn = other.getConn();
+		this.command = other.getCommand();
+		this.userId = other.getUserId();
+	}
+	
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
 	public String getAddress() {
 		return conn.getInetAddress().toString();
 	}

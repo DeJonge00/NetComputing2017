@@ -24,4 +24,8 @@ public class Message<T> implements Serializable {
 	public InetAddress getSenderAddress() {
 		return this.conn.getInetAddress();
 	}
+	
+	public Connection getConn() {
+		return this.conn;
+	}
 }

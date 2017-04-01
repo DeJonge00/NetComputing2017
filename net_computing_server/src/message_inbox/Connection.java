@@ -5,13 +5,35 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import rmi.InitData;
+import rmi.Measurement;
 
 
 public class Connection {
 	private Socket socket;
 	private InitData data;
+	private Measurement last_measurement;
+
+	public Connection(Socket s) {
+		this.socket = s;
+		this.last_measurement = new Measurement();
+	}
+	
+	public synchronized void setLastMeasurement(Measurement m) {
+		this.last_measurement = m;
+	}
+	
+	public synchronized float getLoadInfo() {
+		float memoryLoad, cpuLoad, bridgeLoad;
+		memoryLoad = (last_measurement.getMemory()+last_measurement.getFreememory())/last_measurement.getMemory();
+		
+		if(memoryLoad > 0.9) {
+			memoryLoad = (memoryLoad-1);
+		}
+		return memoryLoad;
+	}
 	
 	public InitData getData() {
 		return data;
@@ -20,10 +42,6 @@ public class Connection {
 	public void setData(InitData data) {
 		this.data = data;
 		System.out.println(data.platform);
-	}
-
-	public Connection(Socket s) {
-		this.socket = s;
 	}
 	
 	public int getPort() {
