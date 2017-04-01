@@ -1,5 +1,0 @@
-
-public class TaskInfo {
-	private int pid;
-	private String status;
-}
