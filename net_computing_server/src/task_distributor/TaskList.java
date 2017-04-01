@@ -11,6 +11,7 @@ public class TaskList {
 		finishedTasks = new ArrayList<FinishedTask>();
 	}
 	
+	/* Inserts a new task in the correct list */
 	public void insertTask(Task task) {
 		if (task instanceof FinishedTask) {
 			int index = find(finishedTasks, task.getUserId());
@@ -21,6 +22,7 @@ public class TaskList {
 		}
 	}
 	
+	/* Returns all active tasks with the specified user id */
 	public ArrayList<ActiveTask> getActiveTasksUser(int id) {
 		ArrayList<ActiveTask> usertasks = new ArrayList<ActiveTask>();
 		int i = find(activeTasks, id);
@@ -31,6 +33,7 @@ public class TaskList {
 		return usertasks;
 	}
 	
+	/* Returns all finished tasks with the specified user id */
 	public ArrayList<FinishedTask> getFinishedTasksUser(int id) {
 		ArrayList<FinishedTask> usertasks = new ArrayList<FinishedTask>();
 		int i = find(finishedTasks, id);
@@ -41,10 +44,13 @@ public class TaskList {
 		return usertasks;
 	}
 	
+	/* Removes task from active list and adds a new finished task to finished list */
 	public void finishTask(ActiveTask task) {
-		int index = activeTasks.indexOf(task);
-		activeTasks.remove(index);
-		finishedTasks.add(new FinishedTask(task));
+		int index = findTask(task);
+		if (index >= 0) {
+			activeTasks.remove(index);
+			finishedTasks.add(new FinishedTask(task));
+		}
 	}
 	
 	/* Implements binary search to find the first occurence of a task with userid id */
@@ -64,5 +70,16 @@ public class TaskList {
 			}
 		}
 		return m;
+	}
+	
+	/* Finds an active task in the task list */
+	private int findTask(ActiveTask task) {
+		for (int i = 0; i < activeTasks.size(); i++) {
+			if (activeTasks.get(i).getPid() == task.getPid()
+			&& activeTasks.get(i).getConn() == task.getConn()) {
+				return i;
+			}
+		}
+		return -1;
 	}
 }
