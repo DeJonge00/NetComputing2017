@@ -1,6 +1,7 @@
 import message_inbox.ConnectionList;
 import message_inbox.Message;
 import message_inbox.MessageInbox;
+import data_analyzer.DataAnalyzer;
 
 import java.io.IOException;
 
@@ -14,15 +15,19 @@ import task_distributor.TaskQueue;
 public class Server {
 	private ConnectionList workers;
 	private MessageInbox message_inbox;
+	private DataAnalyzer analyzer;
 	private static Sigar sigar = new Sigar();
 	
 	public Server(int port) throws IOException {
 		this.workers = new ConnectionList();
 		this.message_inbox = new MessageInbox(this.workers, port);
+		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue());
 	}
 	
 	public void start() {
 		Thread t = new Thread(this.message_inbox);
+		t.start();
+		t = new Thread(this.analyzer);
 		t.start();
 		
 		try {

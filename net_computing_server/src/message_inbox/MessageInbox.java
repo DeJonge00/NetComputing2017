@@ -14,6 +14,10 @@ public class MessageInbox implements Runnable {
 		this.messages = new MessageQueue();
 	}
 	
+	public MessageQueue getMessageQueue() {
+		return messages;
+	}
+
 	public Message<?> getNextMessage() {
 		if(this.messages.isEmpty()) {
 			return null;
