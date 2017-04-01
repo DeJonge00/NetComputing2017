@@ -19,7 +19,7 @@ public class TaskDistributor extends Thread{
 			System.setSecurityManager(new RMISecurityManager());
 			//stub=(TaskServer)Naming.lookup("rmi://192.168.178.30:1099/taskManager");  
 			
-		}catch(Exception e){
+		} catch (Exception e){
 			e.printStackTrace();
 		}   
 	} 
@@ -43,6 +43,7 @@ public class TaskDistributor extends Thread{
 	}
 	
 	public String getTaskData(int pid) {
+		System.out.println("taskdata");
 		String s = "";
 		try {
 			s = stub.getOutput(pid);
@@ -61,14 +62,14 @@ public class TaskDistributor extends Thread{
 			if(t != null) {
 				// there is a task to distribute
 				try {
-					stub=(TaskServer)Naming.lookup("rmi://localhost:1099/taskManager");  
+					stub=(TaskServer)Naming.lookup("rmi://" + connections.getFirst().getInetAddress().getHostAddress() + ":1099/taskManager");  
 					stub.execute(t.getCommand());
 					System.out.println("executing " + t.getCommand());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} else {
-				// no command to execute so we sleep for 5 seconds
+				// no command to execute so we sleep for 5 miliseconds
 				try {
 					Thread.sleep(5);
 				} catch (InterruptedException e) {

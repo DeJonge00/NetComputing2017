@@ -15,15 +15,9 @@ public class MessageReceiver implements Runnable {
 	private MessageQueue messages;
 	
 	public MessageReceiver(Connection c, MessageQueue mq) {
-			this.connection = c;
-			this.messages = mq;
-			try {
-				this.in = new ObjectInputStream(this.connection.getInputStream());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.println("starting message receiver");
-			handleConnect();
+
+		this.connection = c;
+		this.messages = mq;
 	}
 	
 	public void handleConnect() {
@@ -33,9 +27,12 @@ public class MessageReceiver implements Runnable {
 				this.connection.setData((InitData)o);
 			}
 		} catch (Exception e) {
+			System.out.println("Object could not be read (handleconnect)");
 			e.printStackTrace();
+			return;
 		}
 	}
+	
 	public Message<?> read_message() {
 		Message<?> msg;
 		Object o = null;
@@ -43,9 +40,8 @@ public class MessageReceiver implements Runnable {
 		try {
 			o = this.in.readObject();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Object could not be read, returning empty measurement");
 		}
-		
 		if(o != null && o instanceof Measurement) {
 			msg = new Message<Measurement>((Measurement)o, this.connection);
 		} else if(o instanceof TaskInfo){
@@ -53,12 +49,17 @@ public class MessageReceiver implements Runnable {
 		} else {
 			msg = new Message<Measurement>(new Measurement(), this.connection);
 		}
-		
-		
 		return msg;
 	}
 	
 	public void run() {
+		try {
+			this.in = new ObjectInputStream(this.connection.getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		handleConnect();
+		
 		Message<?> msg;
 		while (true) {
 			msg = read_message();

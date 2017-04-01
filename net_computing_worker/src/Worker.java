@@ -1,5 +1,7 @@
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
@@ -41,8 +43,12 @@ public class Worker {
 			rmiport = 1099;
 		}
 		
+		Socket socket;
+		ObjectOutputStream oos;
 		try {
-			monitor = new ResourceMonitor(serverAddress, serverPort);
+			socket = new Socket(serverAddress.getHostAddress(), serverPort);
+			oos = new ObjectOutputStream(socket.getOutputStream());
+			monitor = new ResourceMonitor(oos);
 			monitor.start();
 		} catch (IOException e1) {
 			System.out.println("Starting resourcemonitor failed");
@@ -51,7 +57,7 @@ public class Worker {
 		
 		// initialize taskManager
 		try {
-			TaskManager tm = new TaskManager(serverAddress, serverPort);
+			TaskManager tm = new TaskManager(oos);
 			tm.initSecurityManager();
 			System.out.println("\n\nStarting registry");
 			//TaskManager stub = (TaskManager) UnicastRemoteObject.exportObject(tm, 0);
@@ -60,12 +66,12 @@ public class Worker {
 			Naming.rebind("rmi://localhost:" + rmiport + "/taskManager", tm);
 			//System.out.println(registry);
 			//System.out.println("\n\n" + registry.lookup("taskManager"));
-			System.out.println("\n\n" + Naming.lookup("rmi://localhost:" + rmiport + "/taskManager"));
+			//System.out.println("\n" + Naming.lookup("rmi://localhost:" + rmiport + "/taskManager"));
 			
             System.out.println("TaskManager bound\n\n");
 		} catch (Exception e) {
-
 			System.out.println("remote exception in taskManager\n\n");
+			monitor.quit();
 			e.printStackTrace();
 		}
 	}

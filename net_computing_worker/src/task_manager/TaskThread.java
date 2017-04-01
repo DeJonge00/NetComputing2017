@@ -16,15 +16,13 @@ public class TaskThread extends Observable implements Runnable {
 	private TaskOutput out;
 	private int pid;
 	private Thread t;
-	private InetAddress serveraddress;
-	private int serverport;
+	private ObjectOutputStream oos;
 	
-	public TaskThread(Process p, TaskOutput out, int pid, InetAddress a, int po) {
+	public TaskThread(Process p, TaskOutput out, int pid, ObjectOutputStream o) {
 		this.process = p;
 		this.out = out;
 		this.pid = pid;
-		this.serveraddress = a;
-		this.serverport = po;
+		this.oos = o;
 	}
 	
 	public void run() {
@@ -33,11 +31,11 @@ public class TaskThread extends Observable implements Runnable {
 			BufferedReader in = getInputStream();
 			String output = readTaskOutput(in);
 			this.out.setOutput(output);
-			sendData(serveraddress, serverport, new TaskInfo(pid, "finished"));
+			sendData(new TaskInfo(pid, "finished"));
 		} catch (InterruptedException e) {
 			process.destroy();
 			out.setOutput("interrupted");
-			sendData(serveraddress, serverport, new TaskInfo(pid, "interrupted"));
+			sendData(new TaskInfo(pid, "interrupted"));
 			System.out.println("Process was interrupted: " + process.toString());
 			return;
 		}
@@ -60,19 +58,14 @@ public class TaskThread extends Observable implements Runnable {
 		return sb.toString();
 	}
 	
-	public boolean sendData(InetAddress a, int p, TaskInfo tf) {
+	public boolean sendData(TaskInfo tf) {
 		try {
-			Socket s = new Socket(a.getHostAddress(), p);
-			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-
 			oos.writeObject(tf);
 			System.out.println("Sent message to inbox");
-			return true;
-
 		} catch (Exception e) {
-			System.out.println(a.getHostAddress() + " -- " + p);
 			System.out.println("Is there a server running on that port?");
 			return false;
 		}
+		return true;
 	}
 }
