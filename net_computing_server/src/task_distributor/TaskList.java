@@ -3,28 +3,28 @@ package task_distributor;
 import java.util.ArrayList;
 
 public class TaskList {
-	public ArrayList<ActiveTask> activeTasks;
-	public ArrayList<FinishedTask> finishedTasks;
+	public ArrayList<TaskActive> activeTasks;
+	public ArrayList<TaskFinished> finishedTasks;
 	
 	public TaskList() {
-		activeTasks = new ArrayList<ActiveTask>();
-		finishedTasks = new ArrayList<FinishedTask>();
+		activeTasks = new ArrayList<TaskActive>();
+		finishedTasks = new ArrayList<TaskFinished>();
 	}
 	
 	/* Inserts a new task in the correct list */
 	public void insertTask(Task task) {
-		if (task instanceof FinishedTask) {
+		if (task instanceof TaskFinished) {
 			int index = find(finishedTasks, task.getUserId());
-			finishedTasks.add(index, (FinishedTask) task);
+			finishedTasks.add(index, (TaskFinished) task);
 		} else {
 			int index = find(activeTasks, task.getUserId());
-			activeTasks.add(index, (FinishedTask) task);
+			activeTasks.add(index, (TaskFinished) task);
 		}
 	}
 	
 	/* Returns all active tasks with the specified user id */
-	public ArrayList<ActiveTask> getActiveTasksUser(int id) {
-		ArrayList<ActiveTask> usertasks = new ArrayList<ActiveTask>();
+	public ArrayList<TaskActive> getActiveTasksUser(int id) {
+		ArrayList<TaskActive> usertasks = new ArrayList<TaskActive>();
 		int i = find(activeTasks, id);
 		for (; activeTasks.get(i).getUserId() == id; i++) {
 			usertasks.add(activeTasks.get(i));
@@ -34,8 +34,8 @@ public class TaskList {
 	}
 	
 	/* Returns all finished tasks with the specified user id */
-	public ArrayList<FinishedTask> getFinishedTasksUser(int id) {
-		ArrayList<FinishedTask> usertasks = new ArrayList<FinishedTask>();
+	public ArrayList<TaskActive> getFinishedTasksUser(int id) {
+		ArrayList<TaskActive> usertasks = new ArrayList<TaskActive>();
 		int i = find(finishedTasks, id);
 		for (; finishedTasks.get(i).getUserId() == id; i++) {
 			usertasks.add(finishedTasks.get(i));
@@ -45,11 +45,11 @@ public class TaskList {
 	}
 	
 	/* Removes task from active list and adds a new finished task to finished list */
-	public void finishTask(ActiveTask task) {
+	public void finishTask(TaskActive task) {
 		int index = findTask(task);
 		if (index >= 0) {
 			activeTasks.remove(index);
-			finishedTasks.add(new FinishedTask(task));
+			finishedTasks.add(new TaskFinished(task));
 		}
 	}
 	
@@ -72,8 +72,8 @@ public class TaskList {
 		return m;
 	}
 	
+	public int findTask(TaskActive task) {
 	/* Finds an active task in the task list */
-	private int findTask(ActiveTask task) {
 		for (int i = 0; i < activeTasks.size(); i++) {
 			if (activeTasks.get(i).getPid() == task.getPid()
 			&& activeTasks.get(i).getConn() == task.getConn()) {
