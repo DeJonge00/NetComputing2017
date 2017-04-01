@@ -41,6 +41,12 @@ public class TaskList {
 		return usertasks;
 	}
 	
+	public void finishTask(ActiveTask task) {
+		int index = activeTasks.indexOf(task);
+		activeTasks.remove(index);
+		finishedTasks.add(new FinishedTask(task));
+	}
+	
 	/* Implements binary search to find the first occurence of a task with userid id */
 	private int find(ArrayList<? extends Task> list, int id) {
 		int l = 0, r = list.size() - 1, m = 0, currId;
