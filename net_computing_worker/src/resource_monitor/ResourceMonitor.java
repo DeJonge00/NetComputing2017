@@ -1,10 +1,8 @@
 package resource_monitor;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.UnknownHostException;
 
 import org.hyperic.sigar.CpuPerc;
@@ -60,9 +58,12 @@ public class ResourceMonitor extends Thread {
 		InitData data;
 		// Create init data
 		try {
-			data = new InitData(File.listRoots().length, InetAddress.getLocalHost(), System.getProperty("os.name"));
+			data = new InitData(sigar.getCpuPercList().length, InetAddress.getLocalHost(), System.getProperty("os.name"));
 		} catch (UnknownHostException e1) {
 			System.out.println("UnknownHostException in initdata");
+			return false;
+		} catch (SigarException e2) {
+			e2.printStackTrace();
 			return false;
 		}
 		// Send data to server
@@ -82,7 +83,7 @@ public class ResourceMonitor extends Thread {
 		Measurement measurement = new Measurement();
 		try {
 			mem = sigar.getMem();
-			measurement.setMemoryInfo(mem.getRam(), mem.getTotal(), mem.getTotal() - mem.getUsed());
+			measurement.setMemoryInfo(mem.getRam(), mem.getTotal(), mem.getTotal() - mem.getActualUsed());
 		} catch (SigarException se) {
 			System.out.println("Aquiring of memory info failed");
 		}
@@ -94,6 +95,7 @@ public class ResourceMonitor extends Thread {
 				total += cpu[j].getCombined();
 			}
 			measurement.setCpuUsage(total);
+			measurement.setCpuamount(cpu.length);
 		} catch (SigarException e3) {
 			System.out.println("Aquiring cpu info failed");
 		}

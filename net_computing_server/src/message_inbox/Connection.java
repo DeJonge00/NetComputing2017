@@ -25,14 +25,15 @@ public class Connection {
 		this.last_measurement = m;
 	}
 	
-	public synchronized float getLoadInfo() {
-		float memoryLoad, cpuLoad, bridgeLoad;
-		memoryLoad = (last_measurement.getMemory()+last_measurement.getFreememory())/last_measurement.getMemory();
-		
-		if(memoryLoad > 0.9) {
-			memoryLoad = (memoryLoad-1);
+	public synchronized double getLoadInfo() {
+		double memoryLoad, cpuLoad, load;
+		memoryLoad = (last_measurement.getMemory()-last_measurement.getFreememory())/last_measurement.getMemory();
+		cpuLoad = last_measurement.getCpuUsage() / (double)last_measurement.getCpuamount();
+		if(memoryLoad < 0.9 && cpuLoad < 0.9) {
+			return ((memoryLoad + cpuLoad)/2);
+		} else {
+			return memoryLoad > cpuLoad ? (1.0-memoryLoad) : (1.0-cpuLoad);
 		}
-		return memoryLoad;
 	}
 	
 	public InitData getData() {

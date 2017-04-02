@@ -11,7 +11,8 @@ public class ConnectionList {
 	synchronized public void addConnection(Connection conn) {
 		int i = 0;
 		int size = connections.size();
-		float load = conn.getLoadInfo();
+		double load = conn.getLoadInfo();
+		//System.out.println(load);
 		
 		if(size > 0) {
 			// find the position at which the connection should be inserted

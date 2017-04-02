@@ -13,8 +13,7 @@ public class Measurement implements Serializable {
 	private double cpuUsage;
 		
 	public Measurement() {
-		File[] roots = File.listRoots();
-		cpuamount = roots.length;
+		cpuamount = 0;
 		ram = 0;
 		memory = 0;
 		freememory = 0;
