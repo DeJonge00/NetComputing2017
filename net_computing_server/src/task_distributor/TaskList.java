@@ -97,4 +97,12 @@ public class TaskList {
 		}
 		return -1;
 	}
+	
+	public ArrayList<TaskActive> getActiveTasks() {
+		return this.activeTasks;
+	}
+	
+	public ArrayList<TaskFinished> getFinishedTasks() {
+		return this.finishedTasks;
+	}
 }

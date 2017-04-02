@@ -20,12 +20,13 @@ public class Webserver {
 	private static Sigar sigar = new Sigar();
 	private TaskQueue tq;
 	private TaskDistributor td;
+	private TaskList tl;
 	
 	public Webserver(int port) throws IOException {
 		this.workers = new ConnectionList();
 		this.message_inbox = new MessageInbox(this.workers, port);
 		this.tq = new TaskQueue();
-		TaskList tl = new TaskList();
+		this.tl = new TaskList();
 		td = new TaskDistributor(tq, this.workers, tl);
 		
 		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue(), this.workers, tl);
@@ -120,7 +121,7 @@ public class Webserver {
         context.setClassLoader(Thread.currentThread().getContextClassLoader());
         server.setHandler(context);
  
-        context.setHandler(new TaskApi(tq));
+        context.setHandler(new TaskApi(tq, tl));
         try{
         server.start();
         server.join();

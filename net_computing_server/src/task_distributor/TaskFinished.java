@@ -11,4 +11,28 @@ public class TaskFinished extends TaskActive {
 		this.taskOutput = taskOutput;
 		this.exitStatus = exitStatus;
 	}
+
+	public int getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(int endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getTaskOutput() {
+		return taskOutput;
+	}
+
+	public void setTaskOutput(String taskOutput) {
+		this.taskOutput = taskOutput;
+	}
+
+	public int getExitStatus() {
+		return exitStatus;
+	}
+
+	public void setExitStatus(int exitStatus) {
+		this.exitStatus = exitStatus;
+	}
 }
