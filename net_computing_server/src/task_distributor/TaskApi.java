@@ -117,11 +117,11 @@ public class TaskApi extends AbstractHandler {
 	
 	void do_GET_tasks(PrintWriter writer) {
 		writer.println("<table>");		
-		writer.println("<tr><td>");
+		writer.println("<tr><td class='activefinished' style='left:0px;'>");
 		
 		do_GET_ActiveTask(writer);
 		
-		writer.println("</td><td>");
+		writer.println("</td><td class='activefinished' style='right:0px;'>");
 		
 		do_GET_FinishedTask(writer);
 		
