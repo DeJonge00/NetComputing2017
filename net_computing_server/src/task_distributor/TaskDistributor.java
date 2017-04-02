@@ -2,7 +2,6 @@ package task_distributor;
 
 import java.rmi.Naming;
 import java.rmi.RMISecurityManager;
-import java.rmi.RemoteException;
 
 import message_inbox.Connection;
 import message_inbox.ConnectionList;
@@ -26,7 +25,7 @@ public class TaskDistributor extends Thread{
 		} catch (Exception e){
 			e.printStackTrace();
 		}   
-	} 
+	}
 	
 	
 	@Override
@@ -41,10 +40,13 @@ public class TaskDistributor extends Thread{
 					Connection conn = connections.getFirst();
 					t.setConn(conn);
 					stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  
-					stub.execute(t.getCommand());
+					
 					// upgrade the current task to an active task
 					TaskActive at = new TaskActive(t);
 					at.setStartTime(System.currentTimeMillis());
+					
+					int pid = stub.execute(t.getCommand(), t.getInput());
+					at.setPid(pid);
 					// to do: store ActiveTask
 					tl.insertTask(at);
 					System.out.println("executing " + t.getCommand());

@@ -11,10 +11,6 @@ public class MessageQueue extends LinkedList<Message<?>>{
 	}
 	
 	synchronized public void enqueue(Message<?> m) {
-		Object o = m.getMessageContent();
-		if(o instanceof Measurement) {
-			System.out.println(((Measurement)o).toString());
-		}
 		this.add(m);
 	}
 	

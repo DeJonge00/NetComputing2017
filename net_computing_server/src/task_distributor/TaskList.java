@@ -1,10 +1,12 @@
 package task_distributor;
 
+import java.rmi.Naming;
 import java.util.ArrayList;
 
 import message_inbox.Connection;
+import rmi.TaskServer;
 
-public class TaskList {
+public class TaskList{
 	public ArrayList<TaskActive> activeTasks;
 	public ArrayList<TaskFinished> finishedTasks;
 	
@@ -18,9 +20,25 @@ public class TaskList {
 		if (task instanceof TaskFinished) {
 			int index = find(finishedTasks, task.getUserId());
 			finishedTasks.add(index, (TaskFinished) task);
+			
 		} else {
 			int index = find(activeTasks, task.getUserId());
 			activeTasks.add(index, (TaskActive) task);
+		}
+	}
+	
+	public void remove(int taskId) {
+		Task task = findByTaskId(taskId);
+		if (task instanceof TaskFinished) {
+			finishedTasks.remove((TaskFinished) task);
+		} else {
+			try {
+				TaskServer stub = (TaskServer)Naming.lookup("rmi://"+task.getConn().getInetAddress().getHostAddress()+":1099/taskManager");
+				stub.interrupt(((TaskActive)task).getPid());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			activeTasks.remove((TaskActive) task);
 		}
 	}
 	
@@ -47,12 +65,14 @@ public class TaskList {
 	}
 	
 	/* Removes task from active list and adds a new finished task to finished list */
-	public void finishTask(int pid, Connection conn, int endTime, String taskOutput, int exitStatus) {
+	public void finishTask(int pid, Connection conn, long endTime, String taskOutput, int exitStatus) {
 		int index = findTask(pid, conn);
+		System.out.println("finishing task with pid" + pid + " at index "+index);
 		if (index >= 0) {
 			TaskActive at = activeTasks.get(index);
-			activeTasks.remove(index);
 			finishedTasks.add(new TaskFinished(at, endTime, taskOutput, exitStatus));
+			activeTasks.remove(index);
+			System.out.println("finishing task with pid" + at.getPid() + " at index "+index);
 			System.out.println("task finished: " + taskOutput);
 		}
 	}
@@ -74,6 +94,21 @@ public class TaskList {
 			}
 		}
 		return m;
+	}
+	
+	public Task findByTaskId(int taskId) {
+		for(TaskActive ta : this.activeTasks) {
+			if(ta.getTaskId() == taskId) {
+				return ta;
+			}
+		}
+		
+		for(TaskFinished tf : this.finishedTasks) {
+			if(tf.getTaskId() == taskId) {
+				return tf;
+			}
+		}
+		return null;
 	}
 	
 	public int findTask(TaskActive task) {

@@ -39,6 +39,7 @@ public class DataAnalyzer implements Runnable {
 				Message<TaskInfo> m = (Message<TaskInfo>)messages.dequeue();
 				TaskInfo tf = m.getMessageContent();
 				int pid = tf.getPid();
+				System.out.println("dataanalyzer pid:" + pid);
 				
 				Connection conn = m.getConn();
 				// retrieve active task based on pid and conn
@@ -47,8 +48,7 @@ public class DataAnalyzer implements Runnable {
 				try {
 					TaskServer stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  
 					String result = stub.getOutput(pid);
-					tl.finishTask(pid, conn, 0, result, 0);
-					System.out.println(result);
+					tl.finishTask(pid, conn, tf.getFinishTime(), result, tf.getStatus());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

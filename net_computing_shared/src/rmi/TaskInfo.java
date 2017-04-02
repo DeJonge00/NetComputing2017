@@ -5,10 +5,10 @@ import java.io.Serializable;
 public class TaskInfo implements Serializable {
 	public static final long serialVersionUID = 123;
 	private int pid;
-	private String status;
+	private int status;
 	private long finishTime;
 	
-	public TaskInfo(int pid, String s, long time) {
+	public TaskInfo(int pid, int s, long time) {
 		this.pid = pid;
 		this.status = s;
 		this.finishTime = time;
@@ -22,11 +22,11 @@ public class TaskInfo implements Serializable {
 		this.pid = pid;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 	

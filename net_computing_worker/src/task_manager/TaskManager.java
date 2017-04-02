@@ -23,12 +23,12 @@ public class TaskManager extends UnicastRemoteObject implements TaskServer, Seri
 		this.oos = o;
 	}
 	
-	public synchronized int execute(String process) {
+	public synchronized int execute(String process, String input) {
 		Task t = null;
 		try {
 			Process p = Runtime.getRuntime().exec(process);
 			TaskOutput out = new TaskOutput();
-			TaskThread tt = new TaskThread(p, out, pid, oos);
+			TaskThread tt = new TaskThread(p, out, pid, oos, input);
 			Thread thread = new Thread(tt);
 			t = new Task(thread, out, pid);
 			this.tasks.add(t);

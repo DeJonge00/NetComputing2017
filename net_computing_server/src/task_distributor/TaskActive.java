@@ -28,4 +28,9 @@ public class TaskActive extends Task {
 	public void setStartTime(long startTime) {
 		this.startTime = startTime;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "<td>"+startTime+"</td>";
+	}
 }

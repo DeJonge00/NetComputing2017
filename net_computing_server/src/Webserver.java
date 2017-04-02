@@ -27,7 +27,7 @@ public class Webserver {
 		this.message_inbox = new MessageInbox(this.workers, port);
 		this.tq = new TaskQueue();
 		this.tl = new TaskList();
-		td = new TaskDistributor(tq, this.workers, tl);
+		this.td = new TaskDistributor(tq, this.workers, this.tl);
 		
 		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue(), this.workers, tl);
 		

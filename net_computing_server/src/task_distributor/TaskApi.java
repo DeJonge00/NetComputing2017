@@ -23,9 +23,11 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 public class TaskApi extends AbstractHandler {
 	private TaskQueue tq;
 	private TaskList tl;
+	private int taskCounter;
 	public TaskApi(TaskQueue tq, TaskList tl) {
 		this.tq = tq;
 		this.tl = tl;
+		this.taskCounter = 0;
 	}
 	
 	public void handle(String target,Request baseRequest,HttpServletRequest request,HttpServletResponse response) 
@@ -34,37 +36,36 @@ public class TaskApi extends AbstractHandler {
 		boolean err404 = false;
 		HTMLTemplate.renderTemplate(response.getWriter(), "./HTML/Header.html");
 		if(baseRequest.getMethod().equals("GET")) {
-			if(target.equals("/active_task") || target.equals("/active_task/")) {
+			if(target.matches("/active_task/?")) {
 				// INDEX active tasks
 				do_GET_ActiveTask(response.getWriter());
 				System.out.println("GET active_task");
-			} else if(target.equals("/finished_task") || target.equals("/finished_task/")) {
+			} else if(target.matches("/finished_task/?") || target.equals("/finished_task/")) {
 				do_GET_FinishedTask(response.getWriter());
 				// INDEX finished tasks
 				System.out.println("GET finished_task");
-			} else if(target.equals("/create") || target.equals("/create/")) {
+			} else if(target.matches("/create/?")) {
 				// NEW task
 				do_GET_CreateTask(response.getWriter());
 				System.out.println("GET create task form");
 			} else if (target.equals("/")) {
 				do_GET_tasks(response.getWriter());
+			} else if(target.matches("/\\d")) {
+				do_GET_task(response.getWriter(), Integer.parseInt(target.substring(1)));
 			} else {
 				err404 = true;
 			}
 		} else if (baseRequest.getMethod().equals("POST")) {
-			if(target.equals("/create") || target.equals("/create/")) {
+			if(target.matches("/create/?")) {
 				// CREATE task
 				do_POST_CreateTask(
-						baseRequest.getParameter("command"), 
-						baseRequest.getParameter("name"));
+						baseRequest.getParameter("command"),
+						baseRequest.getParameter("input"));
 				response.sendRedirect("/task/create/");
-				System.out.println("POST create task form");
-			}
-		} else if (baseRequest.getMethod().equals("DELETE")) {
-			if(target.equals("/destroy") || target.equals("/destroy/")) {
-				// DESTROY task
-				do_DELETE_DestroyTask(response.getWriter());
-				System.out.println("DELETE destroy task");
+			} else if (target.matches("/\\d")) {
+				// Standard HTML5 forms do not support sending DELETE requests, so we post to the resource instead
+				do_DELETE_DestroyTask(response.getWriter(), Integer.parseInt(target.substring(1)));
+				response.sendRedirect("/task/");
 			} else {
 				err404 = true;
 			}
@@ -81,36 +82,45 @@ public class TaskApi extends AbstractHandler {
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
 	}
-
+	
+	void do_GET_task(PrintWriter writer, int taskId) {
+		Task t = tl.findByTaskId(taskId);
+		if(t != null) {
+			writer.println("<h1>task output from task "+taskId+":</h1><br>");
+			if(t instanceof TaskFinished) {
+				String out = ((TaskFinished)t).getTaskOutput();
+				String[] lines = out.split("\\r?\\n");
+				for(String line : lines) {
+					writer.println(line + "<br>");
+				}
+			} else {
+				writer.println("<h1>Task with ID=" + taskId + " is still executing</h1>");
+			}
+		} else {
+			writer.println("<h1>Task with ID=" + taskId + " not found</h1>");
+		}
+	}
+	
 	void do_GET_tasks(PrintWriter writer) {
 		writer.println("<table>");		
-		writer.println("<tr><td>Active Tasks</td><td>Finished Tasks</td></tr>");
 		writer.println("<tr><td>");
-		writer.println("<table>");
 		
-		for(TaskActive ta : tl.getActiveTasks()) {
-			writer.println("<tr><td>pid:</td><td> " + ta.getPid() + 
-						"</td><td>start time: " + ta.getStartTime() + "</td></tr>");
-		}
+		do_GET_ActiveTask(writer);
 		
-		writer.println("</table></td>");
-		writer.println("<td><table>");
+		writer.println("</td><td>");
 		
-		for(TaskFinished tf : tl.getFinishedTasks()) {
-			writer.println("<tr><td>pid:</td><td> " + tf.getPid() + 
-						"</td><td>finished at: " + tf.getEndTime() + "</td></tr>");
-		}
+		do_GET_FinishedTask(writer);
 		
-		writer.println("</table></td>");		
-		writer.println("</tr>");
+		writer.println("</td></tr>");
 		writer.println("</table>");
 	}
 	void do_GET_ActiveTask(PrintWriter writer) {
 		writer.println("<h2>Active Tasks</h2><br>");
 		writer.println("<table>");
 		for(TaskActive ta : tl.getActiveTasks()) {
-			writer.println("<tr><td>pid:</td><td> " + ta.getPid() + 
-						"</td><td>start time: " + ta.getStartTime() + "</td></tr>");
+			writer.println("<tr>" + ta.toString() + 
+					"<td><form method='GET' action='/task/" + ta.getTaskId() + "'><button type='submit'>view</button></form></td>" +
+					"<td><form method='POST' action='/task/" + ta.getTaskId() + "'><button type='submit'>delete</button></form></td></tr>");
 		}
 		writer.println("</table>");
 	}
@@ -119,8 +129,10 @@ public class TaskApi extends AbstractHandler {
 		writer.println("<h2>Finished Tasks</h2><br>");
 		writer.println("<table>");
 		for(TaskFinished tf : tl.getFinishedTasks()) {
-			writer.println("<tr><td>pid:</td><td> " + tf.getPid() + 
-						"</td><td>finished at: " + tf.getEndTime() + "</td></tr>");
+			System.out.println(tf.getTaskId());
+			writer.println("<tr>" + tf.toString() + 
+						"<td><form method='GET' action='/task/" + tf.getTaskId() + "'><button type='submit'>view</button></form></td>" +
+						"<td><form method='POST' action='/task/" + tf.getTaskId() + "'><button type='submit'>delete</button></form></td></tr>");
 		}
 		writer.println("</table>");
 	}
@@ -130,22 +142,21 @@ public class TaskApi extends AbstractHandler {
         writer.println("<h2>Create a new Task</h2><br>");
         writer.println("Command to execute: <br>");
         writer.println("<input type='text' name='command'><br>");
-        writer.println("Name:<br>");
-        writer.println("<input type='text' name='name'><br>");
+        writer.println("Program input:<br>");
+        writer.println("<input type='textfield' name='input'><br>");
         writer.println("<input type='submit'>");
         writer.println("</form>");
 	}
 
-	void do_POST_CreateTask(String command, String name) {
+	void do_POST_CreateTask(String command, String input) {
 		// process post data
-		System.out.println("POST createTask received command: " + command +
-				"\nFrom: " + name);
-		Task t = new Task(command);
+		Task t = new Task(command, taskCounter, input);
+		taskCounter++;
 		t.setUserId(1);
 		this.tq.enqueue(t);
 	}
 
-	void do_DELETE_DestroyTask(PrintWriter writer) {
-		
+	void do_DELETE_DestroyTask(PrintWriter writer, int taskId) {
+		this.tl.remove(taskId);
 	}
 }

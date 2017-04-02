@@ -1,22 +1,22 @@
 package task_distributor;
 
 public class TaskFinished extends TaskActive {
-	private int endTime;
+	private long endTime;
 	private String taskOutput;
 	private int exitStatus;
 	
-	public TaskFinished(TaskActive t, int endTime, String taskOutput, int exitStatus) {
+	public TaskFinished(TaskActive t, long endTime, String taskOutput, int exitStatus) {
 		super(t);
 		this.endTime = endTime;
 		this.taskOutput = taskOutput;
 		this.exitStatus = exitStatus;
 	}
 
-	public int getEndTime() {
+	public long getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(int endTime) {
+	public void setEndTime(long endTime) {
 		this.endTime = endTime;
 	}
 
@@ -34,5 +34,10 @@ public class TaskFinished extends TaskActive {
 
 	public void setExitStatus(int exitStatus) {
 		this.exitStatus = exitStatus;
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "<td>" + endTime + "</td><td>" + exitStatus + "</td>";
 	}
 }
