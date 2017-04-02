@@ -25,4 +25,8 @@ public class Task {
 	public String getOutput() {
 		return this.output.getOutput();
 	}
+	
+	public String getError() {
+		return this.output.getError();
+	}
 }

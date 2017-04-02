@@ -69,6 +69,6 @@ public class Task {
 	
 	@Override
 	public String toString() {
-		return "<td>"+command+"</td>"+taskId+"</td><td>"+userId+"</td>";
+		return "<td>"+command+"</td><td>"+taskId+"</td><td>"+userId+"</td>";
 	}
 }

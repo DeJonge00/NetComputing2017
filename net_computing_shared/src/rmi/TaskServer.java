@@ -8,5 +8,5 @@ public interface TaskServer extends Remote {
 
 	public void interrupt(int pid) throws RemoteException;
 	
-	public String getOutput(int pid) throws RemoteException;
+	public String[] getOutput(int pid) throws RemoteException;
 }
