@@ -117,11 +117,11 @@ public class TaskApi extends AbstractHandler {
 	
 	void do_GET_tasks(PrintWriter writer) {
 		writer.println("<table>");		
-		writer.println("<tr><td>");
+		writer.println("<tr><td class='activefinished' style='left:0px;'>");
 		
 		do_GET_ActiveTask(writer);
 		
-		writer.println("</td><td>");
+		writer.println("</td><td class='activefinished' style='right:0px;'>");
 		
 		do_GET_FinishedTask(writer);
 		
@@ -159,7 +159,7 @@ public class TaskApi extends AbstractHandler {
         writer.println("Command to execute: <br>");
         writer.println("<input type='text' name='command'><br>");
         writer.println("Program input:<br>");
-        writer.println("<textarea name='input' placeholder='enter program input here (optional)'></textarea>");
+        writer.println("<textarea name='input' placeholder='enter program input here (optional)'></textarea><br>");
         writer.println("<input type='submit'>");
         writer.println("</form>");
 	}

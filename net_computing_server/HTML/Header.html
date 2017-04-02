@@ -1,38 +1,56 @@
 <head>
 <style>
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #444;
-}
-
-li {
-    float: left;
-}
-
-li a {
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-li a:hover {
-    background-color: white;
-    color: #444;
-}
+	html {
+		background-color: white;
+	    text-align: center;
+	    display: table;
+	    width: 100%;
+	}
+	
+	td.activefinished {
+		position:absolute;
+		width:50%;
+		text-align: center;
+	}
+	
+	body {
+		margin: 0px 0px 0px 0px;
+	}
+	
+	ul {
+	    list-style-type: none;
+	    height: 45px;
+	    margin: 0;
+	    padding: 0;
+	    overflow: hidden;
+	    background-color: #444;
+	}
+	
+	li {
+	    float: left;
+	}
+	
+	li a {
+	    display: inline-block;
+	    color: white;
+	    text-align: center;
+	    padding: 14px 16px;
+	    text-decoration: none;
+	}
+	
+	li a:hover {
+	    background-color: white;
+	    color: #444;
+	}
 </style>
 </head>
 <body>
 
-<ul>
-  <li><a href="/task">Home</a></li>
-  <li><a href="/task/create/">Create a new task</a></li>
-  <li><a href="/task/active_task/">Active tasks</a></li>
-  <li><a href="/task/finished_task/">Finished tasks</a></li>
-</ul>
+	<ul>
+	  <li><a href="/task">Home</a></li>
+	  <li><a href="/task/create/">Create a new task</a></li>
+	  <li><a href="/task/active_task/">Active tasks</a></li>
+	  <li><a href="/task/finished_task/">Finished tasks</a></li>
+	</ul>
 
 </body>
