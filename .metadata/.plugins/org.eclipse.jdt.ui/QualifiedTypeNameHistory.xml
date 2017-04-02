@@ -5,4 +5,14 @@
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.awt.List"/>
 <fullyQualifiedTypeName name="java.io.OutputStream"/>
+<fullyQualifiedTypeName name="javax.ws.rs.core.MediaType"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.server.handler.DefaultHandler"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.server.Handler"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.server.handler.ContextHandler.Context"/>
+<fullyQualifiedTypeName name="javax.ws.rs.core.Context"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.server.Connector"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.server.handler.ContextHandler"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.server.handler.AbstractHandler"/>
+<fullyQualifiedTypeName name="com.sun.research.ws.wadl.Request"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.server.Request"/>
 </qualifiedTypeNameHistroy>

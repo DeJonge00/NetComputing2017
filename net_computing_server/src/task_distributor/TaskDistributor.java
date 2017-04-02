@@ -12,9 +12,12 @@ public class TaskDistributor extends Thread{
 	private TaskServer stub; 
 	private TaskQueue tasks;
 	private ConnectionList connections;
-	public TaskDistributor(TaskQueue tq, ConnectionList cl) {
+	private TaskList tl;
+	
+	public TaskDistributor(TaskQueue tq, ConnectionList cl, TaskList tl) {
 		this.tasks = tq;
 		this.connections = cl;
+		this.tl = tl;
 		try {
 			System.out.println("Starting task distributor");
 			System.setSecurityManager(new RMISecurityManager());
@@ -43,6 +46,7 @@ public class TaskDistributor extends Thread{
 					TaskActive at = new TaskActive(t);
 					at.setStartTime(System.currentTimeMillis());
 					// to do: store ActiveTask
+					tl.insertTask(at);
 					System.out.println("executing " + t.getCommand());
 				} catch (Exception e) {
 					e.printStackTrace();

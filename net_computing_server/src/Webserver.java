@@ -9,6 +9,7 @@ import org.hyperic.sigar.Sigar;
 
 import task_distributor.TaskApi;
 import task_distributor.TaskDistributor;
+import task_distributor.TaskList;
 import task_distributor.TaskQueue;
 import data_analyzer.DataAnalyzer;
 
@@ -24,8 +25,10 @@ public class Webserver {
 		this.workers = new ConnectionList();
 		this.message_inbox = new MessageInbox(this.workers, port);
 		this.tq = new TaskQueue();
-		td = new TaskDistributor(tq, this.workers);
-		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue(), this.workers);
+		TaskList tl = new TaskList();
+		td = new TaskDistributor(tq, this.workers, tl);
+		
+		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue(), this.workers, tl);
 		
 		
 		/* test connection list insertion:
