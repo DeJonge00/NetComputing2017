@@ -154,14 +154,14 @@ public class TaskApi extends AbstractHandler {
 	}
 
 	void do_GET_CreateTask(PrintWriter writer) {
-        writer.println("<div style=''><form method='POST'>");
+        writer.println("<div'><form method='POST' class='createform'>");
         writer.println("<h2>Create a new Task</h2><br>");
-        writer.println("<table><tr><td>Command to execute: </td></tr>");
-        writer.println("<tr><td><input type='text' name='command'></td></tr>");
+        writer.println("<table class='tab'><tr><td>Command to execute: </td></tr>");
+        writer.println("<tr><td><input style='width:100%;' type='text' name='command'></td></tr>");
         writer.println("<tr><td>Program input:</td></tr>");
-        writer.println("<tr><td><textarea name='input' placeholder='enter program input here (optional)'></textarea></td></tr>");
-        writer.println("<tr><td><input type='submit'></td></tr>");
-        writer.println("</form></div>");
+        writer.println("<tr><td><textarea style='width:100%;' name='input' placeholder='enter program input here (optional)'></textarea></td></tr>");
+        writer.println("<tr><td><input style='width:100%;' type='submit'></td></tr>");
+        writer.println("</table></form></div>");
 	}
 
 	void do_POST_CreateTask(String command, String input) {
