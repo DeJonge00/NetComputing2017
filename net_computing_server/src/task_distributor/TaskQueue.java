@@ -15,7 +15,6 @@ public class TaskQueue extends LinkedList<Task> {
 			return null;
 		}
 	}
-	
 	public synchronized void enqueue(Task t) {
 		this.add(t);
 	}
