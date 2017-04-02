@@ -1,6 +1,5 @@
 package message_inbox;
 
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -8,14 +7,12 @@ import rmi.InitData;
 import rmi.Measurement;
 import rmi.TaskInfo;
 
-
 public class MessageReceiver implements Runnable {
 	private Connection connection;
 	private ObjectInputStream in;
 	private MessageQueue messages;
 	
 	public MessageReceiver(Connection c, MessageQueue mq) {
-
 		this.connection = c;
 		this.messages = mq;
 	}
@@ -33,7 +30,7 @@ public class MessageReceiver implements Runnable {
 		}
 	}
 	
-	public Message<?> read_message() {
+	public Message<?> readMessage() {
 		Message<?> msg;
 		Object o = null;
 		
@@ -62,7 +59,7 @@ public class MessageReceiver implements Runnable {
 		
 		Message<?> msg;
 		while (true) {
-			msg = read_message();
+			msg = readMessage();
 			this.messages.enqueue(msg);
 		}
 	}

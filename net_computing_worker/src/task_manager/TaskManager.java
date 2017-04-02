@@ -8,7 +8,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import rmi.TaskServer;
 
-
 public class TaskManager extends UnicastRemoteObject implements TaskServer, Serializable {
 	static final long serialVersionUID = 1234;
 	
@@ -37,7 +36,6 @@ public class TaskManager extends UnicastRemoteObject implements TaskServer, Seri
 			thread.start();
 		} catch (IOException e) {
 			System.out.println("IO exception when starting executable in Taskmanager");
-			e.printStackTrace();
 		}
 		if(t != null) {
 			return t.getPid();

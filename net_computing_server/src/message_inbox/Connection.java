@@ -1,15 +1,10 @@
 package message_inbox;
-
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-
 import rmi.InitData;
 import rmi.Measurement;
-
 
 public class Connection {
 	private Socket socket;
