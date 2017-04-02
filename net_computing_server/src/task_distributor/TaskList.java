@@ -2,6 +2,8 @@ package task_distributor;
 
 import java.util.ArrayList;
 
+import message_inbox.Connection;
+
 public class TaskList {
 	public ArrayList<TaskActive> activeTasks;
 	public ArrayList<TaskFinished> finishedTasks;
@@ -18,7 +20,7 @@ public class TaskList {
 			finishedTasks.add(index, (TaskFinished) task);
 		} else {
 			int index = find(activeTasks, task.getUserId());
-			activeTasks.add(index, (TaskFinished) task);
+			activeTasks.add(index, (TaskActive) task);
 		}
 	}
 	
@@ -45,15 +47,17 @@ public class TaskList {
 	}
 	
 	/* Removes task from active list and adds a new finished task to finished list */
-	public void finishTask(TaskActive task) {
-		int index = findTask(task);
+	public void finishTask(int pid, Connection conn, int endTime, String taskOutput, int exitStatus) {
+		int index = findTask(pid, conn);
 		if (index >= 0) {
+			TaskActive at = activeTasks.get(index);
 			activeTasks.remove(index);
-			finishedTasks.add(new TaskFinished(task));
+			finishedTasks.add(new TaskFinished(at, endTime, taskOutput, exitStatus));
+			System.out.println("task finished: " + taskOutput);
 		}
 	}
 	
-	/* Implements binary search to find the first occurence of a task with userid id */
+	/* Implements binary search to find the first occurrence of a task with userid id */
 	private int find(ArrayList<? extends Task> list, int id) {
 		int l = 0, r = list.size() - 1, m = 0, currId;
 		while(l <= r) {
@@ -77,6 +81,17 @@ public class TaskList {
 		for (int i = 0; i < activeTasks.size(); i++) {
 			if (activeTasks.get(i).getPid() == task.getPid()
 			&& activeTasks.get(i).getConn() == task.getConn()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int findTask(int pid, Connection conn) {
+		/* Finds an active task in the task list */
+		for (int i = 0; i < activeTasks.size(); i++) {
+			if (activeTasks.get(i).getPid() == pid
+			&& activeTasks.get(i).getConn() == conn) {
 				return i;
 			}
 		}
