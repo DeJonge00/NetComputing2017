@@ -159,7 +159,7 @@ public class TaskApi extends AbstractHandler {
         writer.println("Command to execute: <br>");
         writer.println("<input type='text' name='command'><br>");
         writer.println("Program input:<br>");
-        writer.println("<textarea name='input' placeholder='enter program input here (optional)'></textarea>");
+        writer.println("<textarea name='input' placeholder='enter program input here (optional)'></textarea><br>");
         writer.println("<input type='submit'>");
         writer.println("</form>");
 	}
