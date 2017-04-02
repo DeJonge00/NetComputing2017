@@ -31,11 +31,11 @@ public class TaskThread extends Observable implements Runnable {
 			BufferedReader in = getInputStream();
 			String output = readTaskOutput(in);
 			this.out.setOutput(output);
-			sendData(new TaskInfo(pid, "finished"));
+			sendData(new TaskInfo(pid, "finished", System.currentTimeMillis()));
 		} catch (InterruptedException e) {
 			process.destroy();
 			out.setOutput("interrupted");
-			sendData(new TaskInfo(pid, "interrupted"));
+			sendData(new TaskInfo(pid, "interrupted", System.currentTimeMillis()));
 			System.out.println("Process was interrupted: " + process.toString());
 			return;
 		}
