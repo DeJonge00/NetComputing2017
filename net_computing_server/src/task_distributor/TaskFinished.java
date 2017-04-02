@@ -3,13 +3,23 @@ package task_distributor;
 public class TaskFinished extends TaskActive {
 	private long endTime;
 	private String taskOutput;
+	private String taskError;
 	private int exitStatus;
 	
-	public TaskFinished(TaskActive t, long endTime, String taskOutput, int exitStatus) {
+	public TaskFinished(TaskActive t, long endTime, String taskOutput, String taskError, int exitStatus) {
 		super(t);
 		this.endTime = endTime;
 		this.taskOutput = taskOutput;
 		this.exitStatus = exitStatus;
+		this.taskError = taskError;
+	}
+
+	public String getTaskError() {
+		return taskError;
+	}
+
+	public void setTaskError(String taskError) {
+		this.taskError = taskError;
 	}
 
 	public long getEndTime() {

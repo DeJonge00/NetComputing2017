@@ -40,7 +40,7 @@ public class TaskApi extends AbstractHandler {
 				// INDEX active tasks
 				do_GET_ActiveTask(response.getWriter());
 				System.out.println("GET active_task");
-			} else if(target.matches("/finished_task/?") || target.equals("/finished_task/")) {
+			} else if(target.matches("/finished_task/?")) {
 				do_GET_FinishedTask(response.getWriter());
 				// INDEX finished tasks
 				System.out.println("GET finished_task");
@@ -86,10 +86,24 @@ public class TaskApi extends AbstractHandler {
 	void do_GET_task(PrintWriter writer, int taskId) {
 		Task t = tl.findByTaskId(taskId);
 		if(t != null) {
-			writer.println("<h1>task output from task "+taskId+":</h1><br>");
 			if(t instanceof TaskFinished) {
-				String out = ((TaskFinished)t).getTaskOutput();
+				writer.println("<h1>standard input for task "+taskId+":</h1><br>");
+				String out = t.getInput();
 				String[] lines = out.split("\\r?\\n");
+				for(String line : lines) {
+					writer.println(line + "<br>");
+				}
+				
+				writer.println("<h1>standard output from task "+taskId+":</h1><br>");
+				out = ((TaskFinished)t).getTaskOutput();
+				lines = out.split("\\r?\\n");
+				for(String line : lines) {
+					writer.println(line + "<br>");
+				}
+				
+				writer.println("<h1>standard error from task "+taskId+":</h1><br>");
+				out = ((TaskFinished)t).getTaskError();
+				lines = out.split("\\r?\\n");
 				for(String line : lines) {
 					writer.println(line + "<br>");
 				}
@@ -117,6 +131,7 @@ public class TaskApi extends AbstractHandler {
 	void do_GET_ActiveTask(PrintWriter writer) {
 		writer.println("<h2>Active Tasks</h2><br>");
 		writer.println("<table>");
+		writer.println("<tr><td>command</td><td>taskId</td><td>userId</td><td>started at</td></tr>");
 		for(TaskActive ta : tl.getActiveTasks()) {
 			writer.println("<tr>" + ta.toString() + 
 					"<td><form method='GET' action='/task/" + ta.getTaskId() + "'><button type='submit'>view</button></form></td>" +
@@ -128,8 +143,9 @@ public class TaskApi extends AbstractHandler {
 	void do_GET_FinishedTask(PrintWriter writer) {
 		writer.println("<h2>Finished Tasks</h2><br>");
 		writer.println("<table>");
+
+		writer.println("<tr><td>command</td><td>taskId</td><td>userId</td><td>started at</td><td>finished at</td><td>exit status</td></tr>");
 		for(TaskFinished tf : tl.getFinishedTasks()) {
-			System.out.println(tf.getTaskId());
 			writer.println("<tr>" + tf.toString() + 
 						"<td><form method='GET' action='/task/" + tf.getTaskId() + "'><button type='submit'>view</button></form></td>" +
 						"<td><form method='POST' action='/task/" + tf.getTaskId() + "'><button type='submit'>delete</button></form></td></tr>");
@@ -143,7 +159,7 @@ public class TaskApi extends AbstractHandler {
         writer.println("Command to execute: <br>");
         writer.println("<input type='text' name='command'><br>");
         writer.println("Program input:<br>");
-        writer.println("<input type='textfield' name='input'><br>");
+        writer.println("<textarea name='input' placeholder='enter program input here (optional)'></textarea>");
         writer.println("<input type='submit'>");
         writer.println("</form>");
 	}

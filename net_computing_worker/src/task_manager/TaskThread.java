@@ -1,11 +1,12 @@
 package task_manager;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.Observable;
 
 import rmi.TaskInfo;
@@ -28,11 +29,18 @@ public class TaskThread extends Observable implements Runnable {
 	
 	public void run() {
 		try {
-			getOutputStream().write(input);
+			String[] inLines = input.split("\\r?\\n");
+			PrintWriter writer = getOutputStream();
+			for(String line : inLines) {
+				writer.println(line);
+			}
 			process.waitFor();
 			BufferedReader in = getInputStream();
 			String output = readTaskOutput(in);
+			BufferedReader err = getErrorStream();
+			String error = readTaskOutput(err);
 			this.out.setOutput(output);
+			this.out.setError(error);
 			sendData(new TaskInfo(pid, process.exitValue(), System.currentTimeMillis()));
 		} catch (InterruptedException e) {
 			process.destroy();
@@ -49,8 +57,13 @@ public class TaskThread extends Observable implements Runnable {
 		return new BufferedReader(new InputStreamReader(process.getInputStream()));
 	}
 	
-	private BufferedWriter getOutputStream() {
-		return new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+	private BufferedReader getErrorStream() {
+		return new BufferedReader(new InputStreamReader(process.getErrorStream()));
+	}
+	
+	private PrintWriter getOutputStream() {
+		return new PrintWriter(new OutputStreamWriter(new BufferedOutputStream(process.getOutputStream())), true);
+
 	}
 	
 	private String readTaskOutput(BufferedReader in) {

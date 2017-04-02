@@ -47,8 +47,8 @@ public class DataAnalyzer implements Runnable {
 				
 				try {
 					TaskServer stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  
-					String result = stub.getOutput(pid);
-					tl.finishTask(pid, conn, tf.getFinishTime(), result, tf.getStatus());
+					String[] result = stub.getOutput(pid);
+					tl.finishTask(pid, conn, tf.getFinishTime(), result[0], result[1], tf.getStatus());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

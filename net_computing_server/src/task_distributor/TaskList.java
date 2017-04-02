@@ -65,15 +65,12 @@ public class TaskList{
 	}
 	
 	/* Removes task from active list and adds a new finished task to finished list */
-	public void finishTask(int pid, Connection conn, long endTime, String taskOutput, int exitStatus) {
+	public void finishTask(int pid, Connection conn, long endTime, String taskOutput, String taskError, int exitStatus) {
 		int index = findTask(pid, conn);
-		System.out.println("finishing task with pid" + pid + " at index "+index);
 		if (index >= 0) {
 			TaskActive at = activeTasks.get(index);
-			finishedTasks.add(new TaskFinished(at, endTime, taskOutput, exitStatus));
+			finishedTasks.add(new TaskFinished(at, endTime, taskOutput, taskError, exitStatus));
 			activeTasks.remove(index);
-			System.out.println("finishing task with pid" + at.getPid() + " at index "+index);
-			System.out.println("task finished: " + taskOutput);
 		}
 	}
 	

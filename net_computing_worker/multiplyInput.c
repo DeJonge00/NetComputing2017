@@ -15,5 +15,7 @@ int main(int argc, char *argv[]) {
 		fscanf(stdin, "%d", &x);
 		fprintf(stdout, "%d\n", x*num);
 	}
+
+	fprintf(stderr, "no errors occured");
 	return 0;
 }
