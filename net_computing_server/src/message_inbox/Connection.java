@@ -9,21 +9,21 @@ import rmi.Measurement;
 public class Connection {
 	private Socket socket;
 	private InitData data;
-	private Measurement last_measurement;
+	private Measurement lastMeasurement;
 
-	public Connection(Socket s) {
-		this.socket = s;
-		this.last_measurement = new Measurement();
+	public Connection(Socket socket) {
+		this.socket = socket;
+		this.lastMeasurement = new Measurement();
 	}
 	
-	public synchronized void setLastMeasurement(Measurement m) {
-		this.last_measurement = m;
+	public synchronized void setLastMeasurement(Measurement measurement) {
+		this.lastMeasurement = measurement;
 	}
 	
 	public synchronized double getLoadInfo() {
-		double memoryLoad, cpuLoad;
-		memoryLoad = (last_measurement.getMemory()-last_measurement.getFreememory())/last_measurement.getMemory();
-		cpuLoad = last_measurement.getCpuUsage() / (double)last_measurement.getCpuamount();
+		double memoryLoad = (lastMeasurement.getMemory() - lastMeasurement.getFreememory()) / lastMeasurement.getMemory();
+		double cpuLoad = lastMeasurement.getCpuUsage() / (double)lastMeasurement.getCpuamount();
+		
 		if(memoryLoad < 0.9 && cpuLoad < 0.9) {
 			return ((memoryLoad + cpuLoad)/2);
 		} else {
@@ -54,11 +54,13 @@ public class Connection {
 	
 	@Override
 	public boolean equals(Object other) {
-		Connection c;
+		Connection connection;
+		
 		if(other instanceof Connection) {
-			c = (Connection)other;
-			if(c.getInetAddress() == this.getInetAddress() &&
-					c.getPort() == this.getPort()) {
+			connection = (Connection)other;
+			
+			if(connection.getInetAddress() == this.getInetAddress()
+			&& connection.getPort() == this.getPort()) {
 				return true;
 			}
 		}

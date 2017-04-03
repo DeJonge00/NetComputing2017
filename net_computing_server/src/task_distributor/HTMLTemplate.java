@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 
 public class HTMLTemplate {
+	
+	// Opens HTML file template and writes it to writer.
 	public static void renderTemplate(PrintWriter writer, String template) {
 		try {
 		    BufferedReader reader = new BufferedReader(new FileReader(template));

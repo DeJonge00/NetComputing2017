@@ -11,18 +11,17 @@ public class TaskDistributor extends Thread{
 	private TaskServer stub; 
 	private TaskQueue tasks;
 	private ConnectionList connections;
-	private TaskList tl;
+	private TaskList taskList;
 	
-	public TaskDistributor(TaskQueue tq, ConnectionList cl, TaskList tl) {
-		this.tasks = tq;
-		this.connections = cl;
-		this.tl = tl;
+	public TaskDistributor(TaskQueue taskQueue, ConnectionList connections, TaskList taskList) {
+		this.tasks = taskQueue;
+		this.connections = connections;
+		this.taskList = taskList;
+		
 		try {
 			System.out.println("Starting task distributor");
-			System.setSecurityManager(new RMISecurityManager());
-			//stub=(TaskServer)Naming.lookup("rmi://192.168.178.30:1099/taskManager");  
-			
-		} catch (Exception e){
+			System.setSecurityManager(new RMISecurityManager());			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}   
 	}
@@ -32,24 +31,24 @@ public class TaskDistributor extends Thread{
 	public void run() {
 		while(true) {
 			//dequeue task
-			Task t = tasks.dequeue();
+			Task task = tasks.dequeue();
 			//System.out.println("in taskdistributor loop");
-			if(t != null) {
+			if(task != null) {
 				// there is a task to distribute
 				try {
 					Connection conn = connections.getFirst();
-					t.setConn(conn);
+					task.setConn(conn);
 					stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  
 					
 					// upgrade the current task to an active task
-					TaskActive at = new TaskActive(t);
+					TaskActive at = new TaskActive(task);
 					at.setStartTime(System.currentTimeMillis());
 					
-					int pid = stub.execute(t.getCommand(), t.getInput());
+					int pid = stub.execute(task.getCommand(), task.getInput());
 					at.setPid(pid);
 					// to do: store ActiveTask
-					tl.insertTask(at);
-					System.out.println("executing " + t.getCommand());
+					taskList.insertTask(at);
+					System.out.println("executing " + task.getCommand());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -58,7 +57,7 @@ public class TaskDistributor extends Thread{
 				try {
 					Thread.sleep(5);
 				} catch (InterruptedException e) {
-					// the task distributor was interrupted so we return and shut down
+					System.err.println("The task distributer was interrupted.");
 					return;
 				}
 			}

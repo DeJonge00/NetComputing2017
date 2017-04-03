@@ -14,19 +14,20 @@ import task_distributor.TaskList;
 public class DataAnalyzer implements Runnable {
 	
 	private MessageQueue messages;
-	private ConnectionList workers;
-	private TaskList tasklist;
+	private ConnectionList connections;
+	private TaskList taskList;
 	
-	public DataAnalyzer(MessageQueue messages, ConnectionList c, TaskList tl) {
+	public DataAnalyzer(MessageQueue messages, ConnectionList connections, TaskList taskList) {
 		this.messages = messages;
-		this.workers = c;
-		this.tasklist = tl;
+		this.connections = connections;
+		this.taskList = taskList;
 	}
 
 	@SuppressWarnings("unchecked")
 	public void run() {
 		while (true) {
 			int messageType = messages.getFirstType();
+			
 			if (messageType == 1) { 
 				// it's a measurement
 				Message<Measurement> message = (Message<Measurement>) messages.dequeue();
@@ -35,7 +36,7 @@ public class DataAnalyzer implements Runnable {
 				// update the connection that sent the message
 				Connection conn = message.getConn();
 				conn.setLastMeasurement(measure);
-				this.workers.update(conn);
+				this.connections.update(conn);
 			} else if (messageType == 2) {
 				// it's taskinfo
 				Message<TaskInfo> message = (Message<TaskInfo>) messages.dequeue();
@@ -50,8 +51,9 @@ public class DataAnalyzer implements Runnable {
 				try {
 					TaskServer stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  
 					String[] result = stub.getOutput(pid);
-					tasklist.finishTask(pid, conn, taskinfo.getFinishTime(), result[0], result[1], taskinfo.getStatus());
+					taskList.finishTask(pid, conn, taskinfo.getFinishTime(), result[0], result[1], taskinfo.getStatus());
 				} catch (Exception e) {
+					System.err.println("Could not finish task!");
 					e.printStackTrace();
 				}
 			}

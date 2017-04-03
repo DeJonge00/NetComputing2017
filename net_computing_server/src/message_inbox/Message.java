@@ -5,27 +5,27 @@ import java.net.InetAddress;
 
 public class Message<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Connection conn;
-	private T t;
+	private Connection connection;
+	private T type;
 	
-	public Message(T t, Connection c) {
-		this.t = t;
-		this.conn = c;
+	public Message(T type, Connection c) {
+		this.type = type;
+		this.connection = c;
 	}
 	
 	public T getMessageContent() {
-		return this.t;
+		return this.type;
 	}
 	
 	public int getSenderPort() {
-		return this.conn.getPort();
+		return this.connection.getPort();
 	}
 	
 	public InetAddress getSenderAddress() {
-		return this.conn.getInetAddress();
+		return this.connection.getInetAddress();
 	}
 	
 	public Connection getConn() {
-		return this.conn;
+		return this.connection;
 	}
 }

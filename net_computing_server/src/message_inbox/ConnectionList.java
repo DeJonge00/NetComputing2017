@@ -8,10 +8,10 @@ public class ConnectionList {
 		this.connections = new ArrayList<Connection>();
 	}
 	
-	synchronized public void addConnection(Connection conn) {
+	synchronized public void addConnection(Connection connection) {
 		int i = 0;
 		int size = connections.size();
-		double load = conn.getLoadInfo();
+		double load = connection.getLoadInfo();
 		
 		// find the position at which the connection should be inserted
 		if(size > 0) {
@@ -27,10 +27,10 @@ public class ConnectionList {
 		
 		if(i < size) {
 			// if it is in the middle of the list, insert it at index i
-			this.connections.add(i, conn);
+			this.connections.add(i, connection);
 		} else {
 			// otherwise append it to the end
-			this.connections.add(conn);
+			this.connections.add(connection);
 		}
 	}
 	

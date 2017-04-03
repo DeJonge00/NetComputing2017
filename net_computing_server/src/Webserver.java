@@ -14,24 +14,24 @@ import data_analyzer.DataAnalyzer;
 
 public class Webserver {
 	private ConnectionList workers;
-	private MessageInbox message_inbox;
+	private MessageInbox messageInbox;
 	private DataAnalyzer analyzer;
-	private TaskQueue taskqueue;
+	private TaskQueue taskQueue;
 	private TaskDistributor distributor;
-	private TaskList tasklist;
+	private TaskList taskList;
 	
 	public Webserver(int port) throws IOException {
 		this.workers = new ConnectionList();
-		this.message_inbox = new MessageInbox(this.workers, port);
-		this.taskqueue = new TaskQueue();
-		this.tasklist = new TaskList();
-		this.distributor = new TaskDistributor(taskqueue, this.workers, this.tasklist);
-		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue(), this.workers, tasklist);
+		this.messageInbox = new MessageInbox(this.workers, port);
+		this.taskQueue = new TaskQueue();
+		this.taskList = new TaskList();
+		this.distributor = new TaskDistributor(taskQueue, this.workers, this.taskList);
+		this.analyzer = new DataAnalyzer(messageInbox.getMessageQueue(), this.workers, taskList);
 	}
 	
 	/* Starts a message inbox and a data analyzer. */
 	public void start() {
-		Thread thread = new Thread(this.message_inbox);
+		Thread thread = new Thread(this.messageInbox);
 		thread.start();
 		thread = new Thread(this.analyzer);
 		thread.start();
@@ -54,7 +54,7 @@ public class Webserver {
         context.setClassLoader(Thread.currentThread().getContextClassLoader());
         server.setHandler(context);
  
-        context.setHandler(new TaskApi(taskqueue, tasklist));
+        context.setHandler(new TaskApi(taskQueue, taskList));
         try{
 	        server.start();
 	        server.join();
@@ -69,11 +69,11 @@ public class Webserver {
 			return;
 		}
 		int port = Integer.parseInt(args[0]);
-		Webserver s;
+		Webserver server;
 		try {
-			s = new Webserver(port);
-			s.start();
-			s.initJetty(8080);
+			server = new Webserver(port);
+			server.start();
+			server.initJetty(8080);
 		} catch (Exception e) {
 			System.err.println("Server could not make a socket, aborting");
 		}
