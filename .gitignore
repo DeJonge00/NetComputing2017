@@ -8,6 +8,21 @@
 !sigar.jar
 !/net_computing_server/lib/jaxrs-ri/*
 !/net_computing_server/lib/jetty/*
+!/net_computing_server/lib/jetty/annotations/*
+!/net_computing_server/lib/jetty/apache-jsp/*
+!/net_computing_server/lib/jetty/apache-jstl/*
+!/net_computing_server/lib/jetty/ext/*
+!/net_computing_server/lib/jetty/fcgi/*
+!/net_computing_server/lib/jetty/jaspi/*
+!/net_computing_server/lib/jetty/jndi/*
+!/net_computing_server/lib/jetty/jsp/*
+!/net_computing_server/lib/jetty/monitor/*
+!/net_computing_server/lib/jetty/setuid/*
+!/net_computing_server/lib/jetty/spdy/*
+!/net_computing_server/lib/jetty/spring/*
+!/net_computing_server/lib/jetty/websocket/*
+
+/websocket/*
 *.war
 *.ear
 

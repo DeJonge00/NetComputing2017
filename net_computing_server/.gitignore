@@ -1,3 +1,4 @@
 /bin/
-!/lib/jaxrs-ri/
+!/lib/jaxrs-ri/*
 !/lib/jetty/
+!/lib/jetty/annotations/
