@@ -5,7 +5,6 @@ import message_inbox.MessageInbox;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
-import org.hyperic.sigar.Sigar;
 
 import task_distributor.TaskApi;
 import task_distributor.TaskDistributor;
@@ -17,37 +16,35 @@ public class Webserver {
 	private ConnectionList workers;
 	private MessageInbox message_inbox;
 	private DataAnalyzer analyzer;
-	private static Sigar sigar = new Sigar();
-	private TaskQueue tq;
-	private TaskDistributor td;
-	private TaskList tl;
+	private TaskQueue taskqueue;
+	private TaskDistributor distributor;
+	private TaskList tasklist;
 	
 	public Webserver(int port) throws IOException {
 		this.workers = new ConnectionList();
 		this.message_inbox = new MessageInbox(this.workers, port);
-		this.tq = new TaskQueue();
-		this.tl = new TaskList();
-		this.td = new TaskDistributor(tq, this.workers, this.tl);
-		
-		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue(), this.workers, tl);
+		this.taskqueue = new TaskQueue();
+		this.tasklist = new TaskList();
+		this.distributor = new TaskDistributor(taskqueue, this.workers, this.tasklist);
+		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue(), this.workers, tasklist);
 	}
 	
+	/* Starts a message inbox and a data analyzer. */
 	public void start() {
-		Thread t = new Thread(this.message_inbox);
-		t.start();
-		t = new Thread(this.analyzer);
-		t.start();
+		Thread thread = new Thread(this.message_inbox);
+		thread.start();
+		thread = new Thread(this.analyzer);
+		thread.start();
 		
 		try {
 			Thread.sleep(5000);
-			System.out.println("tq size: " + tq.size());
-			td.start();
+			distributor.start();
 		} catch (Exception e) {
-			System.out.println("Exception in Server.start");
-			return;
+			System.err.println("Exception in Server.start");
 		}
 	}
 	
+	/* Starts a webserver on the specified port. */
 	public void initJetty(int port) {
 		Server server = new Server(8080);
 		 
@@ -57,7 +54,7 @@ public class Webserver {
         context.setClassLoader(Thread.currentThread().getContextClassLoader());
         server.setHandler(context);
  
-        context.setHandler(new TaskApi(tq, tl));
+        context.setHandler(new TaskApi(taskqueue, tasklist));
         try{
 	        server.start();
 	        server.join();
@@ -78,8 +75,7 @@ public class Webserver {
 			s.start();
 			s.initJetty(8080);
 		} catch (Exception e) {
-			System.out.println("Server could not make a socket, aborting");
-			return;
+			System.err.println("Server could not make a socket, aborting");
 		}
 	}
 }
