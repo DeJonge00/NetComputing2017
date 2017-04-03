@@ -117,12 +117,12 @@ public class TaskApi extends AbstractHandler {
 	}
 	
 	void do_GET_tasks(PrintWriter writer) {
-		writer.println("<table>");		
-		writer.println("<tr><td class='activefinished' style='left:0px;'>");
+		writer.println("<table class='tab'>");		
+		writer.println("<tr><td class='tasktable'>");
 		
 		do_GET_ActiveTask(writer);
 		
-		writer.println("</td><td class='activefinished' style='right:0px;'>");
+		writer.println("</td><td class='tasktable'>");
 		
 		do_GET_FinishedTask(writer);
 		
@@ -131,8 +131,8 @@ public class TaskApi extends AbstractHandler {
 	}
 	void do_GET_ActiveTask(PrintWriter writer) {
 		writer.println("<h2>Active Tasks</h2><br>");
-		writer.println("<table>");
-		writer.println("<tr><td>command</td><td>taskId</td><td>userId</td><td>started at</td></tr>");
+		writer.println("<table class='tab'>");
+		writer.println("<tr><th>command</th><th>taskId</th><th>userId</th><th>started at</th></tr>");
 		for(TaskActive ta : tl.getActiveTasks()) {
 			writer.println("<tr>" + ta.toString() + 
 					"<td><form method='GET' action='/task/" + ta.getTaskId() + "'><button type='submit'>view</button></form></td>" +
@@ -143,9 +143,9 @@ public class TaskApi extends AbstractHandler {
 	
 	void do_GET_FinishedTask(PrintWriter writer) {
 		writer.println("<h2>Finished Tasks</h2><br>");
-		writer.println("<table>");
+		writer.println("<table class='tab'>");
 
-		writer.println("<tr><td>command</td><td>taskId</td><td>userId</td><td>started at</td><td>finished at</td><td>exit status</td></tr>");
+		writer.println("<tr><th>command</th><th>taskId</th><th>userId</th><th>started at</th><th>finished at</th><th>exit status</th></tr>");
 		for(TaskFinished tf : tl.getFinishedTasks()) {
 			writer.println("<tr>" + tf.toString() + 
 						"<td><form method='GET' action='/task/" + tf.getTaskId() + "'><button type='submit'>view</button></form></td>" +
@@ -155,14 +155,14 @@ public class TaskApi extends AbstractHandler {
 	}
 
 	void do_GET_CreateTask(PrintWriter writer) {
-        writer.println("<div style=''><form method='POST'>");
+        writer.println("<div'><form method='POST' class='createform'>");
         writer.println("<h2>Create a new Task</h2><br>");
-        writer.println("<table><tr><td>Command to execute: </td></tr>");
-        writer.println("<tr><td><input type='text' name='command'></td></tr>");
+        writer.println("<table class='tab'><tr><td>Command to execute: </td></tr>");
+        writer.println("<tr><td><input style='width:100%;' type='text' name='command'></td></tr>");
         writer.println("<tr><td>Program input:</td></tr>");
-        writer.println("<tr><td><textarea name='input' placeholder='enter program input here (optional)'></textarea></td></tr>");
-        writer.println("<tr><td><input type='submit'></td></tr>");
-        writer.println("</form></div>");
+        writer.println("<tr><td><textarea style='width:100%;' name='input' placeholder='enter program input here (optional)'></textarea></td></tr>");
+        writer.println("<tr><td><input style='width:100%;' type='submit'></td></tr>");
+        writer.println("</table></form></div>");
 	}
 
 	void do_POST_CreateTask(String command, String input) {

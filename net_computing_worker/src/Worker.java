@@ -11,18 +11,22 @@ import resource_monitor.ResourceMonitor;
 import task_manager.TaskManager;
 
 
-public class Worker {	
+public class Worker {
+	/* The following argumentlists work:
+	 * <serverport>
+	 * <serveraddress> <serverport>
+	 * <serveraddress> <serverport> <rmi port>
+	 */
 	public static void main(String [] args) {
 		if(args.length<=0) {
 			System.out.println("Give a port to send results too!");
 			return;
 		}
 		
+		// Set serverport and serveraddress from the arguments
 		int serverPort;
 		InetAddress serverAddress;
 		ResourceMonitor monitor;
-
-		//System.setProperty("java.security.policy","../lib/security.policy‌​");
 		try {
 			if(args.length>=2) {
 				serverAddress = InetAddress.getByName(args[0]);
@@ -36,6 +40,7 @@ public class Worker {
 			return;
 		}
 		
+		// Set local RMI to port if it is in the arguments
 		int rmiport;
 		if(args.length>=3) {
 			rmiport = Integer.parseInt(args[1]);
@@ -43,6 +48,7 @@ public class Worker {
 			rmiport = 1099;
 		}
 		
+		// Create resourcemonitor
 		Socket socket;
 		ObjectOutputStream oos;
 		try {
@@ -61,7 +67,6 @@ public class Worker {
 			tm.initSecurityManager();
 			System.out.println("\n\nStarting registry");
 			//TaskManager stub = (TaskManager) UnicastRemoteObject.exportObject(tm, 0);
-			Registry registry = LocateRegistry.createRegistry(rmiport);
 			//System.out.println(registry);
 			Naming.rebind("rmi://localhost:" + rmiport + "/taskManager", tm);
 			//System.out.println(registry);

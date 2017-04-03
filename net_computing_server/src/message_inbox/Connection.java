@@ -1,15 +1,10 @@
 package message_inbox;
-
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-
 import rmi.InitData;
 import rmi.Measurement;
-
 
 public class Connection {
 	private Socket socket;
@@ -26,7 +21,7 @@ public class Connection {
 	}
 	
 	public synchronized double getLoadInfo() {
-		double memoryLoad, cpuLoad, load;
+		double memoryLoad, cpuLoad;
 		memoryLoad = (last_measurement.getMemory()-last_measurement.getFreememory())/last_measurement.getMemory();
 		cpuLoad = last_measurement.getCpuUsage() / (double)last_measurement.getCpuamount();
 		if(memoryLoad < 0.9 && cpuLoad < 0.9) {

@@ -15,45 +15,45 @@ public class DataAnalyzer implements Runnable {
 	
 	private MessageQueue messages;
 	private ConnectionList workers;
-	private TaskList tl;
+	private TaskList tasklist;
 	
 	public DataAnalyzer(MessageQueue messages, ConnectionList c, TaskList tl) {
 		this.messages = messages;
 		this.workers = c;
-		this.tl = tl;
+		this.tasklist = tl;
 	}
-	
-	@SuppressWarnings("unused")
+
+	@SuppressWarnings("unchecked")
 	public void run() {
 		while (true) {
 			int messageType = messages.getFirstType();
-			if (messageType == 1) {
+			if (messageType == 1) { 
 				// it's a measurement
-				Message<Measurement> m = (Message<Measurement>)messages.dequeue();
-				Measurement measure = m.getMessageContent();
+				Message<Measurement> message = (Message<Measurement>) messages.dequeue();
+				Measurement measure = message.getMessageContent();
+				
 				// update the connection that sent the message
-				Connection conn = m.getConn();
+				Connection conn = message.getConn();
 				conn.setLastMeasurement(measure);
 				this.workers.update(conn);
 			} else if (messageType == 2) {
-				Message<TaskInfo> m = (Message<TaskInfo>)messages.dequeue();
-				TaskInfo tf = m.getMessageContent();
-				int pid = tf.getPid();
-				System.out.println("dataanalyzer pid:" + pid);
+				// it's taskinfo
+				Message<TaskInfo> message = (Message<TaskInfo>) messages.dequeue();
+				TaskInfo taskinfo = message.getMessageContent();
 				
-				Connection conn = m.getConn();
-				// retrieve active task based on pid and conn
-				//Task t = ActiveTasks.getTask(pid, conn);
+				// Get relevant data from the taskinfo
+				int pid = taskinfo.getPid();
+				Connection conn = message.getConn();
+				System.out.println("data analyzer pid = " + pid + ", conn = " + conn);
 				
+				// Finish the taskinfo's respective task
 				try {
 					TaskServer stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  
 					String[] result = stub.getOutput(pid);
-					tl.finishTask(pid, conn, tf.getFinishTime(), result[0], result[1], tf.getStatus());
+					tasklist.finishTask(pid, conn, taskinfo.getFinishTime(), result[0], result[1], taskinfo.getStatus());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				// upgrade the current active task to finished task
-				
 			}
 			try {
 				Thread.sleep(1);

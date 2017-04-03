@@ -12,10 +12,9 @@ public class ConnectionList {
 		int i = 0;
 		int size = connections.size();
 		double load = conn.getLoadInfo();
-		//System.out.println(load);
 		
+		// find the position at which the connection should be inserted
 		if(size > 0) {
-			// find the position at which the connection should be inserted
 			Connection c = this.connections.get(i);
 			while (i < size && c.getLoadInfo() > load) {
 				i++;
@@ -23,7 +22,6 @@ public class ConnectionList {
 					// make sure we're not going out of bounds
 					c = this.connections.get(i);
 				}
-				
 			}
 		}
 		

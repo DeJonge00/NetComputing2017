@@ -81,6 +81,7 @@ public class ResourceMonitor extends Thread {
 		Mem mem;
 		CpuPerc[] cpu;
 		Measurement measurement = new Measurement();
+		// Get ram info
 		try {
 			mem = sigar.getMem();
 			measurement.setMemoryInfo(mem.getRam(), mem.getTotal(), mem.getTotal() - mem.getActualUsed());
@@ -88,6 +89,7 @@ public class ResourceMonitor extends Thread {
 			System.out.println("Aquiring of memory info failed");
 		}
 		
+		// Get cpu info (amount of cores and usage from 0-1*cores)
 		try {
 			cpu = sigar.getCpuPercList();
 			int total = 0;
@@ -100,6 +102,7 @@ public class ResourceMonitor extends Thread {
 			System.out.println("Aquiring cpu info failed");
 		}
 		
+		// Get load average (windows not implemented)
 		try {
 			double[] loadAvg = sigar.getLoadAverage();
 			double[] avg = sigar.getLoadAverage();

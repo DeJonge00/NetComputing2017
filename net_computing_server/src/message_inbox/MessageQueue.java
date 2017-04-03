@@ -6,10 +6,11 @@ import rmi.Measurement;
 import rmi.TaskInfo;
 
 public class MessageQueue extends LinkedList<Message<?>>{
+	private static final long serialVersionUID = 1L;
 	public MessageQueue() {
-		
+		super();
 	}
-	
+
 	synchronized public void enqueue(Message<?> m) {
 		this.add(m);
 	}

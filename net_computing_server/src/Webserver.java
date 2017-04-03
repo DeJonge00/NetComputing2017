@@ -5,7 +5,6 @@ import message_inbox.MessageInbox;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
-import org.hyperic.sigar.Sigar;
 
 import task_distributor.TaskApi;
 import task_distributor.TaskDistributor;
@@ -17,101 +16,35 @@ public class Webserver {
 	private ConnectionList workers;
 	private MessageInbox message_inbox;
 	private DataAnalyzer analyzer;
-	private static Sigar sigar = new Sigar();
-	private TaskQueue tq;
-	private TaskDistributor td;
-	private TaskList tl;
+	private TaskQueue taskqueue;
+	private TaskDistributor distributor;
+	private TaskList tasklist;
 	
 	public Webserver(int port) throws IOException {
 		this.workers = new ConnectionList();
 		this.message_inbox = new MessageInbox(this.workers, port);
-		this.tq = new TaskQueue();
-		this.tl = new TaskList();
-		this.td = new TaskDistributor(tq, this.workers, this.tl);
-		
-		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue(), this.workers, tl);
-		
-		
-		/* test connection list insertion:
-		Connection c1 = new Connection(new Socket("localhost", 5000));
-		Measurement m1 = new Measurement();
-		m1.setMemoryInfo(2048, 512, 1536);
-		c1.setLastMeasurement(m1);
-		
-		Connection c2 = new Connection(new Socket("localhost", 5000));
-		Measurement m2 = new Measurement();
-		m2.setMemoryInfo(2048, 1024, 1024);
-		c2.setLastMeasurement(m2);
-		
-		Connection c3 = new Connection(new Socket("localhost", 5000));
-		Measurement m3 = new Measurement();
-		m3.setMemoryInfo(2048, 700, 1348);
-		c3.setLastMeasurement(m3);
-
-		workers.addConnection(c1);
-		workers.addConnection(c2);
-		workers.addConnection(c3);
-		*/
+		this.taskqueue = new TaskQueue();
+		this.tasklist = new TaskList();
+		this.distributor = new TaskDistributor(taskqueue, this.workers, this.tasklist);
+		this.analyzer = new DataAnalyzer(message_inbox.getMessageQueue(), this.workers, tasklist);
 	}
 	
+	/* Starts a message inbox and a data analyzer. */
 	public void start() {
-		Thread t = new Thread(this.message_inbox);
-		t.start();
-		t = new Thread(this.analyzer);
-		t.start();
+		Thread thread = new Thread(this.message_inbox);
+		thread.start();
+		thread = new Thread(this.analyzer);
+		thread.start();
 		
 		try {
 			Thread.sleep(5000);
-			//Task task = new Task("./inf hello");
-			//task.setConn(this.workers.getFirst());
-			//this.tq.enqueue(task);
-			System.out.println("tq size: " + tq.size());
-			td.start();
-			//System.out.println("Started ./infinte as process #" + pid);
-			//System.out.println("going to sleep for 10 seconds");
-			//Thread.sleep(10000);
-			//td.interrupt(pid);
-			//System.out.println("interrupted process #" + pid);
-			/*while(true) {
-				Message<?> msg = this.message_inbox.getNextMessage();
-				if(msg != null && msg.getMessageContent() instanceof TaskInfo) {
-					TaskInfo tf = (TaskInfo)msg.getMessageContent();
-					//System.out.println("Process exit status: " + td.getTaskData(tf.getPid()));
-					System.out.println("Process output: " + td.getTaskData(tf.getPid()));
-				}
-				Thread.sleep(50);
-			}*/
+			distributor.start();
 		} catch (Exception e) {
-			System.out.println("Exception in Server.start");
-			return;
+			System.err.println("Exception in Server.start");
 		}
-		
-		
-        
 	}
 	
-	/*public void test() {
-		System.out.println("Started messageInbox, sleeping for 500ms");
-		try {
-			Thread.sleep(500);
-			this.takeMeasurement();
-			Socket s = new Socket("localhost", 5000);
-			ObjectOutputSinallytream oos = new ObjectOutputStream(s.getOutputStream());
-			
-			for(int i=0; i<1000; i++) {
-				Measurement msg = new Measurement();
-				oos.writeObject(msg);
-				System.out.println("Sent message to inbox");
-				this.takeMeasurement();
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		this.takeMeasurement();
-	}*/
+	/* Starts a webserver on the specified port. */
 	public void initJetty(int port) {
 		Server server = new Server(8080);
 		 
@@ -121,10 +54,10 @@ public class Webserver {
         context.setClassLoader(Thread.currentThread().getContextClassLoader());
         server.setHandler(context);
  
-        context.setHandler(new TaskApi(tq, tl));
+        context.setHandler(new TaskApi(taskqueue, tasklist));
         try{
-        server.start();
-        server.join();
+	        server.start();
+	        server.join();
         } catch (Exception e) {
         	e.printStackTrace();
         }
@@ -142,8 +75,7 @@ public class Webserver {
 			s.start();
 			s.initJetty(8080);
 		} catch (Exception e) {
-			System.out.println("Server could not make a socket, aborting");
-			return;
+			System.err.println("Server could not make a socket, aborting");
 		}
 	}
 }

@@ -8,7 +8,6 @@ public class TaskQueue extends LinkedList<Task> {
 	}
 	
 	public synchronized Task dequeue() {
-		//System.out.println("dequeue");
 		if(size() > 0) {
 			return this.removeFirst();
 		} else {
