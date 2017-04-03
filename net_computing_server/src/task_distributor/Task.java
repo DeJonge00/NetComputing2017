@@ -39,10 +39,6 @@ public class Task {
 		this.userId = userId;
 	}
 
-	public String getAddress() {
-		return conn.getInetAddress().toString();
-	}
-
 	public Connection getConn() {
 		return conn;
 	}

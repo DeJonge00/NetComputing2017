@@ -87,26 +87,27 @@ public class TaskApi extends AbstractHandler {
 		Task t = tl.findByTaskId(taskId);
 		if(t != null) {
 			if(t instanceof TaskFinished) {
-				writer.println("<h1>standard input for task "+taskId+":</h1><br>");
+				writer.println("<h1>standard input for task "+taskId+":</h1><br><div style='text-align:left'>");
 				String out = t.getInput();
 				String[] lines = out.split("\\r?\\n");
 				for(String line : lines) {
 					writer.println(line + "<br>");
 				}
 				
-				writer.println("<h1>standard output from task "+taskId+":</h1><br>");
+				writer.println("</div><h1>standard output from task "+taskId+":</h1><br><div style='text-align:left'>");
 				out = ((TaskFinished)t).getTaskOutput();
 				lines = out.split("\\r?\\n");
 				for(String line : lines) {
 					writer.println(line + "<br>");
 				}
 				
-				writer.println("<h1>standard error from task "+taskId+":</h1><br>");
+				writer.println("</div><h1>standard error from task "+taskId+":</h1><br><div style='text-align:left'>");
 				out = ((TaskFinished)t).getTaskError();
 				lines = out.split("\\r?\\n");
 				for(String line : lines) {
 					writer.println(line + "<br>");
 				}
+				writer.println("</div>");
 			} else {
 				writer.println("<h1>Task with ID=" + taskId + " is still executing</h1>");
 			}

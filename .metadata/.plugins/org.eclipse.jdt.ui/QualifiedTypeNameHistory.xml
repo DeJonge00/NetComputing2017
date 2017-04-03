@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="rmi.Measurement"/>
-<fullyQualifiedTypeName name="message_inbox.Connection"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.awt.List"/>
 <fullyQualifiedTypeName name="java.io.OutputStream"/>
@@ -15,4 +14,6 @@
 <fullyQualifiedTypeName name="org.eclipse.jetty.server.handler.AbstractHandler"/>
 <fullyQualifiedTypeName name="com.sun.research.ws.wadl.Request"/>
 <fullyQualifiedTypeName name="org.eclipse.jetty.server.Request"/>
+<fullyQualifiedTypeName name="message_inbox.Connection"/>
+<fullyQualifiedTypeName name="java.rmi.Naming"/>
 </qualifiedTypeNameHistroy>

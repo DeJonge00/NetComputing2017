@@ -8,7 +8,6 @@ import message_inbox.ConnectionList;
 import rmi.TaskServer;
 
 public class TaskDistributor extends Thread{
-	private TaskServer stub; 
 	private TaskQueue tasks;
 	private ConnectionList connections;
 	private TaskList tl;
@@ -39,7 +38,7 @@ public class TaskDistributor extends Thread{
 				try {
 					Connection conn = connections.getFirst();
 					t.setConn(conn);
-					stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  
+					TaskServer stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  
 					
 					// upgrade the current task to an active task
 					TaskActive at = new TaskActive(t);
@@ -56,7 +55,7 @@ public class TaskDistributor extends Thread{
 			} else {
 				// no command to execute so we sleep for 5 miliseconds
 				try {
-					Thread.sleep(5);
+					Thread.sleep(1);
 				} catch (InterruptedException e) {
 					// the task distributor was interrupted so we return and shut down
 					return;

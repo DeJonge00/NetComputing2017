@@ -4542,3 +4542,75 @@ java.lang.NoClassDefFoundError: org/eclipse/m2e/core/MavenPlugin
 !MESSAGE From: m2e - Maven Integration for Eclipse (includes Incubating components) 1.7.0.20160603-1933 (org.eclipse.m2e.feature.feature.group 1.7.0.20160603-1933)
 !SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2017-04-01 18:42:35.231
 !MESSAGE To: org.eclipse.m2e.discovery [1.7.0.20160603-1933]
+!SESSION 2017-04-03 10:23:40.109 -----------------------------------------------
+eclipse.buildId=debbuild
+java.version=1.8.0_121
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.jobs 4 2 2017-04-03 10:25:41.687
+!MESSAGE An internal error occurred during: "Restoring type hierarchy of 'net_computing_server'...".
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.jdt.internal.compiler.lookup.ReferenceBinding$3.compare(ReferenceBinding.java:67)
+	at java.util.TimSort.binarySort(TimSort.java:296)
+	at java.util.TimSort.sort(TimSort.java:221)
+	at java.util.Arrays.sort(Arrays.java:1512)
+	at org.eclipse.jdt.internal.compiler.lookup.ReferenceBinding.sortMethods(ReferenceBinding.java:169)
+	at org.eclipse.jdt.internal.compiler.lookup.BinaryTypeBinding.getMethods(BinaryTypeBinding.java:946)
+	at org.eclipse.jdt.internal.compiler.lookup.BinaryTypeBinding.findMethod(BinaryTypeBinding.java:773)
+	at org.eclipse.jdt.internal.compiler.lookup.BinaryTypeBinding.cachePartsFrom(BinaryTypeBinding.java:329)
+	at org.eclipse.jdt.internal.compiler.lookup.LookupEnvironment.createBinaryTypeFrom(LookupEnvironment.java:700)
+	at org.eclipse.jdt.internal.compiler.lookup.LookupEnvironment.cacheBinaryType(LookupEnvironment.java:201)
+	at org.eclipse.jdt.internal.core.hierarchy.HierarchyResolver.resolve(HierarchyResolver.java:718)
+	at org.eclipse.jdt.internal.core.hierarchy.RegionBasedHierarchyBuilder.createTypeHierarchyBasedOnRegion(RegionBasedHierarchyBuilder.java:90)
+	at org.eclipse.jdt.internal.core.hierarchy.RegionBasedHierarchyBuilder.build(RegionBasedHierarchyBuilder.java:59)
+	at org.eclipse.jdt.internal.core.hierarchy.RegionBasedTypeHierarchy.compute(RegionBasedTypeHierarchy.java:97)
+	at org.eclipse.jdt.internal.core.hierarchy.TypeHierarchy.refresh(TypeHierarchy.java:1263)
+	at org.eclipse.jdt.internal.core.CreateTypeHierarchyOperation.executeOperation(CreateTypeHierarchyOperation.java:90)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:728)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:788)
+	at org.eclipse.jdt.core.JavaCore.newTypeHierarchy(JavaCore.java:4371)
+	at org.eclipse.jdt.internal.ui.typehierarchy.TypeHierarchyLifeCycle.createTypeHierarchy(TypeHierarchyLifeCycle.java:316)
+	at org.eclipse.jdt.internal.ui.typehierarchy.TypeHierarchyLifeCycle.doHierarchyRefresh(TypeHierarchyLifeCycle.java:330)
+	at org.eclipse.jdt.internal.ui.typehierarchy.TypeHierarchyViewPart.doRestoreInBackground(TypeHierarchyViewPart.java:1723)
+	at org.eclipse.jdt.internal.ui.typehierarchy.TypeHierarchyViewPart.access$11(TypeHierarchyViewPart.java:1722)
+	at org.eclipse.jdt.internal.ui.typehierarchy.TypeHierarchyViewPart$17.run(TypeHierarchyViewPart.java:1704)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SESSION 2017-04-03 11:34:37.166 -----------------------------------------------
+eclipse.buildId=debbuild
+java.version=1.8.0_121
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.jobs 4 2 2017-04-03 11:35:05.211
+!MESSAGE An internal error occurred during: "Restoring type hierarchy of 'net_computing_server'...".
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.jdt.internal.compiler.lookup.ReferenceBinding$3.compare(ReferenceBinding.java:67)
+	at java.util.TimSort.binarySort(TimSort.java:296)
+	at java.util.TimSort.sort(TimSort.java:221)
+	at java.util.Arrays.sort(Arrays.java:1512)
+	at org.eclipse.jdt.internal.compiler.lookup.ReferenceBinding.sortMethods(ReferenceBinding.java:169)
+	at org.eclipse.jdt.internal.compiler.lookup.BinaryTypeBinding.getMethods(BinaryTypeBinding.java:946)
+	at org.eclipse.jdt.internal.compiler.lookup.BinaryTypeBinding.findMethod(BinaryTypeBinding.java:773)
+	at org.eclipse.jdt.internal.compiler.lookup.BinaryTypeBinding.cachePartsFrom(BinaryTypeBinding.java:329)
+	at org.eclipse.jdt.internal.compiler.lookup.LookupEnvironment.createBinaryTypeFrom(LookupEnvironment.java:700)
+	at org.eclipse.jdt.internal.compiler.lookup.LookupEnvironment.cacheBinaryType(LookupEnvironment.java:201)
+	at org.eclipse.jdt.internal.core.hierarchy.HierarchyResolver.resolve(HierarchyResolver.java:718)
+	at org.eclipse.jdt.internal.core.hierarchy.RegionBasedHierarchyBuilder.createTypeHierarchyBasedOnRegion(RegionBasedHierarchyBuilder.java:90)
+	at org.eclipse.jdt.internal.core.hierarchy.RegionBasedHierarchyBuilder.build(RegionBasedHierarchyBuilder.java:59)
+	at org.eclipse.jdt.internal.core.hierarchy.RegionBasedTypeHierarchy.compute(RegionBasedTypeHierarchy.java:97)
+	at org.eclipse.jdt.internal.core.hierarchy.TypeHierarchy.refresh(TypeHierarchy.java:1263)
+	at org.eclipse.jdt.internal.core.CreateTypeHierarchyOperation.executeOperation(CreateTypeHierarchyOperation.java:90)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:728)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:788)
+	at org.eclipse.jdt.core.JavaCore.newTypeHierarchy(JavaCore.java:4371)
+	at org.eclipse.jdt.internal.ui.typehierarchy.TypeHierarchyLifeCycle.createTypeHierarchy(TypeHierarchyLifeCycle.java:316)
+	at org.eclipse.jdt.internal.ui.typehierarchy.TypeHierarchyLifeCycle.doHierarchyRefresh(TypeHierarchyLifeCycle.java:330)
+	at org.eclipse.jdt.internal.ui.typehierarchy.TypeHierarchyViewPart.doRestoreInBackground(TypeHierarchyViewPart.java:1723)
+	at org.eclipse.jdt.internal.ui.typehierarchy.TypeHierarchyViewPart.access$11(TypeHierarchyViewPart.java:1722)
+	at org.eclipse.jdt.internal.ui.typehierarchy.TypeHierarchyViewPart$17.run(TypeHierarchyViewPart.java:1704)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)

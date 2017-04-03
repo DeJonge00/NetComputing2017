@@ -33,7 +33,7 @@ public class MessageReceiver implements Runnable {
 		}
 	}
 	
-	public Message<?> read_message() {
+	private Message<?> read_message() {
 		Message<?> msg;
 		Object o = null;
 		
