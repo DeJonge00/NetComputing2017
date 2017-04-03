@@ -25,19 +25,6 @@ public class Worker {
 			return;
 		}
 		
-		// Check if worker has GCC installed
-		boolean hasGcc = false;
-		String[] paths = System.getenv("PATH").split(":");
-		for(int i = 0; i < paths.length; i++) {
-			if (new File(paths[i] + "/gcc").isFile()) {
-				hasGcc = true;
-			}
-		}
-		if (!hasGcc) {
-			System.err.println("Worker most have gcc installed!");
-			return;
-		}
-		
 		// Set serverport and serveraddress from the arguments
 		int serverPort;
 		InetAddress serverAddress;
