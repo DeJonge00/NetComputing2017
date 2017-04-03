@@ -22,21 +22,21 @@ public class DataAnalyzer implements Runnable {
 		this.workers = c;
 		this.tl = tl;
 	}
-	
-	@SuppressWarnings("unused")
+
+	@SuppressWarnings("unchecked")
 	public void run() {
 		while (true) {
 			int messageType = messages.getFirstType();
 			if (messageType == 1) {
 				// it's a measurement
-				Message<Measurement> m = (Message<Measurement>)messages.dequeue();
+				Message<Measurement> m = (Message<Measurement>) messages.dequeue();
 				Measurement measure = m.getMessageContent();
 				// update the connection that sent the message
 				Connection conn = m.getConn();
 				conn.setLastMeasurement(measure);
 				this.workers.update(conn);
 			} else if (messageType == 2) {
-				Message<TaskInfo> m = (Message<TaskInfo>)messages.dequeue();
+				Message<TaskInfo> m = (Message<TaskInfo>) messages.dequeue();
 				TaskInfo tf = m.getMessageContent();
 				int pid = tf.getPid();
 				System.out.println("dataanalyzer pid:" + pid);

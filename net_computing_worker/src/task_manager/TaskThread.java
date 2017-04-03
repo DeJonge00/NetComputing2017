@@ -15,7 +15,6 @@ public class TaskThread extends Observable implements Runnable {
 	private Process process;
 	private TaskOutput out;
 	private int pid;
-	private Thread t;
 	private ObjectOutputStream oos;
 	private String input;
 	

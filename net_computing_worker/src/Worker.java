@@ -67,7 +67,6 @@ public class Worker {
 			tm.initSecurityManager();
 			System.out.println("\n\nStarting registry");
 			//TaskManager stub = (TaskManager) UnicastRemoteObject.exportObject(tm, 0);
-			Registry registry = LocateRegistry.createRegistry(rmiport);
 			//System.out.println(registry);
 			Naming.rebind("rmi://localhost:" + rmiport + "/taskManager", tm);
 			//System.out.println(registry);
