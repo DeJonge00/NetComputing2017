@@ -7,6 +7,9 @@
 *.jar
 !sigar.jar
 !/net_computing_server/lib/jaxrs-ri/*
+!/net_computing_server/lib/jaxrs-ri/api/*
+!/net_computing_server/lib/jaxrs-ri/ext/*
+!/net_computing_server/lib/jaxrs-ri/lib/*
 !/net_computing_server/lib/jetty/*
 !/net_computing_server/lib/jetty/annotations/*
 !/net_computing_server/lib/jetty/apache-jsp/*
