@@ -4,6 +4,8 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
@@ -22,6 +24,10 @@ public class Worker {
 			System.err.println("Give a port to send results too!");
 			return;
 		}
+		
+		Path path = Paths.get("net_computing_shared", "src", "rmi", "security.policy");
+		String dir = System.getProperty("user.dir").replaceAll("net_computing_worker", path.toString());
+		System.out.println(dir);
 		
 		// Check if worker has GCC installed
 		boolean hasGcc = false;
@@ -72,6 +78,15 @@ public class Worker {
 			monitor.start();
 		} catch (IOException e1) {
 			System.err.println("Starting resourcemonitor failed");
+			return;
+		}
+		
+		try {
+			System.getProperties().setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+			System.getProperties().setProperty("java.security.policy", dir);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			monitor.quit();
 			return;
 		}
 		
