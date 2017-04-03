@@ -13,54 +13,54 @@ public class TaskManager extends UnicastRemoteObject implements TaskServer, Seri
 	
 	private ArrayList<Task> tasks;
 	private int pid;
-	private ObjectOutputStream oos;
+	private ObjectOutputStream out;
 	
-	public TaskManager(ObjectOutputStream o) throws RemoteException {
+	public TaskManager(ObjectOutputStream out) throws RemoteException {
 		super(4000);
 		this.tasks = new ArrayList<Task>();
 		this.pid = 0;
-		this.oos = o;
+		this.out = out;
 	}
 	
-	public synchronized int execute(String process, String input) {
-		Task t = null;
+	public synchronized int execute(String processString, String input) {
+		Task task = null;
 		try {
 			System.out.println(input);
-			Process p = Runtime.getRuntime().exec(process);
-			t = new Task(p, pid, oos, input);
-			Thread thread = new Thread(t);
-			this.tasks.add(t);
+			Process process = Runtime.getRuntime().exec(processString);
+			task = new Task(process, pid, out, input);
+			Thread thread = new Thread(task);
+			this.tasks.add(task);
 			this.pid++;
 			thread.start();
 		} catch (IOException e) {
 			System.out.println("IO exception when starting executable in Taskmanager");
 		}
-		if(t == null) return -1;
-		return t.getPid();
+		if(task == null) return -1;
+		return task.getPid();
 	}
 	
 	public synchronized void interrupt(int pid) {
-		Task t;
-		if((t = getTask(pid)) != null) {
-			t.interrupt();
+		Task task;
+		if((task = getTask(pid)) != null) {
+			task.interrupt();
 		}
 	}
 	
 	public String[] getOutput(int pid) {
-		Task t;
+		Task task;
 		String[] out = new String[2];
-		if((t = getTask(pid)) != null) {
-			 out[0] = t.getOutput();
-			 out[1] = t.getError();
+		if((task = getTask(pid)) != null) {
+			 out[0] = task.getOutput();
+			 out[1] = task.getError();
 			 return out;
 		}
 		return null;
 	}
 	
 	private Task getTask(int pid) {
-		for(Task t:this.tasks) {
-			if(t.getPid() == pid) {
-				return t;
+		for(Task task:this.tasks) {
+			if(task.getPid() == pid) {
+				return task;
 			}
 		}
 		return null;

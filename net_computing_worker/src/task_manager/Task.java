@@ -12,15 +12,15 @@ import rmi.TaskInfo;
 public class Task extends Thread {
 	private Process process;
 	private int pid;
-	private ObjectOutputStream oos;
+	private ObjectOutputStream out;
 	private String input;
 	private String output;
 	private String error;
 	
-	public Task(Process p, int pid, ObjectOutputStream o, String input) {
-		this.process = p;
+	public Task(Process process, int pid, ObjectOutputStream out, String input) {
+		this.process = process;
 		this.pid = pid;
-		this.oos = o;
+		this.out = out;
 		this.input = input;
 		this.output = "not_finished";
 		this.error = "";
@@ -66,21 +66,21 @@ public class Task extends Thread {
 	}
 	
 	private String readTaskOutput(BufferedReader in) {
-		StringBuffer sb = new StringBuffer();
+		StringBuffer buffer = new StringBuffer();
 		String line;
 		try {
 			while((line = in.readLine()) != null) {
-				sb.append(line + "\n");
+				buffer.append(line + "\n");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return sb.toString();
+		return buffer.toString();
 	}
 	
 	public boolean sendData(TaskInfo tf) {
 		try {
-			oos.writeObject(tf);
+			out.writeObject(tf);
 			System.out.println("Sent message to inbox");
 		} catch (Exception e) {
 			System.out.println("Is there a server running on that port?");

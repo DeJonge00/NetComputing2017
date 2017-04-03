@@ -18,19 +18,19 @@ public class ResourceMonitor extends Thread {
 
 	private boolean running;
 	private static Sigar sigar;
-	private ObjectOutputStream oos;
+	private ObjectOutputStream out;
 	
-	public ResourceMonitor(ObjectOutputStream o) {
-		running = false;
+	public ResourceMonitor(ObjectOutputStream out) {
+		this.running = false;
 		sigar = new Sigar();
-		oos = o;
+		this.out = out;
 	}
 
 	public void run() {
-		if(sendInitData(oos)) {
+		if(sendInitData(out)) {
 			running = true;
 			while (running) {
-				if (!sendMeasurement(oos, takeMeasurement())) {
+				if (!sendMeasurement(out, takeMeasurement())) {
 					// Sending message failed
 					running = false;
 					System.out.println("Failed sending measurement");
@@ -44,7 +44,7 @@ public class ResourceMonitor extends Thread {
 				}
 			}
 			try {
-				oos.close();
+				out.close();
 			} catch (IOException e) {
 				System.out.println("Failed to close outputstream or socket");
 			}
@@ -54,7 +54,7 @@ public class ResourceMonitor extends Thread {
 		}
 	}
 
-	private boolean sendInitData(ObjectOutputStream oos) {
+	private boolean sendInitData(ObjectOutputStream out) {
 		InitData data;
 		// Create init data
 		try {
@@ -68,8 +68,8 @@ public class ResourceMonitor extends Thread {
 		}
 		// Send data to server
 		try {
-			oos.writeObject(data);
-			oos.flush();
+			out.writeObject(data);
+			out.flush();
 		} catch (Exception e) {
 			System.out.println("Unable to make a socket connection");
 			return false;
@@ -119,10 +119,10 @@ public class ResourceMonitor extends Thread {
 		return measurement;
 	}
 
-	private boolean sendMeasurement(ObjectOutputStream oos, Measurement m) {
+	private boolean sendMeasurement(ObjectOutputStream out, Measurement measurement) {
 		try {
-			oos.writeObject(m);
-			oos.flush();
+			out.writeObject(measurement);
+			out.flush();
 		} catch (Exception e) {
 			System.out.println("Unable to make a socket connection");
 			return false;

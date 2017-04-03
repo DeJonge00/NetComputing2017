@@ -5,7 +5,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
 import resource_monitor.ResourceMonitor;
 import task_manager.TaskManager;
@@ -51,11 +50,11 @@ public class Worker {
 		
 		// Create resourcemonitor
 		Socket socket;
-		ObjectOutputStream oos;
+		ObjectOutputStream out;
 		try {
 			socket = new Socket(serverAddress.getHostAddress(), serverPort);
-			oos = new ObjectOutputStream(socket.getOutputStream());
-			monitor = new ResourceMonitor(oos);
+			out = new ObjectOutputStream(socket.getOutputStream());
+			monitor = new ResourceMonitor(out);
 			monitor.start();
 		} catch (IOException e1) {
 			System.out.println("Starting resourcemonitor failed");
@@ -64,10 +63,10 @@ public class Worker {
 		
 		// initialize taskManager
 		try {
-			TaskManager tm = new TaskManager(oos);
-			tm.initSecurityManager();
+			TaskManager manager = new TaskManager(out);
+			manager.initSecurityManager();
 			LocateRegistry.createRegistry(rmiport);
-			Naming.rebind("rmi://localhost:" + rmiport + "/taskManager", tm);
+			Naming.rebind("rmi://localhost:" + rmiport + "/taskManager", manager);
 		} catch (Exception e) {
 			System.out.println("remote exception in taskManager\n\n");
 			monitor.quit();
