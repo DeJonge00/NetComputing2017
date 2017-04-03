@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import message_inbox.ConnectionList;
 import message_inbox.MessageInbox;
@@ -36,19 +38,11 @@ public class Webserver {
 		Thread analyzerThread = new Thread(this.analyzer);
 		analyzerThread.start();
 		
-		try {
-			Thread.sleep(5000);
-			distributor.start();
-		} catch (Exception e) {
-			messageInboxThread.interrupt();
-			analyzerThread.interrupt();
-			System.err.println("Exception in Server.start");
-			return;
-		}
+		distributor.start();
 	}
 	
 	/* Starts a webserver on the specified port. */
-	public void initJetty(int port) {
+	public void initJetty(int port) throws Exception {
 		Server server = new Server(8080);
 		 
         ContextHandler context = new ContextHandler();
@@ -58,27 +52,31 @@ public class Webserver {
         server.setHandler(context);
  
         context.setHandler(this.taskApi);
-        try{
-	        server.start();
-	        server.join();
-        } catch (Exception e) {
-        	e.printStackTrace();
-        }
+
+        server.start();
+        server.join();
 	}
 	
 	public static void main(String [] args) {
 		if(args.length <= 0) {
-			System.out.println("Give a port as argument 1");
+			System.err.println("Give a port as argument 1");
 			return;
 		}
 		int port = Integer.parseInt(args[0]);
+		
+		// Setup policy file
+		Path p = Paths.get(System.getProperty("user.dir")).getParent();
+		Path dir = Paths.get(p.toString(), "net_computing_shared", "src", "rmi", "security.policy");
+		System.out.println(dir.toString());
+		System.getProperties().setProperty("java.security.policy", dir.toString());
+		
 		Webserver server;
 		try {
 			server = new Webserver(port);
 			server.start();
 			server.initJetty(8080);
 		} catch (Exception e) {
-			System.err.println("Server could not make a socket, aborting");
+			System.err.println("Server could not make a socket or Jetty, aborting");
 		}
 	}
 }

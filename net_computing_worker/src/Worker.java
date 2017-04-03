@@ -85,7 +85,7 @@ public class Worker {
 			System.getProperties().setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
 			System.getProperties().setProperty("java.security.policy", dir.toString());
 		} catch (UnknownHostException e) {
-			e.printStackTrace();
+			System.err.println("Could not initialize localhost");
 			monitor.quit();
 			return;
 		}
@@ -99,7 +99,6 @@ public class Worker {
 		} catch (Exception e) {
 			System.err.println("remote exception in taskManager\n\n");
 			monitor.quit();
-			e.printStackTrace();
 		}
 	}
 }

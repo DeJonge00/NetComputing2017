@@ -47,9 +47,23 @@ public class TaskDistributor extends Thread{
 			//System.out.println("in taskdistributor loop");
 			if(task != null) {
 				// there is a task to distribute
+
 				Connection conn = connections.getFirst();
 				if(conn==null) tasks.enqueue(task);
 				else {
+					String c = task.getCommand();
+					if(!c.startsWith("gcc ")) {
+						StringBuilder sb = new StringBuilder();
+						sb.append(c);
+						if(conn.getData().platform == 0) {
+							sb.insert(c.indexOf(" "), ".exe");
+						} else if(conn.getData().platform == 1) {
+							sb.insert(0, "./");
+						} else {
+							continue;
+						}
+						task.setCommand(sb.toString());
+					}
 					try {
 						task.setConn(conn);
 						TaskServer stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  

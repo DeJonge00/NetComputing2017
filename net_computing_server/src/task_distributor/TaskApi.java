@@ -168,10 +168,11 @@ public class TaskApi extends AbstractHandler {
 
 	/* Create a new task when the data from the create form is POSTed. */
 	void do_POST_CreateTask(String command, String input) {
-		Task task = new Task(command, taskCounter, input);
-		taskCounter++;
-		task.setUserId(1);
-		this.taskQueue.enqueue(task);
+		System.out.println("\n\n\nmatched command "+command+"\n\n\n");
+			Task task = new Task(command, taskCounter, input);
+			taskCounter++;
+			task.setUserId(1);
+			this.taskQueue.enqueue(task);
 	}
 
 	/* Remove a task from the tasklist. */
