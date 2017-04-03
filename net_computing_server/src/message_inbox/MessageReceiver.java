@@ -25,7 +25,6 @@ public class MessageReceiver implements Runnable {
 			}
 		} catch (Exception e) {
 			System.out.println("Object could not be read (handleconnect)");
-			e.printStackTrace();
 			return;
 		}
 	}
@@ -53,7 +52,8 @@ public class MessageReceiver implements Runnable {
 		try {
 			this.in = new ObjectInputStream(this.connection.getInputStream());
 		} catch (IOException e) {
-			e.printStackTrace();
+			connection.quit();
+			return;
 		}
 		handleConnect();
 		
