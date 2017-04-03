@@ -39,7 +39,21 @@ public class TaskDistributor extends Thread{
 
 					task.setConn(conn);
 					TaskServer stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  
-
+					
+					String c = task.getCommand();
+					if(!c.startsWith("gcc ")) {
+						StringBuilder sb = new StringBuilder();
+						sb.append(c);
+						if(conn.getData().platform == 0) {
+							sb.insert(c.indexOf(" "), ".exe");
+						} else if(conn.getData().platform == 1) {
+							sb.insert(0, "./");
+						} else {
+							continue;
+						}
+						task.setCommand(sb.toString());
+					}
+					
 					
 					// upgrade the current task to an active task
 					TaskActive at = new TaskActive(task);
