@@ -5,15 +5,20 @@ import java.net.InetAddress;
 
 public class InitData implements Serializable {
 	private static final long serialVersionUID = 1L;
-	public int coreamount;
+	public int coreAmount;
 	public InetAddress address;
 	public int platform;
 	
-	public InitData(int ca, InetAddress a, String p) {
-		coreamount = ca;
-		address = a;
-		if(p.toLowerCase().contains("windows")) platform = 0;
-		else if(p.toLowerCase().contains("linux")) platform = 1;
-		else platform = -1;
+	public InitData(int coreAmount, InetAddress adress, String platform) {
+		this.coreAmount = coreAmount;
+		address = adress;
+		
+		if(platform.toLowerCase().contains("windows")) {
+			this.platform = 0;
+		} else if(platform.toLowerCase().contains("linux")) {
+			this.platform = 1;
+		} else {
+			this.platform = -1;
+		}
 	}
 }

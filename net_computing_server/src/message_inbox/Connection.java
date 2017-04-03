@@ -21,7 +21,7 @@ public class Connection {
 	}
 	
 	public synchronized double getLoadInfo() {
-		double memoryLoad = (lastMeasurement.getMemory() - lastMeasurement.getFreememory()) / lastMeasurement.getMemory();
+		double memoryLoad = (lastMeasurement.getMemory() - lastMeasurement.getFreeMemory()) / lastMeasurement.getMemory();
 		double cpuLoad = lastMeasurement.getCpuUsage() / (double)lastMeasurement.getCpuamount();
 		
 		if(memoryLoad < 0.9 && cpuLoad < 0.9) {
