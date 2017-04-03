@@ -51,30 +51,30 @@ public class TaskDistributor extends Thread{
 				Connection conn = connections.getFirst();
 				if(conn==null) tasks.enqueue(task);
 				else {
-					String c = task.getCommand();
-					if(!c.startsWith("gcc ")) {
-						StringBuilder sb = new StringBuilder();
-						sb.append(c);
+					String command = task.getCommand();
+					if(!command.startsWith("gcc ")) {
+						StringBuilder builder = new StringBuilder();
+						builder.append(command);
 						if(conn.getData().platform == 0) {
-							sb.insert(c.indexOf(" "), ".exe");
+							builder.insert(command.indexOf(" "), ".exe");
 						} else if(conn.getData().platform == 1) {
-							sb.insert(0, "./");
+							builder.insert(0, "./");
 						} else {
 							continue;
 						}
-						task.setCommand(sb.toString());
+						task.setCommand(builder.toString());
 					}
 					try {
 						task.setConn(conn);
 						TaskServer stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  
 	
 						// upgrade the current task to an active task
-						TaskActive at = new TaskActive(task);
-						at.setStartTime(System.currentTimeMillis());
+						TaskActive activeTask = new TaskActive(task);
+						activeTask.setStartTime(System.currentTimeMillis());
 						
 						int pid = stub.execute(task.getCommand(), task.getInput());
-						at.setPid(pid);
-						taskList.insertTask(at);
+						activeTask.setPid(pid);
+						taskList.insertTask(activeTask);
 						System.out.println("executing " + task.getCommand());
 					} catch (Exception e) {
 						System.out.println("Task execution failed, re-enqueueing task");
