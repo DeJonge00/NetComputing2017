@@ -57,7 +57,7 @@ public class Worker {
 		try {
 			socket = new Socket(serverAddress.getHostAddress(), serverPort);
 			out = new ObjectOutputStream(socket.getOutputStream());
-			monitor = new ResourceMonitor(out);
+			monitor = new ResourceMonitor(out, rmiport);
 			monitor.start();
 		} catch (IOException e1) {
 			System.err.println("Starting resourcemonitor failed");

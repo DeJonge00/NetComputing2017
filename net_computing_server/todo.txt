@@ -1,9 +1,9 @@
 TO DO:
 - introductie van report uitbreiden
 - Design van report uitbreiden
-- client disconnect routine op client en server
++ client disconnect routine op client en server
 - readme maken: hoe te installeren en uitvoeren
-- alleen gcc commands uitvoeren
++ alleen gcc commands uitvoeren
 + alleen workers met gcc geinstalleerd mogen connecten
-- opnieuw opstarten van tasks, wanneer worker disconnect
-- arguments dynamic maken?
++ opnieuw opstarten van tasks, wanneer worker disconnect
++ arguments dynamic maken?

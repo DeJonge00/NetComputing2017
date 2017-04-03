@@ -1,9 +1,9 @@
 package resource_monitor;
 
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.rmi.Naming;
 
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Mem;
@@ -19,11 +19,13 @@ public class ResourceMonitor extends Thread {
 	private boolean running;
 	private static Sigar sigar;
 	private ObjectOutputStream out;
+	private int rmiport;
 	
-	public ResourceMonitor(ObjectOutputStream out) {
+	public ResourceMonitor(ObjectOutputStream out, int rmiport) {
 		this.running = false;
 		sigar = new Sigar();
 		this.out = out;
+		this.rmiport = rmiport;
 	}
 
 	public void run() {
@@ -32,8 +34,8 @@ public class ResourceMonitor extends Thread {
 			while (running) {
 				if (!sendMeasurement(out, takeMeasurement())) {
 					// Sending message failed
-					running = false;
-					System.out.println("Failed sending measurement");
+					System.err.println("Failed sending measurement");
+					quit();
 				}
 	
 				// End of cycle
@@ -43,14 +45,9 @@ public class ResourceMonitor extends Thread {
 					e.printStackTrace();
 				}
 			}
-			try {
-				out.close();
-			} catch (IOException e) {
-				System.out.println("Failed to close outputstream or socket");
-			}
 			System.out.println("Connections closed, stopping worker");
 		} else {
-			System.out.println("Server not found, aborting");
+			System.err.println("Server not found, aborting");
 		}
 	}
 
@@ -124,7 +121,7 @@ public class ResourceMonitor extends Thread {
 			out.writeObject(measurement);
 			out.flush();
 		} catch (Exception e) {
-			System.out.println("Unable to make a socket connection");
+			System.err.println("Unable to make a socket connection");
 			return false;
 		}
 		return true;
@@ -132,5 +129,10 @@ public class ResourceMonitor extends Thread {
 	
 	public void quit() {
 		this.running = false;
+		try {
+			Naming.unbind("rmi://localhost:" + rmiport + "/taskManager");
+		} catch (Exception e) {
+			System.err.println("no rmi bound");
+		}
 	}
 }
