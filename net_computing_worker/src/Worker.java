@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -18,7 +19,19 @@ public class Worker {
 	 */
 	public static void main(String [] args) {
 		if(args.length<=0) {
-			System.out.println("Give a port to send results too!");
+			System.err.println("Give a port to send results too!");
+			return;
+		}
+		
+		boolean hasGcc = false;
+		String[] paths = System.getenv("PATH").split(":");
+		for(int i = 0; i < paths.length; i++) {
+			if (new File(paths[i] + "/gcc").isFile()) {
+				hasGcc = true;
+			}
+		}
+		if (!hasGcc) {
+			System.err.println("Worker most have gcc installed!");
 			return;
 		}
 		
@@ -57,7 +70,7 @@ public class Worker {
 			monitor = new ResourceMonitor(out);
 			monitor.start();
 		} catch (IOException e1) {
-			System.out.println("Starting resourcemonitor failed");
+			System.err.println("Starting resourcemonitor failed");
 			return;
 		}
 		
@@ -68,7 +81,7 @@ public class Worker {
 			LocateRegistry.createRegistry(rmiport);
 			Naming.rebind("rmi://localhost:" + rmiport + "/taskManager", manager);
 		} catch (Exception e) {
-			System.out.println("remote exception in taskManager\n\n");
+			System.err.println("remote exception in taskManager\n\n");
 			monitor.quit();
 			e.printStackTrace();
 		}
