@@ -23,6 +23,7 @@ public class Worker {
 			return;
 		}
 		
+		// Check if worker has GCC installed
 		boolean hasGcc = false;
 		String[] paths = System.getenv("PATH").split(":");
 		for(int i = 0; i < paths.length; i++) {
