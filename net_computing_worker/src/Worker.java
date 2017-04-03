@@ -25,10 +25,6 @@ public class Worker {
 			return;
 		}
 		
-		Path path = Paths.get("net_computing_shared", "src", "rmi", "security.policy");
-		String dir = System.getProperty("user.dir").replaceAll("net_computing_worker", path.toString());
-		System.out.println(dir);
-		
 		// Check if worker has GCC installed
 		boolean hasGcc = false;
 		String[] paths = System.getenv("PATH").split(":");
@@ -82,8 +78,13 @@ public class Worker {
 		}
 		
 		try {
+			// Get security.policy filepath
+			Path p = Paths.get(System.getProperty("user.dir"));
+			p.getParent();
+			Path dir = Paths.get(p.toString(), "net_computing_shared", "src", "rmi", "security.policy");
+			
 			System.getProperties().setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
-			System.getProperties().setProperty("java.security.policy", dir);
+			System.getProperties().setProperty("java.security.policy", dir.toString());
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			monitor.quit();
