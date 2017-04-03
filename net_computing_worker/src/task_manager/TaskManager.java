@@ -27,21 +27,16 @@ public class TaskManager extends UnicastRemoteObject implements TaskServer, Seri
 		try {
 			System.out.println(input);
 			Process p = Runtime.getRuntime().exec(process);
-			TaskOutput out = new TaskOutput();
-			TaskThread tt = new TaskThread(p, out, pid, oos, input);
-			Thread thread = new Thread(tt);
-			t = new Task(thread, out, pid);
+			t = new Task(p, pid, oos, input);
+			Thread thread = new Thread(t);
 			this.tasks.add(t);
 			this.pid++;
 			thread.start();
 		} catch (IOException e) {
 			System.out.println("IO exception when starting executable in Taskmanager");
 		}
-		if(t != null) {
-			return t.getPid();
-		} else {
-			return -1;
-		}
+		if(t == null) return -1;
+		return t.getPid();
 	}
 	
 	public synchronized void interrupt(int pid) {

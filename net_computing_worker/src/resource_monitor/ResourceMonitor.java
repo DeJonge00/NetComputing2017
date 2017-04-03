@@ -18,7 +18,7 @@ public class ResourceMonitor extends Thread {
 
 	private boolean running;
 	private static Sigar sigar;
-	ObjectOutputStream oos;
+	private ObjectOutputStream oos;
 	
 	public ResourceMonitor(ObjectOutputStream o) {
 		running = false;
@@ -77,7 +77,7 @@ public class ResourceMonitor extends Thread {
 		return true;
 	}
 
-	public Measurement takeMeasurement() {
+	private Measurement takeMeasurement() {
 		Mem mem;
 		CpuPerc[] cpu;
 		Measurement measurement = new Measurement();
@@ -119,7 +119,7 @@ public class ResourceMonitor extends Thread {
 		return measurement;
 	}
 
-	public boolean sendMeasurement(ObjectOutputStream oos, Measurement m) {
+	private boolean sendMeasurement(ObjectOutputStream oos, Measurement m) {
 		try {
 			oos.writeObject(m);
 			oos.flush();
@@ -132,9 +132,5 @@ public class ResourceMonitor extends Thread {
 	
 	public void quit() {
 		this.running = false;
-	}
-	
-	public boolean isRunning() {
-		return running;
 	}
 }
