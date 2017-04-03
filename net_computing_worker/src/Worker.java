@@ -51,7 +51,7 @@ public class Worker {
 				serverPort = Integer.parseInt(args[0]);
 			}
 		} catch (UnknownHostException e) {
-			System.out.println("That is not a valid address");
+			System.err.println("That is not a valid address");
 			return;
 		}
 		
@@ -79,9 +79,8 @@ public class Worker {
 		
 		try {
 			// Get security.policy filepath
-			Path p = Paths.get(System.getProperty("user.dir"));
-			p.getParent();
-			Path dir = Paths.get(p.toString(), "net_computing_shared", "src", "rmi", "security.policy");
+			Path path = Paths.get(System.getProperty("user.dir")).getParent();
+			Path dir = Paths.get(path.toString(), "net_computing_shared", "src", "rmi", "security.policy");
 			
 			System.getProperties().setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
 			System.getProperties().setProperty("java.security.policy", dir.toString());
