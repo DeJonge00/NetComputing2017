@@ -28,10 +28,9 @@ public class TaskManager extends UnicastRemoteObject implements TaskServer, Seri
 			System.out.println(input);
 			Process process = Runtime.getRuntime().exec(processString);
 			task = new Task(process, pid, out, input);
-			Thread thread = new Thread(task);
 			this.tasks.add(task);
 			this.pid++;
-			thread.start();
+			task.start();
 		} catch (IOException e) {
 			System.out.println("IO exception when starting executable in Taskmanager");
 		}
