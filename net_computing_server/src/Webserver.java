@@ -13,20 +13,20 @@ import task_distributor.TaskQueue;
 import data_analyzer.DataAnalyzer;
 
 public class Webserver {
-	private ConnectionList workers;
 	private MessageInbox messageInbox;
 	private DataAnalyzer analyzer;
-	private TaskQueue taskQueue;
 	private TaskDistributor distributor;
-	private TaskList taskList;
+	private TaskApi taskApi;
 	
 	public Webserver(int port) throws IOException {
-		this.workers = new ConnectionList();
-		this.messageInbox = new MessageInbox(this.workers, port);
-		this.taskQueue = new TaskQueue();
-		this.taskList = new TaskList();
-		this.distributor = new TaskDistributor(taskQueue, this.workers, this.taskList);
-		this.analyzer = new DataAnalyzer(messageInbox.getMessageQueue(), this.workers, taskList);
+		ConnectionList workers = new ConnectionList();
+		TaskQueue taskQueue = new TaskQueue();
+		TaskList taskList = new TaskList();
+		
+		this.messageInbox = new MessageInbox(workers, port);
+		this.distributor = new TaskDistributor(taskQueue, workers, taskList);
+		this.analyzer = new DataAnalyzer(messageInbox.getMessageQueue(), workers, taskList);
+		this.taskApi = new TaskApi(taskQueue, taskList);
 	}
 	
 	/* Starts a message inbox and a data analyzer. */
@@ -54,7 +54,7 @@ public class Webserver {
         context.setClassLoader(Thread.currentThread().getContextClassLoader());
         server.setHandler(context);
  
-        context.setHandler(new TaskApi(taskQueue, taskList));
+        context.setHandler(this.taskApi);
         try{
 	        server.start();
 	        server.join();
