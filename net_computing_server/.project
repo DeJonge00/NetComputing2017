@@ -25,11 +25,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.pde.PluginNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>spark</name>
-			<type>2</type>
-			<location>/home/jeroen/remco/net_computing/NetComputing2017/net_computing_server/lib/spark/spark-master/src/main/java</location>
-		</link>
-	</linkedResources>
 </projectDescription>

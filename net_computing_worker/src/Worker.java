@@ -1,8 +1,11 @@
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
@@ -18,7 +21,24 @@ public class Worker {
 	 */
 	public static void main(String [] args) {
 		if(args.length<=0) {
-			System.out.println("Give a port to send results too!");
+			System.err.println("Give a port to send results too!");
+			return;
+		}
+		
+		Path path = Paths.get("net_computing_shared", "src", "rmi", "security.policy");
+		String dir = System.getProperty("user.dir").replaceAll("net_computing_worker", path.toString());
+		System.out.println(dir);
+		
+		// Check if worker has GCC installed
+		boolean hasGcc = false;
+		String[] paths = System.getenv("PATH").split(":");
+		for(int i = 0; i < paths.length; i++) {
+			if (new File(paths[i] + "/gcc").isFile()) {
+				hasGcc = true;
+			}
+		}
+		if (!hasGcc) {
+			System.err.println("Worker most have gcc installed!");
 			return;
 		}
 		
@@ -57,7 +77,16 @@ public class Worker {
 			monitor = new ResourceMonitor(out);
 			monitor.start();
 		} catch (IOException e1) {
-			System.out.println("Starting resourcemonitor failed");
+			System.err.println("Starting resourcemonitor failed");
+			return;
+		}
+		
+		try {
+			System.getProperties().setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+			System.getProperties().setProperty("java.security.policy", dir);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			monitor.quit();
 			return;
 		}
 		
@@ -68,7 +97,7 @@ public class Worker {
 			LocateRegistry.createRegistry(rmiport);
 			Naming.rebind("rmi://localhost:" + rmiport + "/taskManager", manager);
 		} catch (Exception e) {
-			System.out.println("remote exception in taskManager\n\n");
+			System.err.println("remote exception in taskManager\n\n");
 			monitor.quit();
 			e.printStackTrace();
 		}
