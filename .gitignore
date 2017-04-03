@@ -6,6 +6,8 @@
 # Package Files #
 *.jar
 !sigar.jar
+!/jaxrs-ri/*
+!/jetty/*
 *.war
 *.ear
 
