@@ -30,7 +30,6 @@ public class MessageQueue extends LinkedList<Message<?>>{
 				return 2;
 			}
 		}
-		
 		return 0;
 	}
 }

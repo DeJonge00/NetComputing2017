@@ -7,8 +7,8 @@ import message_inbox.Connection;
 import rmi.TaskServer;
 
 public class TaskList{
-	public ArrayList<TaskActive> activeTasks;
-	public ArrayList<TaskFinished> finishedTasks;
+	private ArrayList<TaskActive> activeTasks;
+	private ArrayList<TaskFinished> finishedTasks;
 	
 	public TaskList() {
 		activeTasks = new ArrayList<TaskActive>();
@@ -20,7 +20,6 @@ public class TaskList{
 		if (task instanceof TaskFinished) {
 			int index = find(finishedTasks, task.getUserId());
 			finishedTasks.add(index, (TaskFinished) task);
-			
 		} else {
 			int index = find(activeTasks, task.getUserId());
 			activeTasks.add(index, (TaskActive) task);

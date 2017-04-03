@@ -31,16 +31,19 @@ public class Webserver {
 	
 	/* Starts a message inbox and a data analyzer. */
 	public void start() {
-		Thread thread = new Thread(this.messageInbox);
-		thread.start();
-		thread = new Thread(this.analyzer);
-		thread.start();
+		Thread messageInboxThread = new Thread(this.messageInbox);
+		messageInboxThread.start();
+		Thread analyzerThread = new Thread(this.analyzer);
+		analyzerThread.start();
 		
 		try {
 			Thread.sleep(5000);
 			distributor.start();
 		} catch (Exception e) {
+			messageInboxThread.interrupt();
+			analyzerThread.interrupt();
 			System.err.println("Exception in Server.start");
+			return;
 		}
 	}
 	
