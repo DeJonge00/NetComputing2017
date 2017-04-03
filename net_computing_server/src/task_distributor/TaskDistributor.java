@@ -65,6 +65,7 @@ public class TaskDistributor extends Thread{
 						task.setCommand(builder.toString());
 					}
 					try {
+						System.out.println(task.getCommand());
 						task.setConn(conn);
 						TaskServer stub=(TaskServer)Naming.lookup("rmi://" + conn.getInetAddress().getHostAddress() + ":1099/taskManager");  
 	

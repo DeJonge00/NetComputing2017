@@ -51,6 +51,21 @@ public class Worker {
 		}
 		System.out.println(rmiport);
 		
+		try {
+			// Get security.policy filepath
+			Path path = Paths.get(System.getProperty("user.dir"));
+			System.getProperties().setProperty("java.library.path", path.toString());
+			Path dir = Paths.get(path.toString(), "security.policy");
+			
+			System.getProperties().setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+			
+			System.getProperties().setProperty("java.security.policy", dir.toString());
+			System.out.println(dir.toString());
+		} catch (UnknownHostException e) {
+			System.err.println("Could not initialize localhost");
+			return;
+		}
+		
 		// Create resourcemonitor
 		Socket socket;
 		ObjectOutputStream out;
@@ -64,18 +79,7 @@ public class Worker {
 			return;
 		}
 		
-		try {
-			// Get security.policy filepath
-			Path path = Paths.get(System.getProperty("user.dir")).getParent();
-			Path dir = Paths.get(path.toString(), "net_computing_shared", "src", "rmi", "security.policy");
-			
-			System.getProperties().setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
-			System.getProperties().setProperty("java.security.policy", dir.toString());
-		} catch (UnknownHostException e) {
-			System.err.println("Could not initialize localhost");
-			monitor.quit();
-			return;
-		}
+
 		
 		// initialize taskManager
 		try {

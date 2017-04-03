@@ -1,35 +1,4 @@
-*.class
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-!sigar.jar
-!/net_computing_server/lib/jaxrs-ri/*
-!/net_computing_server/lib/jaxrs-ri/api/*
-!/net_computing_server/lib/jaxrs-ri/ext/*
-!/net_computing_server/lib/jaxrs-ri/lib/*
-!/net_computing_server/lib/jetty/*
-!/net_computing_server/lib/jetty/annotations/*
-!/net_computing_server/lib/jetty/apache-jsp/*
-!/net_computing_server/lib/jetty/apache-jstl/*
-!/net_computing_server/lib/jetty/ext/*
-!/net_computing_server/lib/jetty/fcgi/*
-!/net_computing_server/lib/jetty/jaspi/*
-!/net_computing_server/lib/jetty/jndi/*
-!/net_computing_server/lib/jetty/jsp/*
-!/net_computing_server/lib/jetty/monitor/*
-!/net_computing_server/lib/jetty/setuid/*
-!/net_computing_server/lib/jetty/spdy/*
-!/net_computing_server/lib/jetty/spring/*
-!/net_computing_server/lib/jetty/websocket/*
-
-/websocket/*
-*.war
-*.ear
-
-.metadata
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+.metadata/
+/net_computing_worker/bin/
+/net_computing_server/bin/
+/net_computing_shared/bin/

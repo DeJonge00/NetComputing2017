@@ -65,8 +65,8 @@ public class Webserver {
 		int port = Integer.parseInt(args[0]);
 		
 		// Setup policy file
-		Path path = Paths.get(System.getProperty("user.dir")).getParent();
-		Path dir = Paths.get(path.toString(), "net_computing_shared", "src", "rmi", "security.policy");
+		Path path = Paths.get(System.getProperty("user.dir"));
+		Path dir = Paths.get(path.toString(), "security.policy");
 		System.out.println(dir.toString());
 		System.getProperties().setProperty("java.security.policy", dir.toString());
 		

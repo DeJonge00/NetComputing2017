@@ -45,7 +45,7 @@ public class TaskApi extends AbstractHandler {
 				do_GET_CreateTask(response.getWriter());
 			} else if (target.equals("/")) {
 				do_GET_tasks(response.getWriter());
-			} else if(target.matches("/\\d")) {
+			} else if(target.matches("/(\\d)+")) {
 				do_GET_task(response.getWriter(), Integer.parseInt(target.substring(1)));
 			} else {
 				err404 = true;
