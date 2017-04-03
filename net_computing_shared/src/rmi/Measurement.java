@@ -4,44 +4,44 @@ import java.io.Serializable;
 
 public class Measurement implements Serializable {
 	static final long serialVersionUID = 1234;
-	private int cpuamount;
+	private int cpuAmount;
 	private float ram;
 	private float memory;
-	private float freememory;
+	private float freeMemory;
 	private double loadAvg;
 	private double cpuUsage;
 		
 	public Measurement() {
-		cpuamount = 0;
+		cpuAmount = 0;
 		ram = 0;
 		memory = 0;
-		freememory = 0;
+		freeMemory = 0;
 		loadAvg = 0;
 		cpuUsage = 0;
 	}
 	
 	@Override
 	public String toString() {
-		return "Cpu amount: " + cpuamount 
+		return "Cpu amount: " + cpuAmount 
 				+ ", ram: " + this.ram 
 				+ ", memory: " + this.memory 
-				+ ", free memory: " + this.freememory 
+				+ ", free memory: " + this.freeMemory 
 				+ ", loadAvg: " + this.loadAvg
 				+ ", cpu usage: " + this.cpuUsage;
 	}
 
-	public void setMemoryInfo(float r, float t, float f) {
-		ram = r;
-		memory = t;
-		freememory = f;
+	public void setMemoryInfo(float ram, float memory, float freeMemory) {
+		this.ram = ram;
+		this.memory = memory;
+		this.freeMemory = freeMemory;
 	}
 
 	public int getCpuamount() {
-		return cpuamount;
+		return cpuAmount;
 	}
 
-	public void setCpuamount(int cpuamount) {
-		this.cpuamount = cpuamount;
+	public void setCpuamount(int cpuAmount) {
+		this.cpuAmount = cpuAmount;
 	}
 
 	public float getRam() {
@@ -60,12 +60,12 @@ public class Measurement implements Serializable {
 		this.memory = memory;
 	}
 
-	public float getFreememory() {
-		return freememory;
+	public float getFreeMemory() {
+		return freeMemory;
 	}
 
-	public void setFreememory(float freememory) {
-		this.freememory = freememory;
+	public void setFreeMemory(float freeMemory) {
+		this.freeMemory = freeMemory;
 	}
 
 	public double getCpuUsage() {
