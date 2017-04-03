@@ -10,10 +10,12 @@ public class Connection {
 	private Socket socket;
 	private InitData data;
 	private Measurement lastMeasurement;
+	private boolean active;
 
 	public Connection(Socket socket) {
 		this.socket = socket;
 		this.lastMeasurement = new Measurement();
+		active = true;
 	}
 	
 	public synchronized void setLastMeasurement(Measurement measurement) {
@@ -65,5 +67,17 @@ public class Connection {
 			}
 		}
 		return false;
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
+	
+	public void quit() {
+		try {
+			this.socket.close();
+		} catch (IOException e) {
+			System.out.println("Unable to close connection socket");
+		}
 	}
 }

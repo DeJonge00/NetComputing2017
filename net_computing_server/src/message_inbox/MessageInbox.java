@@ -35,7 +35,7 @@ public class MessageInbox implements Runnable {
 				Thread thread = new Thread(receiver);
 				thread.start();
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("Worker failed to connect, removing worker");
 				return;
 			}
 		}

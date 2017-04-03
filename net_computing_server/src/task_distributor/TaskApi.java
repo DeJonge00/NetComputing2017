@@ -10,9 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
-
-
-
 /* 
  * TaskApi listens to API calls from the webserver.
  * When  it receives an API call, it enqueues the task 
