@@ -40,15 +40,12 @@ public class TaskApi extends AbstractHandler {
 			if(target.matches("/active_task/?")) {
 				// INDEX active tasks
 				do_GET_ActiveTask(response.getWriter());
-				System.out.println("GET active_task");
 			} else if(target.matches("/finished_task/?")) {
 				do_GET_FinishedTask(response.getWriter());
 				// INDEX finished tasks
-				System.out.println("GET finished_task");
 			} else if(target.matches("/create/?")) {
 				// NEW task
 				do_GET_CreateTask(response.getWriter());
-				System.out.println("GET create task form");
 			} else if (target.equals("/")) {
 				do_GET_tasks(response.getWriter());
 			} else if(target.matches("/\\d")) {
@@ -89,21 +86,21 @@ public class TaskApi extends AbstractHandler {
 		Task task = taskList.findByTaskId(taskId);
 		if(task != null) {
 			if(task instanceof TaskFinished) {
-				writer.println("<h1>standard input for task "+taskId+":</h1><br>");
+				writer.println("<h2>standard input for task "+taskId+":</h2><br><div class='outputdiv'>");
 				String out = task.getInput();
 				String[] lines = out.split("\\r?\\n");
 				for(String line : lines) {
 					writer.println(line + "<br>");
 				}
 				
-				writer.println("<h1>standard output from task "+taskId+":</h1><br>");
+				writer.println("</div><br><h2>standard output from task "+taskId+":</h2><br><div class='outputdiv'>");
 				out = ((TaskFinished) task).getTaskOutput();
 				lines = out.split("\\r?\\n");
 				for(String line : lines) {
 					writer.println(line + "<br>");
 				}
 				
-				writer.println("<h1>standard error from task "+taskId+":</h1><br>");
+				writer.println("</div><br><h2>standard error from task "+taskId+":</h2><br><div class='outputdiv'>");
 				out = ((TaskFinished) task).getTaskError();
 				lines = out.split("\\r?\\n");
 				for(String line : lines) {
