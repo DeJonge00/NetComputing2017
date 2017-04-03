@@ -6,8 +6,8 @@
 # Package Files #
 *.jar
 !sigar.jar
-!/jaxrs-ri/*
-!/jetty/*
+!/net_computing_server/lib/jaxrs-ri/*
+!/net_computing_server/lib/jetty/*
 *.war
 *.ear
 
