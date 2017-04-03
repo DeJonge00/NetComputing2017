@@ -37,6 +37,7 @@ public class MessageReceiver implements Runnable {
 			object = this.in.readObject();
 		} catch (Exception e) {
 			System.out.println("Object could not be read, returning empty measurement");
+			connection.quit();
 		}
 		if(object != null && object instanceof Measurement) {
 			message = new Message<Measurement>((Measurement)object, this.connection);
