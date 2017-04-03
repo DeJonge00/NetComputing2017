@@ -4,13 +4,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class MessageInbox implements Runnable {
-	private ServerSocket server_socket;
+	private ServerSocket socket;
 	private MessageQueue messages;
-	private ConnectionList workers;
+	private ConnectionList connections;
 	
-	public MessageInbox(ConnectionList w, int port) throws IOException {
-		this.workers = w;
-		this.server_socket = new ServerSocket(port);
+	public MessageInbox(ConnectionList connections, int port) throws IOException {
+		this.connections = connections;
+		this.socket = new ServerSocket(port);
 		this.messages = new MessageQueue();
 	}
 	
@@ -28,12 +28,12 @@ public class MessageInbox implements Runnable {
 	public void run() {
 		while (true) {
 			try {
-				Socket worker = this.server_socket.accept();
-				Connection conn = new Connection(worker);
-				MessageReceiver mr = new MessageReceiver(conn, this.messages);
-				this.workers.addConnection(conn);
-				Thread t = new Thread(mr);
-				t.start();
+				Socket worker = this.socket.accept();
+				Connection connection = new Connection(worker);
+				MessageReceiver receiver = new MessageReceiver(connection, this.messages);
+				this.connections.addConnection(connection);
+				Thread thread = new Thread(receiver);
+				thread.start();
 			} catch (IOException e) {
 				e.printStackTrace();
 				return;

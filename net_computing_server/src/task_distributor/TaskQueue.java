@@ -3,6 +3,8 @@ package task_distributor;
 import java.util.LinkedList;
 
 public class TaskQueue extends LinkedList<Task> {
+	private static final long serialVersionUID = 1L;
+	
 	public TaskQueue() {
 		super();
 	}
@@ -14,7 +16,7 @@ public class TaskQueue extends LinkedList<Task> {
 			return null;
 		}
 	}
-	public synchronized void enqueue(Task t) {
-		this.add(t);
+	public synchronized void enqueue(Task task) {
+		this.add(task);
 	}
 }

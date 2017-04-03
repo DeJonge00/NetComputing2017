@@ -21,12 +21,13 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
  */
 //@WebServlet(name = "task", urlPatterns = {"/tasks"})
 public class TaskApi extends AbstractHandler {
-	private TaskQueue tq;
-	private TaskList tl;
+	private TaskQueue taskQueue;
+	private TaskList taskList;
 	private int taskCounter;
-	public TaskApi(TaskQueue tq, TaskList tl) {
-		this.tq = tq;
-		this.tl = tl;
+	
+	public TaskApi(TaskQueue taskQueue, TaskList taskList) {
+		this.taskQueue = taskQueue;
+		this.taskList = taskList;
 		this.taskCounter = 0;
 	}
 	
@@ -83,26 +84,27 @@ public class TaskApi extends AbstractHandler {
         baseRequest.setHandled(true);
 	}
 	
+	/* Prints the output of the task with the specified taskId. */
 	void do_GET_task(PrintWriter writer, int taskId) {
-		Task t = tl.findByTaskId(taskId);
-		if(t != null) {
-			if(t instanceof TaskFinished) {
-				writer.println("<h1>standard input for task "+taskId+":</h1><br><div style='text-align:left'>");
-				String out = t.getInput();
+		Task task = taskList.findByTaskId(taskId);
+		if(task != null) {
+			if(task instanceof TaskFinished) {
+				writer.println("<h1>standard input for task "+taskId+":</h1><br>");
+				String out = task.getInput();
 				String[] lines = out.split("\\r?\\n");
 				for(String line : lines) {
 					writer.println(line + "<br>");
 				}
 				
-				writer.println("</div><h1>standard output from task "+taskId+":</h1><br><div style='text-align:left'>");
-				out = ((TaskFinished)t).getTaskOutput();
+				writer.println("<h1>standard output from task "+taskId+":</h1><br>");
+				out = ((TaskFinished) task).getTaskOutput();
 				lines = out.split("\\r?\\n");
 				for(String line : lines) {
 					writer.println(line + "<br>");
 				}
 				
-				writer.println("</div><h1>standard error from task "+taskId+":</h1><br><div style='text-align:left'>");
-				out = ((TaskFinished)t).getTaskError();
+				writer.println("<h1>standard error from task "+taskId+":</h1><br>");
+				out = ((TaskFinished) task).getTaskError();
 				lines = out.split("\\r?\\n");
 				for(String line : lines) {
 					writer.println(line + "<br>");
@@ -116,6 +118,7 @@ public class TaskApi extends AbstractHandler {
 		}
 	}
 	
+	/* Prints two HTML tables: one with all active tasks and one with all finished tasks. */
 	void do_GET_tasks(PrintWriter writer) {
 		writer.println("<table class='tab'>");		
 		writer.println("<tr><td class='tasktable'>");
@@ -129,31 +132,35 @@ public class TaskApi extends AbstractHandler {
 		writer.println("</td></tr>");
 		writer.println("</table>");
 	}
+	
+	/* Writes a table with all active tasks to writer. */
 	void do_GET_ActiveTask(PrintWriter writer) {
 		writer.println("<h2>Active Tasks</h2><br>");
 		writer.println("<table class='tab'>");
 		writer.println("<tr><th>command</th><th>taskId</th><th>userId</th><th>started at</th></tr>");
-		for(TaskActive ta : tl.getActiveTasks()) {
-			writer.println("<tr>" + ta.toString() + 
-					"<td><form method='GET' action='/task/" + ta.getTaskId() + "'><button type='submit'>view</button></form></td>" +
-					"<td><form method='POST' action='/task/" + ta.getTaskId() + "'><button type='submit'>delete</button></form></td></tr>");
+		for(TaskActive active : taskList.getActiveTasks()) {
+			writer.println("<tr>" + active.toString() + 
+					"<td><form method='GET' action='/task/" + active.getTaskId() + "'><button type='submit'>view</button></form></td>" +
+					"<td><form method='POST' action='/task/" + active.getTaskId() + "'><button type='submit'>delete</button></form></td></tr>");
 		}
 		writer.println("</table>");
 	}
 	
+	/* Writes a table with all active tasks to writer. */
 	void do_GET_FinishedTask(PrintWriter writer) {
 		writer.println("<h2>Finished Tasks</h2><br>");
 		writer.println("<table class='tab'>");
 
 		writer.println("<tr><th>command</th><th>taskId</th><th>userId</th><th>started at</th><th>finished at</th><th>exit status</th></tr>");
-		for(TaskFinished tf : tl.getFinishedTasks()) {
-			writer.println("<tr>" + tf.toString() + 
-						"<td><form method='GET' action='/task/" + tf.getTaskId() + "'><button type='submit'>view</button></form></td>" +
-						"<td><form method='POST' action='/task/" + tf.getTaskId() + "'><button type='submit'>delete</button></form></td></tr>");
+		for(TaskFinished finished : taskList.getFinishedTasks()) {
+			writer.println("<tr>" + finished.toString() + 
+						"<td><form method='GET' action='/task/" + finished.getTaskId() + "'><button type='submit'>view</button></form></td>" +
+						"<td><form method='POST' action='/task/" + finished.getTaskId() + "'><button type='submit'>delete</button></form></td></tr>");
 		}
 		writer.println("</table>");
 	}
 
+	/* Writes a HTML form for creating a new task to writer. */
 	void do_GET_CreateTask(PrintWriter writer) {
         writer.println("<div'><form method='POST' class='createform'>");
         writer.println("<h2>Create a new Task</h2><br>");
@@ -165,15 +172,16 @@ public class TaskApi extends AbstractHandler {
         writer.println("</table></form></div>");
 	}
 
+	/* Create a new task when the data from the create form is POSTed. */
 	void do_POST_CreateTask(String command, String input) {
-		// process post data
-		Task t = new Task(command, taskCounter, input);
+		Task task = new Task(command, taskCounter, input);
 		taskCounter++;
-		t.setUserId(1);
-		this.tq.enqueue(t);
+		task.setUserId(1);
+		this.taskQueue.enqueue(task);
 	}
 
+	/* Remove a task from the tasklist. */
 	void do_DELETE_DestroyTask(PrintWriter writer, int taskId) {
-		this.tl.remove(taskId);
+		this.taskList.remove(taskId);
 	}
 }

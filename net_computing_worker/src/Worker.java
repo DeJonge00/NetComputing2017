@@ -47,6 +47,7 @@ public class Worker {
 		} else {
 			rmiport = 1099;
 		}
+		System.out.println(rmiport);
 		
 		// Create resourcemonitor
 		Socket socket;
@@ -65,15 +66,8 @@ public class Worker {
 		try {
 			TaskManager tm = new TaskManager(oos);
 			tm.initSecurityManager();
-			System.out.println("\n\nStarting registry");
-			//TaskManager stub = (TaskManager) UnicastRemoteObject.exportObject(tm, 0);
-			//System.out.println(registry);
+			LocateRegistry.createRegistry(rmiport);
 			Naming.rebind("rmi://localhost:" + rmiport + "/taskManager", tm);
-			//System.out.println(registry);
-			//System.out.println("\n\n" + registry.lookup("taskManager"));
-			//System.out.println("\n" + Naming.lookup("rmi://localhost:" + rmiport + "/taskManager"));
-			
-            System.out.println("TaskManager bound\n\n");
 		} catch (Exception e) {
 			System.out.println("remote exception in taskManager\n\n");
 			monitor.quit();

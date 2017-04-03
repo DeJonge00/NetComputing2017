@@ -7,12 +7,13 @@ import rmi.TaskInfo;
 
 public class MessageQueue extends LinkedList<Message<?>>{
 	private static final long serialVersionUID = 1L;
+	
 	public MessageQueue() {
 		super();
 	}
 
-	synchronized public void enqueue(Message<?> m) {
-		this.add(m);
+	synchronized public void enqueue(Message<?> message) {
+		this.add(message);
 	}
 	
 	synchronized public Message<?> dequeue() {
@@ -20,12 +21,12 @@ public class MessageQueue extends LinkedList<Message<?>>{
 	}
 	
 	synchronized public int getFirstType() {
-	
-		Message<?> m = this.peekFirst();
-		if(m != null) {
-			if(m.getMessageContent() instanceof Measurement) {
+		Message<?> message = this.peekFirst();
+		
+		if(message != null) {
+			if(message.getMessageContent() instanceof Measurement) {
 				return 1;
-			} else if (m.getMessageContent() instanceof TaskInfo) {
+			} else if (message.getMessageContent() instanceof TaskInfo) {
 				return 2;
 			}
 		}
